@@ -2,12 +2,12 @@ package com.murerz.dsopz.core;
 
 import java.io.Closeable;
 
-public interface DOZHandler<T> extends Closeable {
+public abstract class DOZHandler<T> extends DOZBuildable implements Closeable {
 
-	public Class<T> spec();
+	public abstract Class<T> spec();
 
-	public void onCommand(T command);
+	public abstract void onCommand(T command);
 
-	public void start();
+	public abstract void start();
 
 }
