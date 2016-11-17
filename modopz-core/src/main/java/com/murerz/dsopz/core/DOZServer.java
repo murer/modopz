@@ -4,9 +4,7 @@ import java.io.Closeable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DOZServer implements Closeable {
-
-	private DOZLog log;
+public class DOZServer extends DOZBuildable implements Closeable {
 
 	private List<DOZHandler<?>> handlers = new ArrayList<DOZHandler<?>>();
 
@@ -25,7 +23,7 @@ public class DOZServer implements Closeable {
 	@Override
 	public void close() {
 		for (int i = handlers.size() - 1; i >= 0; i--) {
-			DOZUtil.close(log, handlers.get(i));
+			DOZUtil.close(log(), handlers.get(i));
 		}
 	}
 
