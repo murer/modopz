@@ -8,4 +8,6 @@ public interface DOZHandler<T> extends Closeable {
 
 	public void onCommand(T command);
 
+	public void start();
+
 }
