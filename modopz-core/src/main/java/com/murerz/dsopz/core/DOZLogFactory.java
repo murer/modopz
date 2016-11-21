@@ -14,6 +14,18 @@ public abstract class DOZLogFactory {
 
 	}
 
+	public static void set(DOZLogFactory factory) {
+		if(me != null) {
+			throw new RuntimeException("you cannot reinit log: " + me);
+		}
+		synchronized (MUTEX) {
+			if(me != null) {
+				throw new RuntimeException("you cannot reinit log: " + me);
+			}
+			me = factory;	
+		}
+	}
+	
 	public static DOZLogFactory me() {
 		if (me == null) {
 			synchronized (MUTEX) {
