@@ -1,5 +1,7 @@
 package com.murerz.dsopz.core;
 
+import com.murerz.dsopz.core.DOZLogFactory.DOZLog;
+
 public class DOZUtil {
 
 	public static void close(DOZLog log, AutoCloseable o) {

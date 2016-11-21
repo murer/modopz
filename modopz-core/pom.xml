@@ -6,6 +6,12 @@
 	<name>modopz-core</name>
 	<version>0.0.1-SNAPSHOT</version>
 
+	<parent>
+		<groupId>com.murerz.modopz</groupId>
+		<artifactId>modopz</artifactId>
+		<version>0.0.1-SNAPSHOT</version>
+	</parent>
+
 	<dependencies>
 		<dependency>
 			<groupId>javax.servlet</groupId>
