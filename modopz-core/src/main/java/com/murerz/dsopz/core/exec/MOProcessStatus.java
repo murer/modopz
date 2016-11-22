@@ -3,7 +3,7 @@ package com.murerz.dsopz.core.exec;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 
-public class ProcessStatus {
+public class MOProcessStatus {
 
 	private Integer code;
 
@@ -15,7 +15,7 @@ public class ProcessStatus {
 		return code;
 	}
 
-	public ProcessStatus setCode(Integer code) {
+	public MOProcessStatus setCode(Integer code) {
 		this.code = code;
 		return this;
 	}
@@ -24,7 +24,7 @@ public class ProcessStatus {
 		return stdout;
 	}
 
-	public ProcessStatus setStdout(ByteArrayOutputStream stdout) {
+	public MOProcessStatus setStdout(ByteArrayOutputStream stdout) {
 		this.stdout = stdout;
 		return this;
 	}
@@ -33,12 +33,12 @@ public class ProcessStatus {
 		return stderr;
 	}
 
-	public ProcessStatus setStderr(ByteArrayOutputStream stderr) {
+	public MOProcessStatus setStderr(ByteArrayOutputStream stderr) {
 		this.stderr = stderr;
 		return this;
 	}
 
-	public void append(ProcessStatus status) {
+	public void append(MOProcessStatus status) {
 		try {
 			code = status.getCode();
 			status.stdout.writeTo(stdout);

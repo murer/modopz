@@ -50,9 +50,9 @@ public class MOProcess {
 		}
 	}
 
-	public ProcessStatus status() {
+	public MOProcessStatus status() {
 		try {
-			ProcessStatus ret = new ProcessStatus();
+			MOProcessStatus ret = new MOProcessStatus();
 			MOUtil.copyAvailable(this.stdout, ret.getStdout(), MAX - ret.getStdout().size());
 			MOUtil.copyAvailable(this.stderr, ret.getStderr(), MAX - ret.getStderr().size());
 			Integer code = code();
@@ -67,9 +67,9 @@ public class MOProcess {
 		}
 	}
 
-	public ProcessStatus waitFor(long timeout) {
+	public MOProcessStatus waitFor(long timeout) {
 		long before = System.currentTimeMillis();
-		ProcessStatus ret = status();
+		MOProcessStatus ret = status();
 		while (true) {
 			if (ret.getCode() != null) {
 				return ret;
