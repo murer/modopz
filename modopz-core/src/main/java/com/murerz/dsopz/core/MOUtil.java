@@ -6,11 +6,9 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
 
-import com.murerz.dsopz.core.MOLogFactory.DOZLog;
-
 public class MOUtil {
 
-	private static final DOZLog LOG = MOLogFactory.me().create(MOUtil.class);
+	private static final MOLog LOG = MOLogFactory.me().create(MOUtil.class);
 
 	public static void close(AutoCloseable o) {
 		if (o != null) {

@@ -8,7 +8,7 @@ public class MOLogFactoryTest {
 
 	@Test
 	public void testLoggerFactory() {
-		DOZLog log = MOLogFactory.me().create(MOLogFactoryTest.class);
+		MOLog log = MOLogFactory.me().create(MOLogFactoryTest.class);
 		log.info("test");
 	}
 

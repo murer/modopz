@@ -5,7 +5,7 @@ import java.util.logging.Logger;
 
 public class MOJdkLogFactory extends MOLogFactory {
 
-	public static class DOZJdkLog implements DOZLog {
+	public static class DOZJdkLog implements MOLog {
 
 		private final Logger logger;
 
@@ -24,7 +24,7 @@ public class MOJdkLogFactory extends MOLogFactory {
 	}
 
 	@Override
-	public DOZLog create(Class<?> clazz) {
+	public MOLog create(Class<?> clazz) {
 		return new DOZJdkLog(clazz);
 	}
 
