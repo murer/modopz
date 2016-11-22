@@ -77,4 +77,20 @@ public class MOProcessKernelTest extends MOAbstractKernelTest {
 		}
 	}
 
+	@Test
+	public void testProcessList() {
+		long id1 = kernel.command(new MOStartProcessMessage().setCmds(Arrays.asList("/bin/bash"))).getId();
+		long id2 = kernel.command(new MOStartProcessMessage().setCmds(Arrays.asList("echo", "testt"))).getId();
+		long id3 = kernel.command(new MOStartProcessMessage().setCmds(Arrays.asList("/bin/bash"))).getId();
+		assertTrue(id1 > 0);
+		assertTrue(id2 > 0);
+		assertTrue(id3 > 0);
+
+		kernel.command(new MOStatusProcessMessage().setId(id1).setWaitFor(500L));
+		kernel.command(new MOStatusProcessMessage().setId(id2).setWaitFor(1L));
+		kernel.command(new MOStatusProcessMessage().setId(id3).setWaitFor(1L));
+
+		assertEquals("[1, 3]", kernel.command(new MOListProcessMessage()).getPrcs().toString());
+	}
+
 }
