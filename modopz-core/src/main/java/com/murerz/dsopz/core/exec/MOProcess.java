@@ -52,7 +52,7 @@ public class MOProcess implements Closeable {
 		}
 	}
 
-	public MOProcessStatus status() {
+	public synchronized MOProcessStatus status() {
 		MOProcessStatus ret = new MOProcessStatus();
 		MOUtil.copyAvailable(this.stdout, ret.getStdout(), MAX - ret.getStdout().size());
 		MOUtil.copyAvailable(this.stderr, ret.getStderr(), MAX - ret.getStderr().size());
@@ -88,11 +88,11 @@ public class MOProcess implements Closeable {
 		}
 	}
 
-	public void stdin(byte[] buffer) {
+	public synchronized void stdin(byte[] buffer) {
 		MOUtil.writeFlush(stdin, buffer);
 	}
 
-	public void close() {
+	public synchronized void close() {
 		process.destroy();
 	}
 

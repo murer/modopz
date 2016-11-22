@@ -41,11 +41,11 @@ public class MOSocket implements Closeable {
 		}
 	}
 
-	public void close() {
+	public synchronized void close() {
 		MOUtil.close(socket);
 	}
 
-	public byte[] read() {
+	public synchronized byte[] read() {
 		if (socket.isClosed() && MOUtil.available(in) <= 0) {
 			return null;
 		}
@@ -66,7 +66,7 @@ public class MOSocket implements Closeable {
 		}
 	}
 
-	public void write(byte[] buffer) {
+	public synchronized void write(byte[] buffer) {
 		MOUtil.writeFlush(out, buffer);
 	}
 
