@@ -75,4 +75,13 @@ public class MOProcessModule extends MOModule {
 		return new MOStartProcessMessage.StartProcessResult().setId(process.getId());
 	}
 
+	@Override
+	public void close() {
+		List<Long> ids = new ArrayList<Long>(prcs.keySet());
+		Collections.sort(ids);
+		for (Long id : ids) {
+			destroy(id);
+		}
+	}
+
 }
