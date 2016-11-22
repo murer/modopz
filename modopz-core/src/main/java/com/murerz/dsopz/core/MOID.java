@@ -8,7 +8,7 @@ public class MOID {
 
 	public static long next() {
 		synchronized (ME) {
-			return ME.last++;
+			return ++ME.last;
 		}
 	}
 
