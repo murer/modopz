@@ -61,8 +61,10 @@ public class MOSocketTest {
 		socket = MOSocket.create("127.0.0.1", server.getLocalPort());
 		client = server.accept();
 		MOUtil.writeFlush(client.getOutputStream(), "t1", "UTF-8");
+		socket.write(MOUtil.toBytes("t2", "UTF-8"));
 		MOUtil.close(socket);
 		assertNull(socket.read());
+		assertEquals("t2", MOUtil.readAvailable(client.getInputStream(), 10, "UTF-8"));
 	}
 
 	@Test

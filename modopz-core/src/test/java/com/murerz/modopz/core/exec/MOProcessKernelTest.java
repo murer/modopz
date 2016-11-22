@@ -2,6 +2,7 @@ package com.murerz.modopz.core.exec;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 import java.util.Arrays;
 
@@ -52,6 +53,7 @@ public class MOProcessKernelTest extends MOAbstractKernelTest {
 		try {
 			kernel.command(new MOStatusProcessMessage().setId(id).setWaitFor(500L)
 					.setStdin("#!/bin/bash -xe\necho stderr 1>&2; echo stdout; exit 5;\n".getBytes()));
+			fail("MOMessageException expected");
 		} catch (MOMessageException e) {
 			assertEquals(new Long(id), ((MOProcessNotFoundResult) e.getResult()).getId());
 		}
