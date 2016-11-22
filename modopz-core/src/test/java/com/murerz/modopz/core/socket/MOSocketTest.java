@@ -28,11 +28,8 @@ public class MOSocketTest {
 	@After
 	public void tearDown() {
 		MOUtil.close(client);
-		socket = null;
 		MOUtil.close(socket);
-		socket = null;
 		MOUtil.close(server);
-		socket = null;
 	}
 
 	@Test

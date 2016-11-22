@@ -5,8 +5,6 @@ import static org.junit.Assert.assertTrue;
 
 import java.util.Arrays;
 
-import org.junit.After;
-import org.junit.Before;
 import org.junit.Test;
 
 import com.murerz.modopz.core.exec.MOStatusProcessMessage.StatusProcessResult;
@@ -15,23 +13,6 @@ import com.murerz.modopz.core.kernel.MOAbstractKernelTest;
 import com.murerz.modopz.core.util.MOUtil;
 
 public class MOProcessKernelTest extends MOAbstractKernelTest {
-
-	private MOProcess process;
-
-	@Before
-	public void setUp() {
-		super.setUp();
-		if (process != null) {
-			throw new RuntimeException("wrong: " + process);
-		}
-	}
-
-	@After
-	public void tearDown() {
-		MOUtil.close(process);
-		process = null;
-		super.tearDown();
-	}
 
 	@Test
 	public void testProcessComplete() {

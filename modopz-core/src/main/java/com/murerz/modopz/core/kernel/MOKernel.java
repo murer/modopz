@@ -42,6 +42,9 @@ public class MOKernel implements Closeable {
 				ret = result;
 			}
 		}
+		if (ret == null) {
+			throw new RuntimeException("unknown command: " + cmd);
+		}
 		return ret;
 	}
 
