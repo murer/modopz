@@ -84,7 +84,12 @@ public class MOSocketKernelTest extends MOAbstractKernelTest {
 		MOUtil.writeFlush(client.getOutputStream(), "t1", "UTF-8");
 		MOUtil.close(client);
 		assertEquals("t1", MOUtil.toString(kernel.command(new MODataSocketMessage().setId(id)).getReceived(), "UTF-8"));
-		assertNull(kernel.command(new MODataSocketMessage().setId(id)).getReceived());
+		try {
+			assertNull(kernel.command(new MODataSocketMessage().setId(id)).getReceived());
+			fail("MOMessageException expected");
+		} catch (MOMessageException e) {
+			assertEquals(new Long(id), ((MOSocketNotFoundResult) e.getResult()).getId());
+		}
 	}
 
 }

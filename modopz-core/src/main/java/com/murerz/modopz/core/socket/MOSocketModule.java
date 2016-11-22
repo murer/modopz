@@ -49,6 +49,10 @@ public class MOSocketModule extends MOModule {
 			socket.write(cmd.getSend());
 		}
 		byte[] read = socket.read();
+		if(read == null) {
+			closeSocket(cmd.getId());
+			throw new MOMessageException("not found", new MOSocketNotFoundResult().setId(cmd.getId()));
+		}
 		return new DataSocketResult().setId(socket.getId()).setCreatedAt(socket.getCreatedAt()).setReceived(read);
 	}
 
