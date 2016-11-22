@@ -3,7 +3,7 @@ package com.murerz.dsopz.core;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class DOZJdkLogFactory extends DOZLogFactory {
+public class MOJdkLogFactory extends MOLogFactory {
 
 	public static class DOZJdkLog implements DOZLog {
 

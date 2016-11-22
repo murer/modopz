@@ -3,9 +3,9 @@ package com.murerz.dsopz.core;
 import java.io.IOException;
 import java.io.InputStream;
 
-import com.murerz.dsopz.core.DOZLogFactory.DOZLog;
+import com.murerz.dsopz.core.MOLogFactory.DOZLog;
 
-public class DOZUtil {
+public class MOUtil {
 
 	public static void close(DOZLog log, AutoCloseable o) {
 		if (o != null) {

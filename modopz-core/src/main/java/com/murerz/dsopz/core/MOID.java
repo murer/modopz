@@ -1,8 +1,8 @@
 package com.murerz.dsopz.core;
 
-public class DOZID {
+public class MOID {
 
-	private static final DOZID ME = new DOZID();
+	private static final MOID ME = new MOID();
 
 	private long last = 0;
 

@@ -1,10 +1,10 @@
 package com.murerz.dsopz.core;
 
-public abstract class DOZLogFactory {
+public abstract class MOLogFactory {
 
 	private static final Object MUTEX = new Object();
 
-	private static DOZLogFactory me;
+	private static MOLogFactory me;
 
 	public static interface DOZLog {
 
@@ -14,7 +14,7 @@ public abstract class DOZLogFactory {
 
 	}
 
-	public static void set(DOZLogFactory factory) {
+	public static void set(MOLogFactory factory) {
 		if (me != null) {
 			throw new RuntimeException("you cannot reinit log: " + me);
 		}
@@ -26,11 +26,11 @@ public abstract class DOZLogFactory {
 		}
 	}
 
-	public static DOZLogFactory me() {
+	public static MOLogFactory me() {
 		if (me == null) {
 			synchronized (MUTEX) {
 				if (me == null) {
-					me = new DOZJdkLogFactory();
+					me = new MOJdkLogFactory();
 				}
 			}
 		}
