@@ -1,9 +1,9 @@
-package com.murerz.dsopz.core.log;
+package com.murerz.modopz.core.log;
 
 import org.junit.Test;
 
-import com.murerz.dsopz.core.log.MOLog;
-import com.murerz.dsopz.core.log.MOLogFactory;
+import com.murerz.modopz.core.log.MOLog;
+import com.murerz.modopz.core.log.MOLogFactory;
 
 public class MOLogFactoryTest {
 

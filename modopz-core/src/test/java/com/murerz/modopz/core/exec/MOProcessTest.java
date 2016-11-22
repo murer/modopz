@@ -1,4 +1,4 @@
-package com.murerz.dsopz.core.log.exec;
+package com.murerz.modopz.core.exec;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
@@ -9,9 +9,9 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.murerz.dsopz.core.exec.MOProcess;
-import com.murerz.dsopz.core.exec.MOProcessStatus;
-import com.murerz.dsopz.core.util.MOUtil;
+import com.murerz.modopz.core.exec.MOProcess;
+import com.murerz.modopz.core.exec.MOProcessStatus;
+import com.murerz.modopz.core.util.MOUtil;
 
 public class MOProcessTest {
 

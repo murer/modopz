@@ -1,4 +1,4 @@
-package com.murerz.dsopz.core.util;
+package com.murerz.modopz.core.util;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -6,8 +6,8 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
 
-import com.murerz.dsopz.core.log.MOLog;
-import com.murerz.dsopz.core.log.MOLogFactory;
+import com.murerz.modopz.core.log.MOLog;
+import com.murerz.modopz.core.log.MOLogFactory;
 
 public class MOUtil {
 

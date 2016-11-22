@@ -1,4 +1,4 @@
-package com.murerz.dsopz.core.socket;
+package com.murerz.modopz.core.socket;
 
 import java.io.BufferedInputStream;
 import java.io.Closeable;
@@ -9,8 +9,8 @@ import java.net.Socket;
 import java.net.SocketTimeoutException;
 import java.net.UnknownHostException;
 
-import com.murerz.dsopz.core.util.MOID;
-import com.murerz.dsopz.core.util.MOUtil;
+import com.murerz.modopz.core.util.MOID;
+import com.murerz.modopz.core.util.MOUtil;
 
 public class MOSocket implements Closeable {
 
