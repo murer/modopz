@@ -4,10 +4,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.murerz.modopz.core.exec.MOListProcessMessage.ListProcessResult;
+import com.murerz.modopz.core.kernel.MOResultMessage;
 
 public class MOListProcessMessage extends MOProcessMessage<ListProcessResult> {
 
-	public static class ListProcessResult {
+	public static class ListProcessResult extends MOResultMessage {
 		private List<Long> prcs = new ArrayList<Long>();
 
 		public List<Long> getPrcs() {

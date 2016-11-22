@@ -1,10 +1,11 @@
 package com.murerz.modopz.core.exec;
 
 import com.murerz.modopz.core.exec.MOStatusProcessMessage.StatusProcessResult;
+import com.murerz.modopz.core.kernel.MOResultMessage;
 
 public class MOStatusProcessMessage extends MOProcessMessage<StatusProcessResult> {
 
-	public static class StatusProcessResult {
+	public static class StatusProcessResult extends MOResultMessage {
 		private Long id;
 		private Long createdAt;
 		private Integer code;

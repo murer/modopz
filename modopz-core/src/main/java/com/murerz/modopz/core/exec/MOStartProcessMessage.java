@@ -4,10 +4,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.murerz.modopz.core.exec.MOStartProcessMessage.StartProcessResult;
+import com.murerz.modopz.core.kernel.MOResultMessage;
 
 public class MOStartProcessMessage extends MOProcessMessage<StartProcessResult> {
 
-	public static class StartProcessResult {
+	public static class StartProcessResult extends MOResultMessage {
 		private long id;
 
 		public long getId() {

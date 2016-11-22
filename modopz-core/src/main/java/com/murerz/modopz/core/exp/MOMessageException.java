@@ -6,11 +6,20 @@ public class MOMessageException extends MOException {
 
 	private static final long serialVersionUID = 1L;
 
-	private MOMessage msg;
+	private MOMessage<?> result;
 
-	public MOMessageException(String msg, MOMessage momessage) {
+	public MOMessageException(String msg, MOMessage<?> result) {
 		super(msg);
-		this.msg = momessage;
+		this.result = result;
+	}
+
+	public MOMessage<?> getResult() {
+		return result;
+	}
+
+	public MOMessageException setResult(MOMessage<?> msg) {
+		this.result = msg;
+		return this;
 	}
 
 }

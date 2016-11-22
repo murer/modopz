@@ -10,6 +10,7 @@ import com.murerz.modopz.core.exec.MOCloseProcessMessage.CloseStatusProcessResul
 import com.murerz.modopz.core.exec.MOListProcessMessage.ListProcessResult;
 import com.murerz.modopz.core.exec.MOStartProcessMessage.StartProcessResult;
 import com.murerz.modopz.core.exec.MOStatusProcessMessage.StatusProcessResult;
+import com.murerz.modopz.core.exp.MOMessageException;
 import com.murerz.modopz.core.kernel.MOMessage;
 import com.murerz.modopz.core.kernel.MOModule;
 import com.murerz.modopz.core.util.MOUtil;
@@ -50,6 +51,9 @@ public class MOProcessModule extends MOModule {
 
 	private StatusProcessResult statusProcess(MOStatusProcessMessage cmd) {
 		MOProcess process = prcs.get(cmd.getId());
+		if(process == null) {
+			throw new MOMessageException("not found", new MOProcessNotFoundResult().setId(cmd.getId()));
+		}
 		if (cmd.getStdin() != null && cmd.getStdin().length > 0) {
 			process.stdin(cmd.getStdin());
 		}
