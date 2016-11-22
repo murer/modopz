@@ -4,6 +4,8 @@ import java.io.Closeable;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.murerz.modopz.core.util.MOUtil;
+
 public class MOKernel implements Closeable {
 
 	private List<MOModule> modules = new ArrayList<MOModule>();
@@ -13,7 +15,9 @@ public class MOKernel implements Closeable {
 	}
 
 	public void close() {
-
+		for (MOModule module : modules) {
+			MOUtil.close(module);
+		}
 	}
 
 	public MOKernel load(MOModule module) {
@@ -22,7 +26,9 @@ public class MOKernel implements Closeable {
 	}
 
 	public void start() {
-
+		for (MOModule module : modules) {
+			module.start();
+		}
 	}
 
 	public <R, T> R command(MOMessage<R> cmd) {
