@@ -87,4 +87,37 @@ public class MOUtil {
 		}
 	}
 
+	public static byte[] cut(byte[] buffer, int offset, int limit) {
+		byte[] ret = new byte[limit];
+		System.arraycopy(buffer, offset, ret, 0, limit);
+		return ret;
+	}
+
+	public static void writeFlush(OutputStream out, String str, String charset) {
+		byte[] buffer = toBytes(str, charset);
+		writeFlush(out, buffer);
+	}
+
+	public static byte[] toBytes(String str, String charset) {
+		try {
+			return str.getBytes(charset);
+		} catch (UnsupportedEncodingException e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	public static String readAvailable(InputStream in, int limit, String charset) {
+		byte[] buffer = readAvailable(in, limit);
+		return toString(buffer, charset);
+	}
+
+	public static void writeFlush(OutputStream out, byte[] buffer) {
+		try {
+			out.write(buffer);
+			out.flush();
+		} catch (IOException e) {
+			throw new RuntimeException(e);
+		}
+	}
+
 }

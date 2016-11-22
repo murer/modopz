@@ -3,6 +3,7 @@ package com.murerz.dsopz.core.exec;
 import java.io.BufferedInputStream;
 import java.io.Closeable;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.OutputStream;
 import java.lang.ProcessBuilder.Redirect;
 import java.util.List;
@@ -20,9 +21,9 @@ public class MOProcess implements Closeable {
 
 	private Process process;
 
-	private BufferedInputStream stderr;
+	private InputStream stderr;
 
-	private BufferedInputStream stdout;
+	private InputStream stdout;
 
 	private OutputStream stdin;
 
@@ -87,13 +88,8 @@ public class MOProcess implements Closeable {
 		}
 	}
 
-	public void stdin(byte[] bytes) {
-		try {
-			this.stdin.write(bytes);
-			this.stdin.flush();
-		} catch (IOException e) {
-			throw new RuntimeException(e);
-		}
+	public void stdin(byte[] buffer) {
+		MOUtil.writeFlush(stdin, buffer);
 	}
 
 	public void close() {
