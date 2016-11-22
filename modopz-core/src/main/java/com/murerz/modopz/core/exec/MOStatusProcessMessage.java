@@ -7,7 +7,7 @@ public class MOStatusProcessMessage extends MOProcessMessage<StatusProcessResult
 	public static class StatusProcessResult {
 		private Long id;
 		private Long createdAt;
-		private Long code;
+		private Integer code;
 		private byte[] stdout;
 		private byte[] stderr;
 
@@ -29,11 +29,11 @@ public class MOStatusProcessMessage extends MOProcessMessage<StatusProcessResult
 			return this;
 		}
 
-		public Long getCode() {
+		public Integer getCode() {
 			return code;
 		}
 
-		public StatusProcessResult setCode(Long code) {
+		public StatusProcessResult setCode(Integer code) {
 			this.code = code;
 			return this;
 		}

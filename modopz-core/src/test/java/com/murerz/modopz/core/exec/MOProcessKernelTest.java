@@ -2,6 +2,7 @@ package com.murerz.modopz.core.exec;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 import java.util.Arrays;
 
@@ -40,6 +41,8 @@ public class MOProcessKernelTest extends MOAbstractKernelTest {
 		StatusProcessResult status = kernel.command(new MOStatusProcessMessage().setId(id));
 		assertTrue(status.getCreatedAt() <= System.currentTimeMillis());
 		assertTrue(status.getCreatedAt() >= System.currentTimeMillis() - 5000);
+		assertEquals("", MOUtil.toString(status.getStdout(), "UTF-8").trim());
+		assertEquals("", MOUtil.toString(status.getStderr(), "UTF-8").trim());
 		assertTrue(status.getId() > 0);
 
 		status = kernel.command(new MOStatusProcessMessage().setId(id).setWaitFor(500L)
@@ -56,15 +59,22 @@ public class MOProcessKernelTest extends MOAbstractKernelTest {
 
 		StatusProcessResult status = kernel.command(
 				new MOStatusProcessMessage().setId(id).setStdin("#!/bin/bash -xe\nsleep 1; echo stdout;\n".getBytes()));
+		assertTrue(status.getCreatedAt() <= System.currentTimeMillis());
+		assertTrue(status.getCreatedAt() >= System.currentTimeMillis() - 5000);
+		assertEquals("", MOUtil.toString(status.getStdout(), "UTF-8").trim());
+		assertEquals("", MOUtil.toString(status.getStderr(), "UTF-8").trim());
+		assertTrue(status.getId() > 0);
 
 		MOUtil.sleep(500L);
 		kernel.command(new MOCloseProcessMessage().setId(id));
 
-		status = kernel.command(new MOStatusProcessMessage().setId(id).setWaitFor(500L)
-				.setStdin("#!/bin/bash -xe\necho stderr 1>&2; echo stdout; exit 5;\n".getBytes()));
-		assertEquals("", MOUtil.toString(status.getStdout(), "UTF-8").trim());
-		assertEquals("", MOUtil.toString(status.getStderr(), "UTF-8").trim());
-		assertEquals(new Integer(143), status.getCode());
+		try {
+			kernel.command(new MOStatusProcessMessage().setId(id).setWaitFor(500L)
+					.setStdin("#!/bin/bash -xe\necho stderr 1>&2; echo stdout; exit 5;\n".getBytes()));
+			fail("Exception expected");
+		} catch (Exception e) {
+
+		}
 	}
 
 }
