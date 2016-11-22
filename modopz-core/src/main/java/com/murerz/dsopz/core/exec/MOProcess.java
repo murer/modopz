@@ -8,8 +8,8 @@ import java.io.OutputStream;
 import java.lang.ProcessBuilder.Redirect;
 import java.util.List;
 
-import com.murerz.dsopz.core.MOID;
-import com.murerz.dsopz.core.MOUtil;
+import com.murerz.dsopz.core.util.MOID;
+import com.murerz.dsopz.core.util.MOUtil;
 
 public class MOProcess implements Closeable {
 

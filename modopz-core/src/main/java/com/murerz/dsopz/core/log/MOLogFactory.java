@@ -1,4 +1,4 @@
-package com.murerz.dsopz.core;
+package com.murerz.dsopz.core.log;
 
 public abstract class MOLogFactory {
 

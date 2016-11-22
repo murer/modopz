@@ -1,4 +1,4 @@
-package com.murerz.dsopz.core.socket;
+package com.murerz.dsopz.core.log.socket;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
@@ -12,7 +12,8 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.murerz.dsopz.core.MOUtil;
+import com.murerz.dsopz.core.socket.MOSocket;
+import com.murerz.dsopz.core.util.MOUtil;
 
 public class MOSocketTest {
 

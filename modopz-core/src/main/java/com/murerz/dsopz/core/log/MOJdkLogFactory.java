@@ -1,4 +1,4 @@
-package com.murerz.dsopz.core;
+package com.murerz.dsopz.core.log;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;

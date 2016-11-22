@@ -9,8 +9,8 @@ import java.net.Socket;
 import java.net.SocketTimeoutException;
 import java.net.UnknownHostException;
 
-import com.murerz.dsopz.core.MOID;
-import com.murerz.dsopz.core.MOUtil;
+import com.murerz.dsopz.core.util.MOID;
+import com.murerz.dsopz.core.util.MOUtil;
 
 public class MOSocket implements Closeable {
 

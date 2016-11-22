@@ -1,4 +1,4 @@
-package com.murerz.dsopz.core;
+package com.murerz.dsopz.core.util;
 
 public class MOID {
 
