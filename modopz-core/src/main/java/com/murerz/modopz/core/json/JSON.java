@@ -9,7 +9,8 @@ public class JSON {
 	}
 
 	public static <T> T parse(String json, Class<T> clazz) {
-		return new Gson().fromJson(json, clazz);
+		Gson gson = new Gson();
+		return gson.fromJson(json, clazz);
 	}
 
 }
