@@ -10,12 +10,14 @@ import com.murerz.dsopz.core.MOLogFactory.DOZLog;
 
 public class MOUtil {
 
-	public static void close(DOZLog log, AutoCloseable o) {
+	private static final DOZLog LOG = MOLogFactory.me().create(MOUtil.class);
+
+	public static void close(AutoCloseable o) {
 		if (o != null) {
 			try {
 				o.close();
 			} catch (Exception e) {
-				log.error("error closing", e);
+				LOG.error("error closing", e);
 			}
 		}
 	}
@@ -46,8 +48,8 @@ public class MOUtil {
 
 	public static int copyAvailable(InputStream in, OutputStream out, int limit) {
 		try {
-			limit = Math.min(in.available(), limit);
-			if (limit == 0) {
+			limit = Math.min(available(in), limit);
+			if (limit <= 0) {
 				return 0;
 			}
 			byte[] buffer = new byte[limit];
@@ -56,6 +58,14 @@ public class MOUtil {
 			return read;
 		} catch (IOException e) {
 			throw new RuntimeException(e);
+		}
+	}
+
+	public static int available(InputStream in) {
+		try {
+			return in.available();
+		} catch (IOException e) {
+			return -1;
 		}
 	}
 

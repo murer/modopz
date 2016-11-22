@@ -1,6 +1,7 @@
 package com.murerz.dsopz.core.exec;
 
 import java.io.BufferedInputStream;
+import java.io.Closeable;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.lang.ProcessBuilder.Redirect;
@@ -9,7 +10,7 @@ import java.util.List;
 import com.murerz.dsopz.core.MOID;
 import com.murerz.dsopz.core.MOUtil;
 
-public class MOProcess {
+public class MOProcess implements Closeable {
 
 	private static final int MAX = 512 * 1024;
 
@@ -51,20 +52,16 @@ public class MOProcess {
 	}
 
 	public MOProcessStatus status() {
-		try {
-			MOProcessStatus ret = new MOProcessStatus();
-			MOUtil.copyAvailable(this.stdout, ret.getStdout(), MAX - ret.getStdout().size());
-			MOUtil.copyAvailable(this.stderr, ret.getStderr(), MAX - ret.getStderr().size());
-			Integer code = code();
-			if (code != null) {
-				if (this.stdout.available() == 0 && this.stderr.available() == 0) {
-					ret.setCode(code);
-				}
+		MOProcessStatus ret = new MOProcessStatus();
+		MOUtil.copyAvailable(this.stdout, ret.getStdout(), MAX - ret.getStdout().size());
+		MOUtil.copyAvailable(this.stderr, ret.getStderr(), MAX - ret.getStderr().size());
+		Integer code = code();
+		if (code != null) {
+			if (MOUtil.available(this.stdout) <= 0 && MOUtil.available(this.stderr) <= 0) {
+				ret.setCode(code);
 			}
-			return ret;
-		} catch (IOException e) {
-			throw new RuntimeException(e);
 		}
+		return ret;
 	}
 
 	public MOProcessStatus waitFor(long timeout) {
@@ -97,6 +94,10 @@ public class MOProcess {
 		} catch (IOException e) {
 			throw new RuntimeException(e);
 		}
+	}
+
+	public void close() {
+		process.destroy();
 	}
 
 }
