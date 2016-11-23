@@ -31,23 +31,6 @@ public class MOKernel implements Closeable {
 		}
 	}
 
-	public <R, T> R command(MOMessage<R> cmd) {
-		R ret = null;
-		for (MOModule module : modules) {
-			R result = module.command(cmd);
-			if (result != null) {
-				if (ret != null) {
-					throw new RuntimeException("multiple responses: " + cmd);
-				}
-				ret = result;
-			}
-		}
-		if (ret == null) {
-			throw new RuntimeException("unknown command: " + cmd);
-		}
-		return ret;
-	}
-
 	@SuppressWarnings("unchecked")
 	public <T> T module(Class<T> clazz) {
 		for (MOModule module : modules) {

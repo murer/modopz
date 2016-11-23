@@ -7,7 +7,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.murerz.modopz.core.kernel.MOMessage;
 import com.murerz.modopz.core.kernel.MOModule;
 import com.murerz.modopz.core.util.MOUtil;
 
@@ -39,11 +38,6 @@ public class MOProcessModule extends MOModule {
 		for (Long id : ids) {
 			destroy(id);
 		}
-	}
-
-	@Override
-	public <R> R command(MOMessage<R> cmd) {
-		return null;
 	}
 
 }
