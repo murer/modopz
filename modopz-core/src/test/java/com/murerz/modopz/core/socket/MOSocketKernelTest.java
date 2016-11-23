@@ -61,7 +61,7 @@ public class MOSocketKernelTest extends MOAbstractKernelTest {
 	@Test
 	public void testSocketClose() throws IOException {
 		server = new ServerSocket(0);
-		Long id = kernel.command(new MOOpenSocketMessage().setHost("127.0.0.1").setPort(server.getLocalPort())).getId();
+		Long id = new MOOpenSocketCommand().setHost("127.0.0.1").setPort(server.getLocalPort()).execute(kernel).getId();
 		client = server.accept();
 		MOUtil.writeFlush(client.getOutputStream(), "t1", "UTF-8");
 		kernel.command(new MODataSocketMessage().setId(id).setSend(MOUtil.toBytes("t2", "UTF-8"))).getReceived();
@@ -79,7 +79,7 @@ public class MOSocketKernelTest extends MOAbstractKernelTest {
 	@Test
 	public void testSocketOtherPeerClose() throws IOException {
 		server = new ServerSocket(0);
-		Long id = kernel.command(new MOOpenSocketMessage().setHost("127.0.0.1").setPort(server.getLocalPort())).getId();
+		Long id = new MOOpenSocketCommand().setHost("127.0.0.1").setPort(server.getLocalPort()).execute(kernel).getId();
 		client = server.accept();
 		MOUtil.writeFlush(client.getOutputStream(), "t1", "UTF-8");
 		MOUtil.close(client);
