@@ -17,6 +17,7 @@
 	<modules>
 		<module>modopz-core</module>
 		<module>modopz-servlet</module>
+		<module>modopz-server</module>
 	</modules>
 
 	<dependencies>
