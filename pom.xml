@@ -83,6 +83,11 @@
 			</dependency>
 			<dependency>
 				<groupId>com.murerz.modopz</groupId>
+				<artifactId>modopz-client</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.murerz.modopz</groupId>
 				<artifactId>modopz-servlet</artifactId>
 				<version>${project.version}</version>
 			</dependency>
