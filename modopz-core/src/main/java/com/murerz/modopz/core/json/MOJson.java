@@ -2,6 +2,7 @@ package com.murerz.modopz.core.json;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.murerz.modopz.core.kernel.MOCommand;
 
 public class MOJson {
 
@@ -14,6 +15,10 @@ public class MOJson {
 	}
 
 	public static GsonBuilder builder() {
+		return basic().registerTypeHierarchyAdapter(MOCommand.class, new MOCommandGsonAdapter());
+	}
+
+	public static GsonBuilder basic() {
 		return new GsonBuilder().registerTypeHierarchyAdapter(byte[].class, new MOByteArrayBase64GsonAdapter());
 	}
 

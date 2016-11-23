@@ -36,9 +36,8 @@ public class MOHttpClient {
 		return this;
 	}
 
-	@SuppressWarnings("unchecked")
 	public <T> T json(MOCommand command, Class<T> type) {
-		String send = parser.stringify(command);
+		String send = MOJson.stringify(command);
 		HttpURLConnection conn = null;
 		try {
 			URL u = new URL(url);
