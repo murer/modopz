@@ -3,7 +3,7 @@ package com.murerz.modopz.server;
 import org.junit.After;
 import org.junit.Before;
 
-import com.murerz.modopz.client.MOHttpClient;
+import com.murerz.modopz.client.util.MOHttpClient;
 import com.murerz.modopz.core.util.MOUtil;
 
 public class MOServerTestCase {
