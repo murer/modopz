@@ -1,9 +1,8 @@
 package com.murerz.modopz.core.exec;
 
-import com.murerz.modopz.core.exp.MOMessageException;
+import com.murerz.modopz.core.exp.MOResultException;
 import com.murerz.modopz.core.kernel.MOCommand;
 import com.murerz.modopz.core.kernel.MOKernel;
-import com.murerz.modopz.core.kernel.MOResult;
 
 public class MOStatusProcessCommand implements MOCommand {
 
@@ -44,7 +43,7 @@ public class MOStatusProcessCommand implements MOCommand {
 		MOProcessModule module = kernel.module(MOProcessModule.class);
 		MOProcess process = module.getProcess(id);
 		if (process == null) {
-			throw new MOMessageException("not found", new MOProcessNotFoundResult().setId(id));
+			throw new MOResultException("not found", new MODataProcessResult().setId(id));
 		}
 		if (stdin != null && stdin.length > 0) {
 			process.stdin(stdin);

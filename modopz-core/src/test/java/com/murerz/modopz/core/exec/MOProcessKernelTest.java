@@ -8,7 +8,7 @@ import java.util.Arrays;
 
 import org.junit.Test;
 
-import com.murerz.modopz.core.exp.MOMessageException;
+import com.murerz.modopz.core.exp.MOResultException;
 import com.murerz.modopz.core.kernel.MOAbstractKernelTest;
 import com.murerz.modopz.core.util.MOUtil;
 
@@ -55,8 +55,8 @@ public class MOProcessKernelTest extends MOAbstractKernelTest {
 					.setStdin("#!/bin/bash -xe\necho stderr 1>&2; echo stdout; exit 5;\n".getBytes()).setWaitFor(500L)
 					.execute(kernel);
 			fail("MOMessageException expected");
-		} catch (MOMessageException e) {
-			assertEquals(new Long(id), ((MOProcessNotFoundResult) e.getResult()).getId());
+		} catch (MOResultException e) {
+			assertEquals(new Long(id), ((MODataProcessResult) e.getResult()).getId());
 		}
 	}
 
