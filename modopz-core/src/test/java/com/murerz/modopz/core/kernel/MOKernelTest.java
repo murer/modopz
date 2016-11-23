@@ -22,8 +22,8 @@ public class MOKernelTest {
 		kernel.load(new MOEchoModule());
 
 		kernel.start();
-		assertEquals("t1", kernel.command(new MOEchoMessage().setMsg("t1")).getMsg());
-		assertEquals("t2", kernel.command(new MOEchoMessage().setMsg("t2")).getMsg());
+		assertEquals("t1", new MOEchoCommand().setMsg("t1").execute(kernel).getMsg());
+		assertEquals("t2", new MOEchoCommand().setMsg("t2").execute(kernel).getMsg());
 	}
 
 }
