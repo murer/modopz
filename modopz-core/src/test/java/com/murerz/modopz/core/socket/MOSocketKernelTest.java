@@ -14,7 +14,6 @@ import org.junit.Test;
 
 import com.murerz.modopz.core.exp.MOMessageException;
 import com.murerz.modopz.core.kernel.MOAbstractKernelTest;
-import com.murerz.modopz.core.socket.MODataSocketMessage.DataSocketResult;
 import com.murerz.modopz.core.util.MOUtil;
 
 public class MOSocketKernelTest extends MOAbstractKernelTest {
@@ -36,25 +35,22 @@ public class MOSocketKernelTest extends MOAbstractKernelTest {
 		Long id = new MOOpenSocketCommand().setHost("127.0.0.1").setPort(server.getLocalPort()).execute(kernel).getId();
 		assertTrue(id.longValue() > 0L);
 
-		DataSocketResult data = kernel.command(new MODataSocketMessage().setId(id));
+		MOSocketResult data = new MODataSocketCommand().setId(id).execute(kernel);
 		assertTrue(data.getCreatedAt() <= System.currentTimeMillis());
 		assertTrue(data.getCreatedAt() >= System.currentTimeMillis() - 5000);
 		assertTrue(data.getId() > 0);
 		assertEquals("", MOUtil.toString(data.getReceived(), "UTF-8"));
 
 		client = server.accept();
-		assertEquals("", MOUtil.toString(kernel.command(new MODataSocketMessage().setId(id)).getReceived(), "UTF-8"));
+		assertEquals("", MOUtil.toString(new MODataSocketCommand().setId(id).execute(kernel).getReceived(), "UTF-8"));
 		assertEquals("", MOUtil.readAvailable(client.getInputStream(), 10, "UTF-8"));
 
 		MOUtil.writeFlush(client.getOutputStream(), "t1", "UTF-8");
-		assertEquals("t1", MOUtil.toString(kernel.command(new MODataSocketMessage().setId(id)).getReceived(), "UTF-8"));
+		assertEquals("t1", MOUtil.toString(new MODataSocketCommand().setId(id).execute(kernel).getReceived(), "UTF-8"));
 		assertEquals("", MOUtil.readAvailable(client.getInputStream(), 10, "UTF-8"));
 
-		assertEquals("",
-				MOUtil.toString(
-						kernel.command(new MODataSocketMessage().setId(id).setSend(MOUtil.toBytes("t2", "UTF-8")))
-								.getReceived(),
-						"UTF-8"));
+		assertEquals("", MOUtil.toString(new MODataSocketCommand().setId(id).setSend(MOUtil.toBytes("t2", "UTF-8"))
+				.execute(kernel).getReceived(), "UTF-8"));
 		assertEquals("t2", MOUtil.readAvailable(client.getInputStream(), 10, "UTF-8"));
 	}
 
@@ -64,12 +60,12 @@ public class MOSocketKernelTest extends MOAbstractKernelTest {
 		Long id = new MOOpenSocketCommand().setHost("127.0.0.1").setPort(server.getLocalPort()).execute(kernel).getId();
 		client = server.accept();
 		MOUtil.writeFlush(client.getOutputStream(), "t1", "UTF-8");
-		kernel.command(new MODataSocketMessage().setId(id).setSend(MOUtil.toBytes("t2", "UTF-8"))).getReceived();
-		kernel.command(new MOCloseSocketMessage().setId(id));
+		new MODataSocketCommand().setId(id).setSend(MOUtil.toBytes("t2", "UTF-8")).execute(kernel).getReceived();
+		new MOCloseSocketCommand().setId(id).execute(kernel);
 		assertEquals("t2", MOUtil.readAvailable(client.getInputStream(), 10, "UTF-8"));
 
 		try {
-			assertNull(kernel.command(new MODataSocketMessage().setId(id)).getReceived());
+			assertNull(new MODataSocketCommand().setId(id).execute(kernel).getReceived());
 			fail("MOMessageException expected");
 		} catch (MOMessageException e) {
 			assertEquals(new Long(id), ((MOSocketNotFoundResult) e.getResult()).getId());
@@ -83,9 +79,9 @@ public class MOSocketKernelTest extends MOAbstractKernelTest {
 		client = server.accept();
 		MOUtil.writeFlush(client.getOutputStream(), "t1", "UTF-8");
 		MOUtil.close(client);
-		assertEquals("t1", MOUtil.toString(kernel.command(new MODataSocketMessage().setId(id)).getReceived(), "UTF-8"));
+		assertEquals("t1", MOUtil.toString(new MODataSocketCommand().setId(id).execute(kernel).getReceived(), "UTF-8"));
 		try {
-			assertNull(kernel.command(new MODataSocketMessage().setId(id)).getReceived());
+			assertNull(new MODataSocketCommand().setId(id).execute(kernel).getReceived());
 			fail("MOMessageException expected");
 		} catch (MOMessageException e) {
 			assertEquals(new Long(id), ((MOSocketNotFoundResult) e.getResult()).getId());
