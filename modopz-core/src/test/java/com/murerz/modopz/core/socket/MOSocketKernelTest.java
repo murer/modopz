@@ -33,7 +33,7 @@ public class MOSocketKernelTest extends MOAbstractKernelTest {
 	public void testSocket() throws IOException {
 		server = new ServerSocket(0);
 
-		Long id = kernel.command(new MOOpenSocketMessage().setHost("127.0.0.1").setPort(server.getLocalPort())).getId();
+		Long id = new MOOpenSocketCommand().setHost("127.0.0.1").setPort(server.getLocalPort()).execute(kernel).getId();
 		assertTrue(id.longValue() > 0L);
 
 		DataSocketResult data = kernel.command(new MODataSocketMessage().setId(id));

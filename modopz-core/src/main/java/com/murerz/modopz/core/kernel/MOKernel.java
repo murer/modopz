@@ -48,4 +48,14 @@ public class MOKernel implements Closeable {
 		return ret;
 	}
 
+	@SuppressWarnings("unchecked")
+	public <T> T module(Class<T> clazz) {
+		for (MOModule module : modules) {
+			if (clazz.isInstance(module)) {
+				return (T) module;
+			}
+		}
+		throw new RuntimeException("module not found: " + clazz);
+	}
+
 }

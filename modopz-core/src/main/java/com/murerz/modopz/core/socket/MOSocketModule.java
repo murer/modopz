@@ -49,7 +49,7 @@ public class MOSocketModule extends MOModule {
 			socket.write(cmd.getSend());
 		}
 		byte[] read = socket.read();
-		if(read == null) {
+		if (read == null) {
 			closeSocket(cmd.getId());
 			throw new MOMessageException("not found", new MOSocketNotFoundResult().setId(cmd.getId()));
 		}
@@ -62,12 +62,12 @@ public class MOSocketModule extends MOModule {
 
 	private OpenSocketResult openSocket(MOOpenSocketMessage cmd) {
 		MOSocket socket = MOSocket.create(cmd.getHost(), cmd.getPort());
-		putSocket(socket.getId(), socket);
+		putSocket(socket);
 		return new OpenSocketResult().setId(socket.getId());
 	}
 
-	private synchronized void putSocket(long id, MOSocket socket) {
-		scks.put(id, socket);
+	public synchronized void putSocket(MOSocket socket) {
+		scks.put(socket.getId(), socket);
 	}
 
 }
