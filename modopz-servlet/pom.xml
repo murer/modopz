@@ -2,8 +2,8 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.murerz.modopz</groupId>
-	<artifactId>modopz-core</artifactId>
-	<name>modopz-core</name>
+	<artifactId>modopz-servlet</artifactId>
+	<name>modopz-servlet</name>
 	<version>0.0.1-SNAPSHOT</version>
 
 	<parent>
@@ -13,9 +13,16 @@
 	</parent>
 
 	<dependencies>
+
 		<dependency>
-			<groupId>com.google.code.gson</groupId>
-			<artifactId>gson</artifactId>
+			<groupId>com.murerz.modopz</groupId>
+			<artifactId>modopz-core</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>servlet-api</artifactId>
+			<scope>provided</scope>
 		</dependency>
 	</dependencies>
 
