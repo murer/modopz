@@ -16,7 +16,7 @@ public class MOServerTestCase {
 		server = new MOServer();
 		server.boot();
 		port = server.bind("127.0.0.1", 0);
-		client = new MOHttpClient().setUrl("http://localhost:" + port + "/s/modopz").setParser(server.getKernel().parser());
+		client = new MOHttpClient().setUrl("http://localhost:" + port + "/s/modopz");
 	}
 
 	@After

@@ -10,22 +10,11 @@ import java.net.URL;
 
 import com.murerz.modopz.core.json.MOJson;
 import com.murerz.modopz.core.kernel.MOCommand;
-import com.murerz.modopz.core.kernel.MOParser;
 import com.murerz.modopz.core.util.MOUtil;
 
 public class MOHttpClient {
 
-	private MOParser parser;
 	private String url;
-
-	public MOParser getParser() {
-		return parser;
-	}
-
-	public MOHttpClient setParser(MOParser parser) {
-		this.parser = parser;
-		return this;
-	}
 
 	public String getUrl() {
 		return url;
