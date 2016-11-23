@@ -1,6 +1,9 @@
 package com.murerz.modopz.core.socket;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import com.murerz.modopz.core.kernel.MOModule;
@@ -21,6 +24,15 @@ public class MOSocketModule extends MOModule {
 
 	public synchronized void addSocket(MOSocket socket) {
 		scks.put(socket.getId(), socket);
+	}
+
+	@Override
+	public synchronized void close() {
+		List<Long> ids = new ArrayList<Long>(scks.keySet());
+		Collections.sort(ids);
+		for (Long id : ids) {
+			closeSocket(id);
+		}
 	}
 
 }
