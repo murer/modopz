@@ -68,6 +68,11 @@
 				<artifactId>modopz-core</artifactId>
 				<version>${project.version}</version>
 			</dependency>
+			<dependency>
+				<groupId>com.murerz.modopz</groupId>
+				<artifactId>modopz-servlet</artifactId>
+				<version>${project.version}</version>
+			</dependency>
 
 		</dependencies>
 	</dependencyManagement>
