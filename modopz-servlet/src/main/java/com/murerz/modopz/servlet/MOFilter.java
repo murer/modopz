@@ -11,11 +11,11 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.murerz.modopz.core.exec.MOProcessModule;
 import com.murerz.modopz.core.kernel.MOCommand;
 import com.murerz.modopz.core.kernel.MOEchoModule;
 import com.murerz.modopz.core.kernel.MOKernel;
 import com.murerz.modopz.core.kernel.MOResult;
+import com.murerz.modopz.core.process.MOProcessModule;
 import com.murerz.modopz.core.socket.MOSocketModule;
 import com.murerz.modopz.core.util.MOUtil;
 

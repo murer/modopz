@@ -3,7 +3,7 @@ package com.murerz.modopz.core.kernel;
 import org.junit.After;
 import org.junit.Before;
 
-import com.murerz.modopz.core.exec.MOProcessModule;
+import com.murerz.modopz.core.process.MOProcessModule;
 import com.murerz.modopz.core.socket.MOSocketModule;
 import com.murerz.modopz.core.util.MOUtil;
 

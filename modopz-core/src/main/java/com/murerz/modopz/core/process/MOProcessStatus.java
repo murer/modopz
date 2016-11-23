@@ -1,4 +1,4 @@
-package com.murerz.modopz.core.exec;
+package com.murerz.modopz.core.process;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;

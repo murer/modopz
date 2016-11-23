@@ -1,4 +1,4 @@
-package com.murerz.modopz.core.exec;
+package com.murerz.modopz.core.process;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
@@ -10,6 +10,11 @@ import org.junit.Test;
 
 import com.murerz.modopz.core.exp.MOException;
 import com.murerz.modopz.core.kernel.MOAbstractKernelTest;
+import com.murerz.modopz.core.process.MOCloseProcessCommand;
+import com.murerz.modopz.core.process.MODataProcessResult;
+import com.murerz.modopz.core.process.MOListProcessCommand;
+import com.murerz.modopz.core.process.MOStartProcessCommand;
+import com.murerz.modopz.core.process.MOStatusProcessCommand;
 import com.murerz.modopz.core.util.MOUtil;
 
 public class MOProcessKernelTest extends MOAbstractKernelTest {
