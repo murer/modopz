@@ -64,4 +64,12 @@ public class MOServer implements Closeable {
 		return kernel;
 	}
 
+	public void waitFor() {
+		try {
+			server.join();
+		} catch (InterruptedException e) {
+			throw new RuntimeException(e);
+		}
+	}
+
 }
