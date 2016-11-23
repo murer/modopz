@@ -19,9 +19,13 @@ import com.murerz.modopz.core.kernel.MOResult;
 import com.murerz.modopz.core.socket.MOSocketModule;
 import com.murerz.modopz.core.util.MOUtil;
 
-public class MOServlet implements Filter {
+public class MOFilter implements Filter {
 
 	private MOKernel kernel;
+
+	public MOKernel getKernel() {
+		return kernel;
+	}
 
 	public final void init(FilterConfig filterConfig) throws ServletException {
 		kernel = createKernel();

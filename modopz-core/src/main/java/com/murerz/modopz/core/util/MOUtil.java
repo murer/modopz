@@ -3,8 +3,10 @@ package com.murerz.modopz.core.util;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
+import java.net.HttpURLConnection;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -135,6 +137,40 @@ public class MOUtil {
 			ret.put(key, value);
 		}
 		return ret;
+	}
+
+	public static void close(HttpURLConnection conn) {
+		if (conn != null) {
+			try {
+				conn.disconnect();
+			} catch (Exception e) {
+				LOG.error("error closing", e);
+			}
+		}
+	}
+
+	public static String readAll(InputStream in, String charset) {
+		try {
+			return readAll(new InputStreamReader(in, charset));
+		} catch (UnsupportedEncodingException e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	private static String readAll(InputStreamReader in) {
+		try {
+			StringBuilder ret = new StringBuilder();
+			char[] buffer = new char[8 * 1024];
+			while (true) {
+				int read = in.read(buffer);
+				if (read < 0) {
+					return ret.toString();
+				}
+				ret.append(buffer, 0, read);
+			}
+		} catch (IOException e) {
+			throw new RuntimeException(e);
+		}
 	}
 
 }

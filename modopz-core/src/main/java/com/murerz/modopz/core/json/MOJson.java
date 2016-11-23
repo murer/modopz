@@ -21,4 +21,8 @@ public class MOJson {
 		return gson().fromJson(json, clazz);
 	}
 
+	public static Object parse(String text) {
+		return parse(text, null);
+	}
+
 }
