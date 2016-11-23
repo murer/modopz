@@ -19,6 +19,7 @@ public class MOAbstractKernelTest {
 		kernel.load(new MOSocketModule());
 
 		kernel.start();
+		
 	}
 
 	@After

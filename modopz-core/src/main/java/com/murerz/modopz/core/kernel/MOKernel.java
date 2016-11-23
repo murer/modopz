@@ -63,4 +63,12 @@ public class MOKernel implements Closeable {
 		throw new RuntimeException("module not found: " + clazz);
 	}
 
+	public MOParser parser() {
+		return new MOParser(commands);
+	}
+
+	public List<MOModule> getModules() {
+		return modules;
+	}
+
 }
