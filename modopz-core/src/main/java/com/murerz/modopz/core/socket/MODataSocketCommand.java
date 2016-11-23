@@ -1,6 +1,6 @@
 package com.murerz.modopz.core.socket;
 
-import com.murerz.modopz.core.exp.MOResultException;
+import com.murerz.modopz.core.exp.MOException;
 import com.murerz.modopz.core.kernel.MOCommand;
 import com.murerz.modopz.core.kernel.MOKernel;
 
@@ -31,7 +31,7 @@ public class MODataSocketCommand implements MOCommand {
 		MOSocketModule module = kernel.module(MOSocketModule.class);
 		MOSocket socket = module.getSocket(id);
 		if (socket == null) {
-			throw new MOResultException("not found", new MOSocketResult().setId(id));
+			throw new MOException("not found", new MOSocketResult().setId(id));
 		}
 		if (send != null && send.length > 0) {
 			socket.write(send);
@@ -39,7 +39,7 @@ public class MODataSocketCommand implements MOCommand {
 		byte[] read = socket.read();
 		if (read == null) {
 			module.closeSocket(socket.getId());
-			throw new MOResultException("not found", new MOSocketResult().setId(socket.getId()));
+			throw new MOException("not found", new MOSocketResult().setId(socket.getId()));
 		}
 		return new MOSocketResult().setId(socket.getId()).setCreatedAt(socket.getCreatedAt()).setReceived(read);
 	}

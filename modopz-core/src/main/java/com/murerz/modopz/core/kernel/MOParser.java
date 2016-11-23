@@ -6,7 +6,7 @@ import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-import com.murerz.modopz.core.json.JSON;
+import com.murerz.modopz.core.json.MOJson;
 
 public class MOParser {
 
@@ -24,7 +24,7 @@ public class MOParser {
 	}
 
 	private Gson gson() {
-		return JSON.builder().create();
+		return MOJson.builder().create();
 	}
 
 	public MOCommand parse(String json) {

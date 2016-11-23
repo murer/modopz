@@ -99,18 +99,18 @@ public class JSONTest {
 
 	@Test
 	public void testJsonBasic() {
-		String json = JSON.stringify(new J1().setId(1L).setName("n1"));
-		assertEquals("[J1 id=1, name=n1, tags=[], j2=null]", JSON.parse(json, J1.class).toString());
+		String json = MOJson.stringify(new J1().setId(1L).setName("n1"));
+		assertEquals("[J1 id=1, name=n1, tags=[], j2=null]", MOJson.parse(json, J1.class).toString());
 		assertEquals("[J1 id=1, name=n1, tags=[], j2=null]",
-				JSON.parse("{\"id\":1,\"name\":\"n1\"}", J1.class).toString());
+				MOJson.parse("{\"id\":1,\"name\":\"n1\"}", J1.class).toString());
 	}
 
 	@Test
 	public void testJsonTags() {
-		String json = JSON.stringify(new J1().setId(1L).setName("n1").setTags(Arrays.asList("tag1", "tag2")));
-		assertEquals("[J1 id=1, name=n1, tags=[tag1, tag2], j2=null]", JSON.parse(json, J1.class).toString());
+		String json = MOJson.stringify(new J1().setId(1L).setName("n1").setTags(Arrays.asList("tag1", "tag2")));
+		assertEquals("[J1 id=1, name=n1, tags=[tag1, tag2], j2=null]", MOJson.parse(json, J1.class).toString());
 		assertEquals("[J1 id=1, name=n1, tags=[t1, t2], j2=null]",
-				JSON.parse("{\"id\":1,\"name\":\"n1\",\"tags\":[\"t1\",\"t2\"]}", J1.class).toString());
+				MOJson.parse("{\"id\":1,\"name\":\"n1\",\"tags\":[\"t1\",\"t2\"]}", J1.class).toString());
 	}
 
 	@Test
@@ -120,8 +120,8 @@ public class JSONTest {
 		j1.getJ2().getJ3s().add(new J3().setNum(100L));
 		j1.getJ2().getJ3s().add(new J3().setNum(101L));
 
-		String json = JSON.stringify(j1);
-		assertEquals("[J1 id=1, name=n1, tags=[], j2=[J2 j3s=[[J3 num=100], [J3 num=101]]]]", JSON.parse(json, J1.class).toString());
+		String json = MOJson.stringify(j1);
+		assertEquals("[J1 id=1, name=n1, tags=[], j2=[J2 j3s=[[J3 num=100], [J3 num=101]]]]", MOJson.parse(json, J1.class).toString());
 	}
 
 }

@@ -39,9 +39,9 @@ public class JSONBinaryTest {
 
 	@Test
 	public void testJsonBinary() {
-		String json = JSON.stringify(new J1().setId(1L).setData(MOUtil.toBytes("abc", "UTF-8")));
+		String json = MOJson.stringify(new J1().setId(1L).setData(MOUtil.toBytes("abc", "UTF-8")));
 		assertEquals("{\"id\":1,\"data\":[97,98,99]}", json);
-		assertEquals("[1 id=1, data=abc]", JSON.parse(json, J1.class).toString());
+		assertEquals("[1 id=1, data=abc]", MOJson.parse(json, J1.class).toString());
 	}
 
 }

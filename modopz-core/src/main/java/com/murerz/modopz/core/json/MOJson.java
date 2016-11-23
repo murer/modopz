@@ -3,7 +3,7 @@ package com.murerz.modopz.core.json;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
-public class JSON {
+public class MOJson {
 
 	public static String stringify(Object obj) {
 		return gson().toJson(obj);

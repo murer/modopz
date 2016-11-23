@@ -12,7 +12,7 @@ import java.net.Socket;
 import org.junit.After;
 import org.junit.Test;
 
-import com.murerz.modopz.core.exp.MOResultException;
+import com.murerz.modopz.core.exp.MOException;
 import com.murerz.modopz.core.kernel.MOAbstractKernelTest;
 import com.murerz.modopz.core.util.MOUtil;
 
@@ -67,7 +67,7 @@ public class MOSocketKernelTest extends MOAbstractKernelTest {
 		try {
 			assertNull(new MODataSocketCommand().setId(id).execute(kernel).getReceived());
 			fail("MOMessageException expected");
-		} catch (MOResultException e) {
+		} catch (MOException e) {
 			assertEquals(new Long(id), ((MOSocketResult) e.getResult()).getId());
 		}
 	}
@@ -83,7 +83,7 @@ public class MOSocketKernelTest extends MOAbstractKernelTest {
 		try {
 			assertNull(new MODataSocketCommand().setId(id).execute(kernel).getReceived());
 			fail("MOMessageException expected");
-		} catch (MOResultException e) {
+		} catch (MOException e) {
 			assertEquals(new Long(id), ((MOSocketResult) e.getResult()).getId());
 		}
 	}

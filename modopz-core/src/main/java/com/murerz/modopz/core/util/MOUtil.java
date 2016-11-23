@@ -5,6 +5,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
+import java.util.HashMap;
+import java.util.Map;
 
 import com.murerz.modopz.core.log.MOLog;
 import com.murerz.modopz.core.log.MOLogFactory;
@@ -121,6 +123,18 @@ public class MOUtil {
 		} catch (IOException e) {
 			throw new RuntimeException(e);
 		}
+	}
+
+	@SuppressWarnings("unchecked")
+	public static <K, V> Map<K, V> map(K k, V v, Object... values) {
+		HashMap<K, V> ret = new HashMap<K, V>();
+		ret.put(k, v);
+		for (int i = 0; i < values.length; i++) {
+			K key = (K) values[i];
+			V value = (V) values[i + 1];
+			ret.put(key, value);
+		}
+		return ret;
 	}
 
 }
