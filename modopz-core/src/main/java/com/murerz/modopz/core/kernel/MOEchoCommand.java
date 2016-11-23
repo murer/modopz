@@ -17,4 +17,9 @@ public class MOEchoCommand implements MOCommand, MOResult {
 		return this;
 	}
 
+	@Override
+	public String toString() {
+		return "[MOEchoCommand msg=" + msg + "]";
+	}
+
 }

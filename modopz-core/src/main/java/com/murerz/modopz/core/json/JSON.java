@@ -9,8 +9,12 @@ public class JSON {
 		return gson().toJson(obj);
 	}
 
-	private static Gson gson() {
-		return new GsonBuilder().registerTypeHierarchyAdapter(byte[].class, new MOByteArrayBase64GsonAdapter()).create();
+	public static Gson gson() {
+		return builder().create();
+	}
+
+	public static GsonBuilder builder() {
+		return new GsonBuilder().registerTypeHierarchyAdapter(byte[].class, new MOByteArrayBase64GsonAdapter());
 	}
 
 	public static <T> T parse(String json, Class<T> clazz) {

@@ -41,6 +41,9 @@ public class MOKernel implements Closeable {
 		for (MOModule module : modules) {
 			List<Class<?>> cmds = module.getCommands();
 			for (Class<?> cmd : cmds) {
+				if (!MOCommand.class.isAssignableFrom(cmd)) {
+					throw new RuntimeException("it is not a command: " + cmd.getName());
+				}
 				Class<?> old = commands.put(cmd.getSimpleName(), cmd);
 				if (old != null) {
 					throw new RuntimeException("command registered twice: " + old.getName() + ", " + cmd.getName());
