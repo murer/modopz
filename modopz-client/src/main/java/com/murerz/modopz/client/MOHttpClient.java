@@ -61,4 +61,8 @@ public class MOHttpClient {
 		}
 	}
 
+	public static MOHttpClient create() {
+		return new MOHttpClient().setUrl(System.getProperty("modopz.url", "http://localhost:8765/s/modopz"));
+	}
+
 }

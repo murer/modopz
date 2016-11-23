@@ -120,6 +120,9 @@ public class MOUtil {
 
 	public static void writeFlush(OutputStream out, byte[] buffer) {
 		try {
+			if (buffer.length == 0) {
+				return;
+			}
 			out.write(buffer);
 			out.flush();
 		} catch (IOException e) {
