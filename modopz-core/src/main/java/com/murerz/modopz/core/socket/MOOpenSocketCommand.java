@@ -29,7 +29,7 @@ public class MOOpenSocketCommand implements MOCommand {
 	public MOSocketResult execute(MOKernel kernel) {
 		MOSocketModule module = kernel.module(MOSocketModule.class);
 		MOSocket socket = MOSocket.create(host, port);
-		module.putSocket(socket);
+		module.addSocket(socket);
 		return new MOSocketResult().setId(socket.getId());
 	}
 

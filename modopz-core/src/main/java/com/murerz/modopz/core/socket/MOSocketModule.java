@@ -8,7 +8,6 @@ import com.murerz.modopz.core.kernel.MOMessage;
 import com.murerz.modopz.core.kernel.MOModule;
 import com.murerz.modopz.core.socket.MOCloseSocketMessage.CloseSocketResult;
 import com.murerz.modopz.core.socket.MODataSocketMessage.DataSocketResult;
-import com.murerz.modopz.core.socket.MOOpenSocketMessage.OpenSocketResult;
 import com.murerz.modopz.core.util.MOUtil;
 
 public class MOSocketModule extends MOModule {
@@ -18,9 +17,6 @@ public class MOSocketModule extends MOModule {
 	@SuppressWarnings("unchecked")
 	@Override
 	public <R> R command(MOMessage<R> cmd) {
-		if (cmd instanceof MOOpenSocketMessage) {
-			return (R) openSocket((MOOpenSocketMessage) cmd);
-		}
 		if (cmd instanceof MODataSocketMessage) {
 			return (R) dataSocket((MODataSocketMessage) cmd);
 		}
@@ -60,13 +56,7 @@ public class MOSocketModule extends MOModule {
 		return scks.get(id);
 	}
 
-	private OpenSocketResult openSocket(MOOpenSocketMessage cmd) {
-		MOSocket socket = MOSocket.create(cmd.getHost(), cmd.getPort());
-		putSocket(socket);
-		return new OpenSocketResult().setId(socket.getId());
-	}
-
-	public synchronized void putSocket(MOSocket socket) {
+	public synchronized void addSocket(MOSocket socket) {
 		scks.put(socket.getId(), socket);
 	}
 
