@@ -1,6 +1,7 @@
 package com.murerz.modopz.core.kernel;
 
 import java.io.Closeable;
+import java.util.List;
 
 public abstract class MOModule implements Closeable {
 
@@ -11,5 +12,7 @@ public abstract class MOModule implements Closeable {
 	public void close() {
 
 	}
+
+	public abstract List<Class<?>> getCommands();
 
 }

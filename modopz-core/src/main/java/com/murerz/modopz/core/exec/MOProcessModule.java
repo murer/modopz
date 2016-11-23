@@ -40,4 +40,14 @@ public class MOProcessModule extends MOModule {
 		}
 	}
 
+	@Override
+	public List<Class<?>> getCommands() {
+		List<Class<?>> ret = new ArrayList<Class<?>>();
+		ret.add(MOStartProcessCommand.class);
+		ret.add(MOCloseProcessCommand.class);
+		ret.add(MOStatusProcessCommand.class);
+		ret.add(MOListProcessCommand.class);
+		return ret;
+	}
+
 }

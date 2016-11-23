@@ -35,4 +35,12 @@ public class MOSocketModule extends MOModule {
 		}
 	}
 
+	@Override
+	public List<Class<?>> getCommands() {
+		List<Class<?>> ret = new ArrayList<Class<?>>();
+		ret.add(MOOpenSocketCommand.class);
+		ret.add(MOCloseSocketCommand.class);
+		ret.add(MODataSocketCommand.class);
+		return ret;	}
+
 }
