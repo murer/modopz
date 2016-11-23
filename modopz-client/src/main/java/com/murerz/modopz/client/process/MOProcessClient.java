@@ -2,9 +2,9 @@ package com.murerz.modopz.client.process;
 
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.util.Arrays;
 
 import com.murerz.modopz.client.MOHttpClient;
+import com.murerz.modopz.core.json.MOJson;
 import com.murerz.modopz.core.process.MODataProcessResult;
 import com.murerz.modopz.core.process.MOStartProcessCommand;
 import com.murerz.modopz.core.process.MOStatusProcessCommand;
@@ -69,9 +69,9 @@ public class MOProcessClient {
 		client.setErr(System.err);
 		client.setClient(MOHttpClient.create());
 
-		// MOStartProcessCommand command =
-		// MOJson.parse(System.getProperty("cmd"), MOStartProcessCommand.class);
-		MOStartProcessCommand command = new MOStartProcessCommand().setCmds(Arrays.asList("/bin/bash"));
+		MOStartProcessCommand command = MOJson.parse(System.getProperty("cmd"), MOStartProcessCommand.class);
+		// MOStartProcessCommand command = new
+		// MOStartProcessCommand().setCmds(Arrays.asList("/bin/bash"));
 		Integer code = client.execute(command);
 		if (code == null) {
 			throw new RuntimeException("code is null");
