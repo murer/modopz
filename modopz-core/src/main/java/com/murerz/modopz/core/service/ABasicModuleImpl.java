@@ -14,4 +14,12 @@ public class ABasicModuleImpl implements ABasicModule {
 		return ABasicModule.class;
 	}
 
+	public void start() {
+
+	}
+
+	public void close() {
+
+	}
+
 }

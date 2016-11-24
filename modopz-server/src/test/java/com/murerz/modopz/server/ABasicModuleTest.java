@@ -9,6 +9,7 @@ import com.murerz.modopz.core.service.ABasicModule;
 
 public class ABasicModuleTest extends ATestCase {
 
+	@Test
 	public void testPing() {
 		ABasicModule module = service.module(ABasicModule.class);
 		assertEquals("OK", module.ping());
@@ -25,7 +26,7 @@ public class ABasicModuleTest extends ATestCase {
 		int hashCode = module.hashCode();
 		assertTrue(hashCode > 0);
 		assertEquals(hashCode, module.hashCode());
-		
+
 	}
 
 }

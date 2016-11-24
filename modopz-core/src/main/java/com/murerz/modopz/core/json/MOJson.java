@@ -19,7 +19,7 @@ public class MOJson {
 	}
 
 	public static GsonBuilder basic() {
-		return new GsonBuilder().registerTypeHierarchyAdapter(byte[].class, new MOByteArrayBase64GsonAdapter());
+		return new GsonBuilder().registerTypeHierarchyAdapter(byte[].class, new AByteArrayBase64GsonAdapter());
 	}
 
 	public static <T> T parse(String json, Class<T> clazz) {

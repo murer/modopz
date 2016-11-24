@@ -11,7 +11,7 @@ import com.google.gson.JsonSerializationContext;
 import com.google.gson.JsonSerializer;
 import com.murerz.modopz.core.util.MOB64;
 
-public class MOByteArrayBase64GsonAdapter implements JsonSerializer<byte[]>, JsonDeserializer<byte[]> {
+public class AByteArrayBase64GsonAdapter implements JsonSerializer<byte[]>, JsonDeserializer<byte[]> {
 
 	public byte[] deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context)
 			throws JsonParseException {
