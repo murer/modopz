@@ -4,12 +4,20 @@ import java.io.Closeable;
 
 public class AKernel implements AService, Closeable {
 
-	public <T> T module(Class<T> clazz) {
-		return null;
-	}
-
 	public void close() {
 
+	}
+
+	public AKernel load(AModule module) {
+		return this;
+	}
+
+	public AKernel start() {
+		return this;
+	}
+
+	public AModule module(String module) {
+		return null;
 	}
 
 }
