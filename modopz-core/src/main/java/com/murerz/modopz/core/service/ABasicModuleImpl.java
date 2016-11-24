@@ -6,4 +6,8 @@ public class ABasicModuleImpl implements ABasicModule {
 		return param;
 	}
 
+	public String ping() {
+		return "OK";
+	}
+
 }
