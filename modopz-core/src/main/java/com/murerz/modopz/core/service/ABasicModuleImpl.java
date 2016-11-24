@@ -10,4 +10,8 @@ public class ABasicModuleImpl implements ABasicModule {
 		return "OK";
 	}
 
+	public Class<?> spec() {
+		return ABasicModule.class;
+	}
+
 }
