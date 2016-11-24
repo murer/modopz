@@ -16,16 +16,12 @@ public class AKernel implements AService, Closeable {
 		return null;
 	}
 
-	public AKernel load(Class<?> spec, AModule module) {
-		return this;
-	}
-
 	public AModule module(String simpleName) {
 		return null;
 	}
 
 	public AKernel load(AModule module) {
-		return load(module.spec(), module);
+		return this;
 	}
 
 }
