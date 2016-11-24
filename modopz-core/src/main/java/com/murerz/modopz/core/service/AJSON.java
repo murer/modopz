@@ -23,7 +23,7 @@ public class AJSON {
 		JsonObject tree = new JsonParser().parse(json).getAsJsonObject();
 		String mod = tree.get("module").getAsString();
 		String act = tree.get("action").getAsString();
-		JsonElement param = tree.get("param");
+		JsonElement param = tree.get("params");
 		param = param == null ? JsonNull.INSTANCE : param;
 		Object parsed = null;
 		if (!param.isJsonNull()) {

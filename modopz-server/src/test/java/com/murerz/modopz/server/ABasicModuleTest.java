@@ -6,6 +6,7 @@ import static org.junit.Assert.assertTrue;
 import org.junit.Test;
 
 import com.murerz.modopz.core.service.ABasicModule;
+import com.murerz.modopz.core.service.AEcho;
 
 public class ABasicModuleTest extends ATestCase {
 
@@ -13,6 +14,12 @@ public class ABasicModuleTest extends ATestCase {
 	public void testPing() {
 		ABasicModule module = service.module(ABasicModule.class);
 		assertEquals("OK", module.ping());
+	}
+
+	@Test
+	public void testEcho() {
+		ABasicModule module = service.module(ABasicModule.class);
+		assertEquals("[AEcho n1]", module.echo(new AEcho().setName("n1")).toString());
 	}
 
 	@Test
