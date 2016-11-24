@@ -1,4 +1,4 @@
-package com.murerz.modopz.client;
+package com.murerz.modopz.client.process;
 
 import static org.junit.Assert.assertEquals;
 
