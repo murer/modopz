@@ -6,7 +6,7 @@ import java.lang.reflect.Proxy;
 
 import com.murerz.modopz.core.service.Service;
 
-public abstract class Client implements Service {
+public abstract class MOClient implements Service {
 
 	protected class Invoker implements InvocationHandler {
 

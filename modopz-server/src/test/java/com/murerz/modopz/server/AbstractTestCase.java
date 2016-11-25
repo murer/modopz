@@ -3,7 +3,7 @@ package com.murerz.modopz.server;
 import org.junit.After;
 import org.junit.Before;
 
-import com.murerz.modopz.core.client.HttpClient;
+import com.murerz.modopz.core.client.MOHttpClient;
 import com.murerz.modopz.core.service.Service;
 import com.murerz.modopz.core.util.Util;
 
@@ -19,7 +19,7 @@ public class AbstractTestCase {
 		server.boot();
 		port = server.bind("127.0.0.1", 0);
 
-		service = new HttpClient().prepare("http://localhost:" + port + "/s/modopz");
+		service = new MOHttpClient().prepare("http://localhost:" + port + "/s/modopz");
 	}
 
 	@After

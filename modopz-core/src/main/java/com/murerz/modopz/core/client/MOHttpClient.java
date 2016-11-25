@@ -13,7 +13,7 @@ import com.murerz.modopz.core.service.Resp;
 import com.murerz.modopz.core.service.Service;
 import com.murerz.modopz.core.util.Util;
 
-public class HttpClient extends Client {
+public class MOHttpClient extends MOClient {
 
 	private String url;
 
