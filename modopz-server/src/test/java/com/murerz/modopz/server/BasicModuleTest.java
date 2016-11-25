@@ -1,6 +1,7 @@
 package com.murerz.modopz.server;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
@@ -19,7 +20,8 @@ public class BasicModuleTest extends AbstractTestCase {
 	@Test
 	public void testEcho() {
 		BasicModule module = service.module(BasicModule.class);
-		assertEquals("[Echo n1]", module.echo(new Echo().setName("n1")).toString());
+//		assertEquals("[Echo n1]", module.echo(new Echo().setName("n1")).toString());
+		assertNull("[Echo n1]", module.echo(null));
 	}
 
 	@Test

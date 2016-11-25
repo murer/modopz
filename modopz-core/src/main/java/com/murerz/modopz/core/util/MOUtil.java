@@ -60,13 +60,13 @@ public class MOUtil {
 	public static Method moduleMethod(Class<?> clazz, String methodName, Collection<String> keys) {
 		keys = new HashSet<String>(keys);
 		List<Method> methods = Reflect.methods(clazz, methodName);
-		for (Method method : methods) {
-			List<String> names = parseParamNames(method);
-			if (names.size() == keys.size() && keys.containsAll(names)) {
-				return method;
-			}
+		if (methods.isEmpty()) {
+			throw new RuntimeException("method not found: " + clazz + "." + methodName + " " + keys);
 		}
-		throw new RuntimeException("method not found: " + clazz + "." + methodName + " " + keys);
+		if (methods.size() > 1) {
+			throw new RuntimeException("method overload not supported: " + clazz + "." + methodName + " " + keys);
+		}
+		return methods.get(0);
 	}
 
 	public static Map<String, Object> parseParams(Method method, Object[] args) {
