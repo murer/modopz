@@ -3,12 +3,16 @@ package com.murerz.modopz.core.client;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 
 import com.murerz.modopz.core.service.Command;
 import com.murerz.modopz.core.service.JSON;
+import com.murerz.modopz.core.service.Param;
 import com.murerz.modopz.core.service.Service;
 import com.murerz.modopz.core.util.Util;
 
@@ -23,6 +27,7 @@ public class MOHttpClient extends MOClient {
 
 	@Override
 	protected Object proxy(Invoker invoker, Object proxy, Class<?> spec, Method method, Object[] args) {
+		List<String> paramNames = parseParamNames(method);
 		// args = args == null ? new Object[0] : args;
 		// if (args.length > 1) {
 		// throw new RuntimeException("unsupported: " + args.length);
@@ -42,6 +47,16 @@ public class MOHttpClient extends MOClient {
 		// }
 		// return ret.getResult();
 		throw new RuntimeException("implement");
+	}
+
+	private List<String> parseParamNames(Method method) {
+		List<String> ret = new ArrayList<String>();
+		Annotation[][] annons = method.getParameterAnnotations();
+		for (int i = 0; i < annons.length; i++) {
+			Param annon = (Param) annons[i][0];
+			ret.add(annon.value());
+		}
+		return ret;
 	}
 
 	private String post(Command cmd) {
