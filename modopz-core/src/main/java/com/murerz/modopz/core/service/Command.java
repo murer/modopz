@@ -1,37 +1,47 @@
 package com.murerz.modopz.core.service;
 
-public class Command<A> {
+import java.util.HashMap;
+import java.util.Map;
+
+public class Command {
 
 	private String module;
 
 	private String action;
 
-	private A params;
+	private Map<String, Object> params = new HashMap<String, Object>();
 
-	public String getModule() {
+	public String module() {
 		return module;
 	}
 
-	public Command<A> setModule(String module) {
+	public Command module(String module) {
 		this.module = module;
 		return this;
 	}
 
-	public String getAction() {
+	public String action() {
 		return action;
 	}
 
-	public Command<A> setAction(String action) {
+	public Command action(String action) {
 		this.action = action;
 		return this;
 	}
 
-	public A getParams() {
+	public Map<String, Object> getParams() {
 		return params;
 	}
 
-	public Command<A> setParams(A params) {
+	public Command setParams(Map<String, Object> params) {
 		this.params = params;
+		return this;
+	}
+
+	public Command setCmd(String cmd) {
+		String[] array = cmd.split(".");
+		module(array[0]);
+		action(array[1]);
 		return this;
 	}
 

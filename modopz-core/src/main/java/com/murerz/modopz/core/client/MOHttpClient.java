@@ -9,7 +9,6 @@ import java.net.URL;
 
 import com.murerz.modopz.core.service.Command;
 import com.murerz.modopz.core.service.JSON;
-import com.murerz.modopz.core.service.Resp;
 import com.murerz.modopz.core.service.Service;
 import com.murerz.modopz.core.util.Util;
 
@@ -24,26 +23,28 @@ public class MOHttpClient extends MOClient {
 
 	@Override
 	protected Object proxy(Invoker invoker, Object proxy, Class<?> spec, Method method, Object[] args) {
-		args = args == null ? new Object[0] : args;
-		if (args.length > 1) {
-			throw new RuntimeException("unsupported: " + args.length);
-		}
-		if (method.getParameterTypes().length > 1) {
-			throw new RuntimeException("unsupported: " + method.getParameterTypes().length);
-		}
-		Command<Object> cmd = new Command<Object>();
-		cmd.setModule(spec.getSimpleName());
-		cmd.setAction(method.getName());
-		cmd.setParams(args.length > 0 ? args[0] : null);
-		String json = post(cmd);
-		Resp<?> ret = JSON.parseResp(method.getReturnType(), json);
-		if (ret.getCode().intValue() != 200) {
-			throw new RuntimeException("not implemented: " + ret.getCode());
-		}
-		return ret.getResult();
+		// args = args == null ? new Object[0] : args;
+		// if (args.length > 1) {
+		// throw new RuntimeException("unsupported: " + args.length);
+		// }
+		// if (method.getParameterTypes().length > 1) {
+		// throw new RuntimeException("unsupported: " +
+		// method.getParameterTypes().length);
+		// }
+		// Command<Object> cmd = new Command<Object>();
+		// cmd.setModule(spec.getSimpleName());
+		// cmd.setAction(method.getName());
+		// cmd.setParams(args.length > 0 ? args[0] : null);
+		// String json = post(cmd);
+		// Resp<?> ret = JSON.parseResp(method.getReturnType(), json);
+		// if (ret.getCode().intValue() != 200) {
+		// throw new RuntimeException("not implemented: " + ret.getCode());
+		// }
+		// return ret.getResult();
+		throw new RuntimeException("implement");
 	}
 
-	private String post(Command<Object> cmd) {
+	private String post(Command cmd) {
 		HttpURLConnection conn = null;
 		try {
 			String send = JSON.stringify(cmd);

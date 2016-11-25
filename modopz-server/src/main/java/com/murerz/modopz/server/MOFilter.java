@@ -17,6 +17,7 @@ import com.murerz.modopz.core.service.JSON;
 import com.murerz.modopz.core.service.Kernel;
 import com.murerz.modopz.core.service.Module;
 import com.murerz.modopz.core.service.Resp;
+import com.murerz.modopz.core.util.MOUtil;
 import com.murerz.modopz.core.util.Reflect;
 import com.murerz.modopz.core.util.Util;
 
@@ -45,9 +46,9 @@ public class MOFilter implements Filter {
 
 	private void post(HttpServletRequest req, HttpServletResponse resp) throws IOException {
 		String json = ServletUtil.readText(req);
-		Command<?> cmd = JSON.parseCommand(kernel, json);
-		Module module = kernel.module(cmd.getModule());
-		Object result = Reflect.invoke(module, cmd.getAction(), cmd.getParams());
+		Command cmd = JSON.parse(json, Command.class);
+		Module module = kernel.module(cmd.module());
+		Object result = MOUtil.invoke(cmd, module);
 		Resp<Object> response = Resp.create(result);
 		String ret = JSON.stringify(response);
 		resp.setContentType("application/json");
