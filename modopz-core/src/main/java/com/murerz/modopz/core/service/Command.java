@@ -1,6 +1,6 @@
 package com.murerz.modopz.core.service;
 
-public class ACommand<A> {
+public class Command<A> {
 
 	private String module;
 
@@ -12,7 +12,7 @@ public class ACommand<A> {
 		return module;
 	}
 
-	public ACommand<A> setModule(String module) {
+	public Command<A> setModule(String module) {
 		this.module = module;
 		return this;
 	}
@@ -21,7 +21,7 @@ public class ACommand<A> {
 		return action;
 	}
 
-	public ACommand<A> setAction(String action) {
+	public Command<A> setAction(String action) {
 		this.action = action;
 		return this;
 	}
@@ -30,7 +30,7 @@ public class ACommand<A> {
 		return params;
 	}
 
-	public ACommand<A> setParams(A params) {
+	public Command<A> setParams(A params) {
 		this.params = params;
 		return this;
 	}

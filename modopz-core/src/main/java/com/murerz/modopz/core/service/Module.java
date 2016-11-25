@@ -2,7 +2,7 @@ package com.murerz.modopz.core.service;
 
 import java.io.Closeable;
 
-public interface AModule extends Closeable {
+public interface Module extends Closeable {
 
 	public Class<?> spec();
 

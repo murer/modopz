@@ -8,18 +8,18 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonNull;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-import com.murerz.modopz.core.json.AByteArrayBase64GsonAdapter;
-import com.murerz.modopz.core.util.AReflect;
+import com.murerz.modopz.core.json.ByteArrayBase64GsonAdapter;
+import com.murerz.modopz.core.util.Reflect;
 
-public class AJSON {
+public class JSON {
 
 	public static GsonBuilder basic() {
 		GsonBuilder ret = new GsonBuilder();
-		ret.registerTypeHierarchyAdapter(byte[].class, new AByteArrayBase64GsonAdapter());
+		ret.registerTypeHierarchyAdapter(byte[].class, new ByteArrayBase64GsonAdapter());
 		return ret;
 	}
 
-	public static ACommand<?> parseCommand(AKernel kernel, String json) {
+	public static Command<?> parseCommand(Kernel kernel, String json) {
 		JsonObject tree = new JsonParser().parse(json).getAsJsonObject();
 		String mod = tree.get("module").getAsString();
 		String act = tree.get("action").getAsString();
@@ -27,12 +27,12 @@ public class AJSON {
 		param = param == null ? JsonNull.INSTANCE : param;
 		Object parsed = null;
 		if (!param.isJsonNull()) {
-			AModule module = kernel.module(mod);
-			Method method = AReflect.method(module.getClass(), act);
+			Module module = kernel.module(mod);
+			Method method = Reflect.method(module.getClass(), act);
 			Class<?> type = method.getReturnType();
 			parsed = basic().create().fromJson(param, type);
 		}
-		return new ACommand<Object>().setModule(mod).setAction(act).setParams(parsed);
+		return new Command<Object>().setModule(mod).setAction(act).setParams(parsed);
 	}
 
 	public static String stringify(Object obj) {
@@ -40,14 +40,14 @@ public class AJSON {
 	}
 
 	@SuppressWarnings("unchecked")
-	public static <T> AResp<T> parseResp(Class<T> type, String json) {
+	public static <T> Resp<T> parseResp(Class<T> type, String json) {
 		Gson gson = basic().create();
 		JsonObject tree = new JsonParser().parse(json).getAsJsonObject();
 		Integer code = gson.fromJson(tree.get("code"), Integer.class);
 		JsonElement result = tree.get("result");
 		result = result == null ? JsonNull.INSTANCE : result;
 		Object parsed = gson.fromJson(result, type);
-		return (AResp<T>) AResp.create(parsed).setCode(code);
+		return (Resp<T>) Resp.create(parsed).setCode(code);
 	}
 
 	public static <T> T parse(String json, Class<T> clazz) {

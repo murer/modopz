@@ -1,6 +1,6 @@
 package com.murerz.modopz.core.util;
 
-public class MOB64 {
+public class B64 {
 
 	private final static char[] ALPHABET = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_"
 			.toCharArray();

@@ -7,17 +7,17 @@ import java.lang.reflect.Method;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-import com.murerz.modopz.core.service.ACommand;
-import com.murerz.modopz.core.service.AJSON;
-import com.murerz.modopz.core.service.AResp;
-import com.murerz.modopz.core.service.AService;
-import com.murerz.modopz.core.util.MOUtil;
+import com.murerz.modopz.core.service.Command;
+import com.murerz.modopz.core.service.JSON;
+import com.murerz.modopz.core.service.Resp;
+import com.murerz.modopz.core.service.Service;
+import com.murerz.modopz.core.util.Util;
 
-public class AHttpClient extends AClient {
+public class HttpClient extends Client {
 
 	private String url;
 
-	public AService prepare(String url) {
+	public Service prepare(String url) {
 		this.url = url;
 		return this;
 	}
@@ -31,22 +31,22 @@ public class AHttpClient extends AClient {
 		if (method.getParameterTypes().length > 1) {
 			throw new RuntimeException("unsupported: " + method.getParameterTypes().length);
 		}
-		ACommand<Object> cmd = new ACommand<Object>();
+		Command<Object> cmd = new Command<Object>();
 		cmd.setModule(spec.getSimpleName());
 		cmd.setAction(method.getName());
 		cmd.setParams(args.length > 0 ? args[0] : null);
 		String json = post(cmd);
-		AResp<?> ret = AJSON.parseResp(method.getReturnType(), json);
+		Resp<?> ret = JSON.parseResp(method.getReturnType(), json);
 		if (ret.getCode().intValue() != 200) {
 			throw new RuntimeException("not implemented: " + ret.getCode());
 		}
 		return ret.getResult();
 	}
 
-	private String post(ACommand<Object> cmd) {
+	private String post(Command<Object> cmd) {
 		HttpURLConnection conn = null;
 		try {
-			String send = AJSON.stringify(cmd);
+			String send = JSON.stringify(cmd);
 			URL u = new URL(url);
 			conn = (HttpURLConnection) u.openConnection();
 			conn.setRequestMethod("POST");
@@ -54,7 +54,7 @@ public class AHttpClient extends AClient {
 			conn.setDoInput(true);
 			conn.setDoOutput(true);
 			OutputStream out = conn.getOutputStream();
-			MOUtil.writeFlush(out, send, "UTF-8");
+			Util.writeFlush(out, send, "UTF-8");
 			int code = conn.getResponseCode();
 			if (code != 200) {
 				throw new RuntimeException("wrong: " + code);
@@ -65,12 +65,12 @@ public class AHttpClient extends AClient {
 				throw new RuntimeException("charset is required: " + contentType);
 			}
 			InputStream in = conn.getInputStream();
-			String text = MOUtil.readAll(in, charset);
+			String text = Util.readAll(in, charset);
 			return text;
 		} catch (IOException e) {
 			throw new RuntimeException(e);
 		} finally {
-			MOUtil.close(conn);
+			Util.close(conn);
 		}
 	}
 

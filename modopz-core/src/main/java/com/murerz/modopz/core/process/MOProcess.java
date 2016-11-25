@@ -8,8 +8,8 @@ import java.io.OutputStream;
 import java.lang.ProcessBuilder.Redirect;
 import java.util.List;
 
-import com.murerz.modopz.core.util.MOID;
-import com.murerz.modopz.core.util.MOUtil;
+import com.murerz.modopz.core.util.ID;
+import com.murerz.modopz.core.util.Util;
 
 public class MOProcess implements Closeable {
 
@@ -38,7 +38,7 @@ public class MOProcess implements Closeable {
 	public static MOProcess create(List<String> cmds) {
 		try {
 			MOProcess ret = new MOProcess();
-			ret.id = MOID.next();
+			ret.id = ID.next();
 			ret.createdAt = System.currentTimeMillis();
 			ProcessBuilder builder = new ProcessBuilder(cmds);
 			builder.redirectOutput(Redirect.PIPE).redirectError(Redirect.PIPE).redirectInput(Redirect.PIPE);
@@ -54,11 +54,11 @@ public class MOProcess implements Closeable {
 
 	public synchronized MOProcessStatus status() {
 		MOProcessStatus ret = new MOProcessStatus();
-		MOUtil.copyAvailable(this.stdout, ret.getStdout(), MAX - ret.getStdout().size());
-		MOUtil.copyAvailable(this.stderr, ret.getStderr(), MAX - ret.getStderr().size());
+		Util.copyAvailable(this.stdout, ret.getStdout(), MAX - ret.getStdout().size());
+		Util.copyAvailable(this.stderr, ret.getStderr(), MAX - ret.getStderr().size());
 		Integer code = code();
 		if (code != null) {
-			if (MOUtil.available(this.stdout) <= 0 && MOUtil.available(this.stderr) <= 0) {
+			if (Util.available(this.stdout) <= 0 && Util.available(this.stderr) <= 0) {
 				ret.setCode(code);
 			}
 		}
@@ -75,7 +75,7 @@ public class MOProcess implements Closeable {
 			if (before + timeout < System.currentTimeMillis()) {
 				return ret;
 			}
-			MOUtil.sleep(20L);
+			Util.sleep(20L);
 			ret.append(status());
 		}
 	}
@@ -89,7 +89,7 @@ public class MOProcess implements Closeable {
 	}
 
 	public synchronized void stdin(byte[] buffer) {
-		MOUtil.writeFlush(stdin, buffer);
+		Util.writeFlush(stdin, buffer);
 	}
 
 	public synchronized void close() {

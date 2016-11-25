@@ -3,13 +3,13 @@ package com.murerz.modopz.core.log;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class MOJdkLogFactory extends MOLogFactory {
+public class JdkLogFactory extends LogFactory {
 
-	public static class MOJdkLog implements MOLog {
+	public static class JdkLog implements Log {
 
 		private final Logger logger;
 
-		public MOJdkLog(Class<?> clazz) {
+		public JdkLog(Class<?> clazz) {
 			logger = Logger.getLogger(clazz.getName());
 		}
 
@@ -24,8 +24,8 @@ public class MOJdkLogFactory extends MOLogFactory {
 	}
 
 	@Override
-	public MOLog create(Class<?> clazz) {
-		return new MOJdkLog(clazz);
+	public Log create(Class<?> clazz) {
+		return new JdkLog(clazz);
 	}
 
 }

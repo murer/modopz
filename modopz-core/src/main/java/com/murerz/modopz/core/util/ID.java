@@ -1,8 +1,8 @@
 package com.murerz.modopz.core.util;
 
-public class MOID {
+public class ID {
 
-	private static final MOID ME = new MOID();
+	private static final ID ME = new ID();
 
 	private long last = 0;
 

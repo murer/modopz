@@ -1,20 +1,20 @@
 package com.murerz.modopz.core.exp;
 
-public class AException extends RuntimeException {
+public class MOException extends RuntimeException {
 
 	private static final long serialVersionUID = 1L;
 
 	private Integer code = 500;
 
-	public AException(String message, Throwable cause) {
+	public MOException(String message, Throwable cause) {
 		super(message, cause);
 	}
 
-	public AException(String message) {
+	public MOException(String message) {
 		super(message);
 	}
 
-	public AException(Throwable cause) {
+	public MOException(Throwable cause) {
 		super(cause);
 	}
 
@@ -22,7 +22,7 @@ public class AException extends RuntimeException {
 		return code;
 	}
 
-	public AException setCode(Integer code) {
+	public MOException setCode(Integer code) {
 		this.code = code;
 		return this;
 	}

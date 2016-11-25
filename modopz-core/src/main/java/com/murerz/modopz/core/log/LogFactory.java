@@ -1,12 +1,12 @@
 package com.murerz.modopz.core.log;
 
-public abstract class MOLogFactory {
+public abstract class LogFactory {
 
 	private static final Object MUTEX = new Object();
 
-	private static MOLogFactory me;
+	private static LogFactory me;
 
-	public static void set(MOLogFactory factory) {
+	public static void set(LogFactory factory) {
 		if (me != null) {
 			throw new RuntimeException("you cannot reinit log: " + me);
 		}
@@ -18,17 +18,17 @@ public abstract class MOLogFactory {
 		}
 	}
 
-	public static MOLogFactory me() {
+	public static LogFactory me() {
 		if (me == null) {
 			synchronized (MUTEX) {
 				if (me == null) {
-					me = new MOJdkLogFactory();
+					me = new JdkLogFactory();
 				}
 			}
 		}
 		return me;
 	}
 
-	public abstract MOLog create(Class<?> clazz);
+	public abstract Log create(Class<?> clazz);
 
 }

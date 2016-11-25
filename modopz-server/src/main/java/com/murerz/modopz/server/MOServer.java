@@ -9,12 +9,12 @@ import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.server.ServerConnector;
 import org.eclipse.jetty.servlet.ServletHandler;
 
-import com.murerz.modopz.core.log.MOLog;
-import com.murerz.modopz.core.log.MOLogFactory;
+import com.murerz.modopz.core.log.Log;
+import com.murerz.modopz.core.log.LogFactory;
 
-public class AServer implements Closeable {
+public class MOServer implements Closeable {
 
-	private static final MOLog LOG = MOLogFactory.me().create(AServer.class);
+	private static final Log LOG = LogFactory.me().create(MOServer.class);
 
 	private Server server;
 
@@ -22,7 +22,7 @@ public class AServer implements Closeable {
 		try {
 			server = new Server();
 			ServletHandler handler = new ServletHandler();
-			handler.addFilterWithMapping(AFilter.class, "/s/modopz", EnumSet.of(DispatcherType.REQUEST));
+			handler.addFilterWithMapping(MOFilter.class, "/s/modopz", EnumSet.of(DispatcherType.REQUEST));
 			server.setHandler(handler);
 			server.start();
 		} catch (Exception e) {

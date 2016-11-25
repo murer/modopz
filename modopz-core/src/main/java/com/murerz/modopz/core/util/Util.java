@@ -10,12 +10,12 @@ import java.net.HttpURLConnection;
 import java.util.HashMap;
 import java.util.Map;
 
-import com.murerz.modopz.core.log.MOLog;
-import com.murerz.modopz.core.log.MOLogFactory;
+import com.murerz.modopz.core.log.Log;
+import com.murerz.modopz.core.log.LogFactory;
 
-public class MOUtil {
+public class Util {
 
-	private static final MOLog LOG = MOLogFactory.me().create(MOUtil.class);
+	private static final Log LOG = LogFactory.me().create(Util.class);
 
 	public static void close(AutoCloseable o) {
 		if (o != null) {

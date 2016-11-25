@@ -8,9 +8,9 @@ import java.util.List;
 
 import org.junit.Test;
 
-import com.murerz.modopz.core.service.AJSON;
+import com.murerz.modopz.core.service.JSON;
 
-public class AJSONTest {
+public class JSONTest {
 
 	public static class J3 {
 		private Long num;
@@ -32,7 +32,7 @@ public class AJSONTest {
 	}
 
 	public static class J2 {
-		private List<J3> j3s = new ArrayList<AJSONTest.J3>();
+		private List<J3> j3s = new ArrayList<JSONTest.J3>();
 
 		public List<J3> getJ3s() {
 			return j3s;
@@ -101,18 +101,18 @@ public class AJSONTest {
 
 	@Test
 	public void testJsonBasic() {
-		String json = AJSON.stringify(new J1().setId(1L).setName("n1"));
-		assertEquals("[J1 id=1, name=n1, tags=[], j2=null]", AJSON.parse(json, J1.class).toString());
+		String json = JSON.stringify(new J1().setId(1L).setName("n1"));
+		assertEquals("[J1 id=1, name=n1, tags=[], j2=null]", JSON.parse(json, J1.class).toString());
 		assertEquals("[J1 id=1, name=n1, tags=[], j2=null]",
-				AJSON.parse("{\"id\":1,\"name\":\"n1\"}", J1.class).toString());
+				JSON.parse("{\"id\":1,\"name\":\"n1\"}", J1.class).toString());
 	}
 
 	@Test
 	public void testJsonTags() {
-		String json = AJSON.stringify(new J1().setId(1L).setName("n1").setTags(Arrays.asList("tag1", "tag2")));
-		assertEquals("[J1 id=1, name=n1, tags=[tag1, tag2], j2=null]", AJSON.parse(json, J1.class).toString());
+		String json = JSON.stringify(new J1().setId(1L).setName("n1").setTags(Arrays.asList("tag1", "tag2")));
+		assertEquals("[J1 id=1, name=n1, tags=[tag1, tag2], j2=null]", JSON.parse(json, J1.class).toString());
 		assertEquals("[J1 id=1, name=n1, tags=[t1, t2], j2=null]",
-				AJSON.parse("{\"id\":1,\"name\":\"n1\",\"tags\":[\"t1\",\"t2\"]}", J1.class).toString());
+				JSON.parse("{\"id\":1,\"name\":\"n1\",\"tags\":[\"t1\",\"t2\"]}", J1.class).toString());
 	}
 
 	@Test
@@ -122,8 +122,8 @@ public class AJSONTest {
 		j1.getJ2().getJ3s().add(new J3().setNum(100L));
 		j1.getJ2().getJ3s().add(new J3().setNum(101L));
 
-		String json = AJSON.stringify(j1);
-		assertEquals("[J1 id=1, name=n1, tags=[], j2=[J2 j3s=[[J3 num=100], [J3 num=101]]]]", AJSON.parse(json, J1.class).toString());
+		String json = JSON.stringify(j1);
+		assertEquals("[J1 id=1, name=n1, tags=[], j2=[J2 j3s=[[J3 num=100], [J3 num=101]]]]", JSON.parse(json, J1.class).toString());
 	}
 
 }

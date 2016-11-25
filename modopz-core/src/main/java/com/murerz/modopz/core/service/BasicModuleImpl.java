@@ -1,13 +1,13 @@
 package com.murerz.modopz.core.service;
 
-public class ABasicModuleImpl implements ABasicModule {
+public class BasicModuleImpl implements BasicModule {
 
 	public String ping() {
 		return "OK";
 	}
 
 	public Class<?> spec() {
-		return ABasicModule.class;
+		return BasicModule.class;
 	}
 
 	public void start() {
@@ -18,7 +18,7 @@ public class ABasicModuleImpl implements ABasicModule {
 
 	}
 
-	public AEcho echo(AEcho echo) {
+	public Echo echo(Echo echo) {
 		return echo;
 	}
 

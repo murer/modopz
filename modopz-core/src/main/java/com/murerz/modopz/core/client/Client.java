@@ -4,9 +4,9 @@ import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
 
-import com.murerz.modopz.core.service.AService;
+import com.murerz.modopz.core.service.Service;
 
-public abstract class AClient implements AService {
+public abstract class Client implements Service {
 
 	protected class Invoker implements InvocationHandler {
 

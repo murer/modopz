@@ -4,20 +4,20 @@ import java.io.Closeable;
 import java.util.HashMap;
 import java.util.Map;
 
-import com.murerz.modopz.core.util.MOUtil;
+import com.murerz.modopz.core.util.Util;
 
-public class AKernel implements AService, Closeable {
+public class Kernel implements Service, Closeable {
 
-	private Map<String, AModule> modules = new HashMap<String, AModule>();
+	private Map<String, Module> modules = new HashMap<String, Module>();
 
 	public void close() {
-		for (AModule module : modules.values()) {
-			MOUtil.close(module);
+		for (Module module : modules.values()) {
+			Util.close(module);
 		}
 	}
 
-	public AKernel start() {
-		for (AModule module : modules.values()) {
+	public Kernel start() {
+		for (Module module : modules.values()) {
 			module.start();
 		}
 		return this;
@@ -28,11 +28,11 @@ public class AKernel implements AService, Closeable {
 		return (T) module(spec.getName());
 	}
 
-	public AModule module(String simpleName) {
+	public Module module(String simpleName) {
 		return modules.get(simpleName);
 	}
 
-	public AKernel load(AModule module) {
+	public Kernel load(Module module) {
 		modules.put(module.spec().getSimpleName(), module);
 		return this;
 	}

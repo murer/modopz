@@ -1,6 +1,6 @@
 package com.murerz.modopz.core.service;
 
-public class AResp<A> {
+public class Resp<A> {
 
 	private Integer code = 200;
 
@@ -10,7 +10,7 @@ public class AResp<A> {
 		return code;
 	}
 
-	public AResp<A> setCode(Integer code) {
+	public Resp<A> setCode(Integer code) {
 		this.code = code;
 		return this;
 	}
@@ -19,13 +19,13 @@ public class AResp<A> {
 		return result;
 	}
 
-	public AResp<A> setResult(A result) {
+	public Resp<A> setResult(A result) {
 		this.result = result;
 		return this;
 	}
 
-	public static <T> AResp<T> create(T result) {
-		return new AResp<T>().setResult(result);
+	public static <T> Resp<T> create(T result) {
+		return new Resp<T>().setResult(result);
 	}
 
 }

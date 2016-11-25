@@ -1,6 +1,6 @@
 package com.murerz.modopz.core.service;
 
-public class AEcho {
+public class Echo {
 
 	private String name;
 
@@ -8,7 +8,7 @@ public class AEcho {
 		return name;
 	}
 
-	public AEcho setName(String name) {
+	public Echo setName(String name) {
 		this.name = name;
 		return this;
 	}

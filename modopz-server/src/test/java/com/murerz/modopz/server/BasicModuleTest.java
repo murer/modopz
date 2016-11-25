@@ -5,26 +5,26 @@ import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
-import com.murerz.modopz.core.service.ABasicModule;
-import com.murerz.modopz.core.service.AEcho;
+import com.murerz.modopz.core.service.BasicModule;
+import com.murerz.modopz.core.service.Echo;
 
-public class ABasicModuleTest extends ATestCase {
+public class BasicModuleTest extends AbstractTestCase {
 
 	@Test
 	public void testPing() {
-		ABasicModule module = service.module(ABasicModule.class);
+		BasicModule module = service.module(BasicModule.class);
 		assertEquals("OK", module.ping());
 	}
 
 	@Test
 	public void testEcho() {
-		ABasicModule module = service.module(ABasicModule.class);
-		assertEquals("[AEcho n1]", module.echo(new AEcho().setName("n1")).toString());
+		BasicModule module = service.module(BasicModule.class);
+		assertEquals("[AEcho n1]", module.echo(new Echo().setName("n1")).toString());
 	}
 
 	@Test
 	public void testObjectMethods() {
-		ABasicModule module = service.module(ABasicModule.class);
+		BasicModule module = service.module(BasicModule.class);
 		assertEquals("[proxy:com.murerz.modopz.core.service.ABasicModule]", module.toString());
 
 		assertEquals(true, module.equals(module));

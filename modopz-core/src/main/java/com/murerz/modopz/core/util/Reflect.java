@@ -3,7 +3,7 @@ package com.murerz.modopz.core.util;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
-public class AReflect {
+public class Reflect {
 
 	public static Object invoke(Object obj, String methodName, Object param) {
 		try {

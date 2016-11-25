@@ -11,22 +11,22 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.murerz.modopz.core.service.ABasicModuleImpl;
-import com.murerz.modopz.core.service.ACommand;
-import com.murerz.modopz.core.service.AJSON;
-import com.murerz.modopz.core.service.AKernel;
-import com.murerz.modopz.core.service.AModule;
-import com.murerz.modopz.core.service.AResp;
-import com.murerz.modopz.core.util.AReflect;
-import com.murerz.modopz.core.util.MOUtil;
+import com.murerz.modopz.core.service.BasicModuleImpl;
+import com.murerz.modopz.core.service.Command;
+import com.murerz.modopz.core.service.JSON;
+import com.murerz.modopz.core.service.Kernel;
+import com.murerz.modopz.core.service.Module;
+import com.murerz.modopz.core.service.Resp;
+import com.murerz.modopz.core.util.Reflect;
+import com.murerz.modopz.core.util.Util;
 
-public class AFilter implements Filter {
+public class MOFilter implements Filter {
 
-	private AKernel kernel;
+	private Kernel kernel;
 
 	public void init(FilterConfig filterConfig) throws ServletException {
-		kernel = new AKernel();
-		kernel.load(new ABasicModuleImpl());
+		kernel = new Kernel();
+		kernel.load(new BasicModuleImpl());
 		kernel.start();
 	}
 
@@ -44,19 +44,19 @@ public class AFilter implements Filter {
 	}
 
 	private void post(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-		String json = MOServletUtil.readText(req);
-		ACommand<?> cmd = AJSON.parseCommand(kernel, json);
-		AModule module = kernel.module(cmd.getModule());
-		Object result = AReflect.invoke(module, cmd.getAction(), cmd.getParams());
-		AResp<Object> response = AResp.create(result);
-		String ret = AJSON.stringify(response);
+		String json = ServletUtil.readText(req);
+		Command<?> cmd = JSON.parseCommand(kernel, json);
+		Module module = kernel.module(cmd.getModule());
+		Object result = Reflect.invoke(module, cmd.getAction(), cmd.getParams());
+		Resp<Object> response = Resp.create(result);
+		String ret = JSON.stringify(response);
 		resp.setContentType("application/json");
 		resp.setCharacterEncoding("UTF-8");
 		resp.getWriter().write(ret);
 	}
 
 	public void destroy() {
-		MOUtil.close(kernel);
+		Util.close(kernel);
 	}
 
 }

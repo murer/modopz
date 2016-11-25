@@ -11,7 +11,7 @@ import org.junit.Test;
 
 import com.murerz.modopz.core.process.MOProcess;
 import com.murerz.modopz.core.process.MOProcessStatus;
-import com.murerz.modopz.core.util.MOUtil;
+import com.murerz.modopz.core.util.Util;
 
 public class MOProcessTest {
 
@@ -26,7 +26,7 @@ public class MOProcessTest {
 
 	@After
 	public void tearDown() {
-		MOUtil.close(process);
+		Util.close(process);
 		process = null;
 	}
 
@@ -38,8 +38,8 @@ public class MOProcessTest {
 		assertTrue(process.getId() > 0);
 
 		MOProcessStatus status = process.waitFor(500L);
-		assertEquals("abc", MOUtil.toString(status.getStdout(), "UTF-8").trim());
-		assertEquals("", MOUtil.toString(status.getStderr(), "UTF-8"));
+		assertEquals("abc", Util.toString(status.getStdout(), "UTF-8").trim());
+		assertEquals("", Util.toString(status.getStderr(), "UTF-8"));
 		assertEquals(new Integer(0), status.getCode());
 	}
 
@@ -53,8 +53,8 @@ public class MOProcessTest {
 		process.stdin("#!/bin/bash -xe\necho stderr 1>&2; echo stdout; exit 5;\n".getBytes());
 
 		MOProcessStatus status = process.waitFor(500L);
-		assertEquals("stdout", MOUtil.toString(status.getStdout(), "UTF-8").trim());
-		assertEquals("stderr", MOUtil.toString(status.getStderr(), "UTF-8").trim());
+		assertEquals("stdout", Util.toString(status.getStdout(), "UTF-8").trim());
+		assertEquals("stderr", Util.toString(status.getStderr(), "UTF-8").trim());
 		assertEquals(new Integer(5), status.getCode());
 	}
 
@@ -68,8 +68,8 @@ public class MOProcessTest {
 		process.stdin("#!/bin/bash -xe\nsleep 1; echo stderr 1>&2; echo stdout; exit 5;\n".getBytes());
 
 		MOProcessStatus status = process.waitFor(1500L);
-		assertEquals("stdout", MOUtil.toString(status.getStdout(), "UTF-8").trim());
-		assertEquals("stderr", MOUtil.toString(status.getStderr(), "UTF-8").trim());
+		assertEquals("stdout", Util.toString(status.getStdout(), "UTF-8").trim());
+		assertEquals("stderr", Util.toString(status.getStderr(), "UTF-8").trim());
 		assertEquals(new Integer(5), status.getCode());
 	}
 
@@ -81,12 +81,12 @@ public class MOProcessTest {
 		assertTrue(process.getId() > 0);
 
 		process.stdin("#!/bin/bash -xe\nsleep 1; echo stdout;\n".getBytes());
-		MOUtil.sleep(500L);
-		MOUtil.close(process);
+		Util.sleep(500L);
+		Util.close(process);
 
 		MOProcessStatus status = process.waitFor(1500l);
-		assertEquals("", MOUtil.toString(status.getStdout(), "UTF-8").trim());
-		assertEquals("", MOUtil.toString(status.getStderr(), "UTF-8").trim());
+		assertEquals("", Util.toString(status.getStdout(), "UTF-8").trim());
+		assertEquals("", Util.toString(status.getStderr(), "UTF-8").trim());
 		assertEquals(new Integer(143), status.getCode());
 	}
 

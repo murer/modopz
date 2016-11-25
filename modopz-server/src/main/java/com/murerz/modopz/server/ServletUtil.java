@@ -8,9 +8,9 @@ import java.io.StringWriter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.murerz.modopz.core.service.AJSON;
+import com.murerz.modopz.core.service.JSON;
 
-public class MOServletUtil {
+public class ServletUtil {
 
 	public static final int REQUEST_MAX_SIZE = 32 * 1024 * 1024;
 
@@ -32,7 +32,7 @@ public class MOServletUtil {
 				writer.append((char) c);
 			}
 			if (in.read() >= 0) {
-				throw new MOEntityTooLargeHttpException(REQUEST_MAX_SIZE);
+				throw new EntityTooLargeHttpException(REQUEST_MAX_SIZE);
 			}
 			return writer.toString();
 		} catch (IOException e) {
@@ -44,7 +44,7 @@ public class MOServletUtil {
 		try {
 			resp.setContentType("application/json");
 			resp.setCharacterEncoding("UTF-8");
-			String json = AJSON.stringify(obj);
+			String json = JSON.stringify(obj);
 			resp.getWriter().write(json);
 		} catch (IOException e) {
 			throw new RuntimeException(e);

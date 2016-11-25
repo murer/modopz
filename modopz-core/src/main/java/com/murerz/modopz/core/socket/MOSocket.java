@@ -9,8 +9,8 @@ import java.net.Socket;
 import java.net.SocketTimeoutException;
 import java.net.UnknownHostException;
 
-import com.murerz.modopz.core.util.MOID;
-import com.murerz.modopz.core.util.MOUtil;
+import com.murerz.modopz.core.util.ID;
+import com.murerz.modopz.core.util.Util;
 
 public class MOSocket implements Closeable {
 
@@ -27,7 +27,7 @@ public class MOSocket implements Closeable {
 	public static MOSocket create(String host, int port) {
 		try {
 			MOSocket ret = new MOSocket();
-			ret.id = MOID.next();
+			ret.id = ID.next();
 			ret.createdAt = System.currentTimeMillis();
 			ret.socket = new Socket(host, port);
 			ret.socket.setSoTimeout(100);
@@ -42,11 +42,11 @@ public class MOSocket implements Closeable {
 	}
 
 	public synchronized void close() {
-		MOUtil.close(socket);
+		Util.close(socket);
 	}
 
 	public synchronized byte[] read() {
-		if (socket.isClosed() && MOUtil.available(in) <= 0) {
+		if (socket.isClosed() && Util.available(in) <= 0) {
 			return null;
 		}
 		try {
@@ -58,7 +58,7 @@ public class MOSocket implements Closeable {
 			if (read == 0) {
 				return new byte[0];
 			}
-			return MOUtil.cut(buffer, 0, read);
+			return Util.cut(buffer, 0, read);
 		} catch (SocketTimeoutException e) {
 			return new byte[0];
 		} catch (IOException e) {
@@ -67,7 +67,7 @@ public class MOSocket implements Closeable {
 	}
 
 	public synchronized void write(byte[] buffer) {
-		MOUtil.writeFlush(out, buffer);
+		Util.writeFlush(out, buffer);
 	}
 
 	public long getId() {

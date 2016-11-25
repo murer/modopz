@@ -13,7 +13,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import com.murerz.modopz.core.socket.MOSocket;
-import com.murerz.modopz.core.util.MOUtil;
+import com.murerz.modopz.core.util.Util;
 
 public class MOSocketTest {
 
@@ -27,9 +27,9 @@ public class MOSocketTest {
 
 	@After
 	public void tearDown() {
-		MOUtil.close(client);
-		MOUtil.close(socket);
-		MOUtil.close(server);
+		Util.close(client);
+		Util.close(socket);
+		Util.close(server);
 	}
 
 	@Test
@@ -40,19 +40,19 @@ public class MOSocketTest {
 		assertTrue(socket.getCreatedAt() <= System.currentTimeMillis());
 		assertTrue(socket.getCreatedAt() >= System.currentTimeMillis() - 5000);
 		assertTrue(socket.getId() > 0);
-		assertEquals("", MOUtil.toString(socket.read(), "UTF-8"));
+		assertEquals("", Util.toString(socket.read(), "UTF-8"));
 
 		client = server.accept();
-		assertEquals("", MOUtil.toString(socket.read(), "UTF-8"));
-		assertEquals("", MOUtil.readAvailable(client.getInputStream(), 10, "UTF-8"));
+		assertEquals("", Util.toString(socket.read(), "UTF-8"));
+		assertEquals("", Util.readAvailable(client.getInputStream(), 10, "UTF-8"));
 
-		MOUtil.writeFlush(client.getOutputStream(), "t1", "UTF-8");
-		assertEquals("t1", MOUtil.toString(socket.read(), "UTF-8"));
-		assertEquals("", MOUtil.readAvailable(client.getInputStream(), 10, "UTF-8"));
+		Util.writeFlush(client.getOutputStream(), "t1", "UTF-8");
+		assertEquals("t1", Util.toString(socket.read(), "UTF-8"));
+		assertEquals("", Util.readAvailable(client.getInputStream(), 10, "UTF-8"));
 
-		socket.write(MOUtil.toBytes("t2", "UTF-8"));
-		assertEquals("", MOUtil.toString(socket.read(), "UTF-8"));
-		assertEquals("t2", MOUtil.readAvailable(client.getInputStream(), 10, "UTF-8"));
+		socket.write(Util.toBytes("t2", "UTF-8"));
+		assertEquals("", Util.toString(socket.read(), "UTF-8"));
+		assertEquals("t2", Util.readAvailable(client.getInputStream(), 10, "UTF-8"));
 	}
 
 	@Test
@@ -60,11 +60,11 @@ public class MOSocketTest {
 		server = new ServerSocket(0);
 		socket = MOSocket.create("127.0.0.1", server.getLocalPort());
 		client = server.accept();
-		MOUtil.writeFlush(client.getOutputStream(), "t1", "UTF-8");
-		socket.write(MOUtil.toBytes("t2", "UTF-8"));
-		MOUtil.close(socket);
+		Util.writeFlush(client.getOutputStream(), "t1", "UTF-8");
+		socket.write(Util.toBytes("t2", "UTF-8"));
+		Util.close(socket);
 		assertNull(socket.read());
-		assertEquals("t2", MOUtil.readAvailable(client.getInputStream(), 10, "UTF-8"));
+		assertEquals("t2", Util.readAvailable(client.getInputStream(), 10, "UTF-8"));
 	}
 
 	@Test
@@ -72,9 +72,9 @@ public class MOSocketTest {
 		server = new ServerSocket(0);
 		socket = MOSocket.create("127.0.0.1", server.getLocalPort());
 		client = server.accept();
-		MOUtil.writeFlush(client.getOutputStream(), "t1", "UTF-8");
-		MOUtil.close(client);
-		assertEquals("t1", MOUtil.toString(socket.read(), "UTF-8"));
+		Util.writeFlush(client.getOutputStream(), "t1", "UTF-8");
+		Util.close(client);
+		assertEquals("t1", Util.toString(socket.read(), "UTF-8"));
 		assertNull(socket.read());
 	}
 }

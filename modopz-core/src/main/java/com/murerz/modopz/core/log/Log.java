@@ -1,6 +1,6 @@
 package com.murerz.modopz.core.log;
 
-public interface MOLog {
+public interface Log {
 
 	void error(String msg, Exception e);
 
