@@ -50,4 +50,8 @@ public class AJSON {
 		return (AResp<T>) AResp.create(parsed).setCode(code);
 	}
 
+	public static <T> T parse(String json, Class<T> clazz) {
+		return basic().create().fromJson(json, clazz);
+	}
+
 }

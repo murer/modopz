@@ -14,7 +14,7 @@ import com.murerz.modopz.core.log.MOLogFactory;
 
 public class AServer implements Closeable {
 
-	private static final MOLog LOG = MOLogFactory.me().create(MOServer.class);
+	private static final MOLog LOG = MOLogFactory.me().create(AServer.class);
 
 	private Server server;
 

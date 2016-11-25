@@ -8,7 +8,7 @@ import java.io.StringWriter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.murerz.modopz.core.json.MOJson;
+import com.murerz.modopz.core.service.AJSON;
 
 public class MOServletUtil {
 
@@ -44,7 +44,7 @@ public class MOServletUtil {
 		try {
 			resp.setContentType("application/json");
 			resp.setCharacterEncoding("UTF-8");
-			String json = MOJson.stringify(obj);
+			String json = AJSON.stringify(obj);
 			resp.getWriter().write(json);
 		} catch (IOException e) {
 			throw new RuntimeException(e);

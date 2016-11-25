@@ -1,13 +1,13 @@
 package com.murerz.modopz.servlet;
 
-import com.murerz.modopz.core.exp.MOException;
+import com.murerz.modopz.core.exp.AException;
 
-public class MOEntityTooLargeHttpException extends MOException {
+public class MOEntityTooLargeHttpException extends AException {
 
 	private static final long serialVersionUID = 1L;
 
 	public MOEntityTooLargeHttpException(int max) {
-		super(413, "entity too large, max: " + max, null);
+		super("entity too large, max: " + max);
 	}
 
 }

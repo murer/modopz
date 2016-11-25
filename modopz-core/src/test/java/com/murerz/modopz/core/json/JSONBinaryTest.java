@@ -4,6 +4,7 @@ import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
 
+import com.murerz.modopz.core.service.AJSON;
 import com.murerz.modopz.core.util.MOUtil;
 
 public class JSONBinaryTest {
@@ -39,9 +40,9 @@ public class JSONBinaryTest {
 
 	@Test
 	public void testJsonBinary() {
-		String json = MOJson.stringify(new J1().setId(1L).setData(MOUtil.toBytes("abc", "UTF-8")));
+		String json = AJSON.stringify(new J1().setId(1L).setData(MOUtil.toBytes("abc", "UTF-8")));
 		assertEquals("{\"id\":1,\"data\":\"YWJj\"}", json);
-		assertEquals("[1 id=1, data=abc]", MOJson.parse(json, J1.class).toString());
+		assertEquals("[1 id=1, data=abc]", AJSON.parse(json, J1.class).toString());
 	}
 
 }
