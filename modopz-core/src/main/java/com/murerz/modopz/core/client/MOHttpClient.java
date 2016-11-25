@@ -26,6 +26,7 @@ public class MOHttpClient extends MOClient {
 
 	@Override
 	protected Object proxy(Invoker invoker, Object proxy, Class<?> spec, Method method, Object[] args) {
+		args = args == null ? new Object[0] : args;
 		Command command = new Command();
 		command.module(spec.getSimpleName()).action(method.getName());
 

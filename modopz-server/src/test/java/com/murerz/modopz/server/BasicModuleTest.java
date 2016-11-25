@@ -25,7 +25,7 @@ public class BasicModuleTest extends AbstractTestCase {
 	@Test
 	public void testObjectMethods() {
 		BasicModule module = service.module(BasicModule.class);
-		assertEquals("[proxy:com.murerz.modopz.core.service.BasicModule]", module.toString());
+		assertEquals("[proxy:com.murerz.modopz.core.module.BasicModule]", module.toString());
 
 		assertEquals(true, module.equals(module));
 		assertEquals(false, module.equals("any"));
