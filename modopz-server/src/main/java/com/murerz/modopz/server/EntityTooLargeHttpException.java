@@ -8,6 +8,7 @@ public class EntityTooLargeHttpException extends MOException {
 
 	public EntityTooLargeHttpException(int max) {
 		super("entity too large, max: " + max);
+		setCode(413);
 	}
 
 }
