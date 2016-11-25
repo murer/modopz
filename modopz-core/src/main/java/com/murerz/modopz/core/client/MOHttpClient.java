@@ -8,6 +8,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.Map;
 
+import com.murerz.modopz.core.exp.MOException;
 import com.murerz.modopz.core.service.Command;
 import com.murerz.modopz.core.service.JSON;
 import com.murerz.modopz.core.service.Resp;
@@ -34,7 +35,7 @@ public class MOHttpClient extends MOClient {
 		command.setParams(params);
 		Resp<?> resp = post(command);
 		if (resp.getCode().intValue() != 200) {
-			throw new RuntimeException("not implemented: " + resp);
+			throw new MOException("server error " + resp.getCode() + ": " + resp.getResult()).setCode(resp.getCode());
 		}
 		return resp.getResult();
 	}

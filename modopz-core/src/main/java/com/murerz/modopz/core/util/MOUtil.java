@@ -10,6 +10,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 
+import com.murerz.modopz.core.exp.MOException;
 import com.murerz.modopz.core.module.Module;
 import com.murerz.modopz.core.service.Command;
 import com.murerz.modopz.core.service.JSON;
@@ -33,8 +34,17 @@ public class MOUtil {
 		} catch (IllegalArgumentException e) {
 			throw new RuntimeException(e);
 		} catch (InvocationTargetException e) {
-			throw new RuntimeException(e);
+			return handleException(e);
 		}
+	}
+
+	private static Resp<?> handleException(InvocationTargetException exp) {
+		String stack = Util.stack(exp);
+		MOException mo = Util.cause(exp, MOException.class);
+		if (mo == null) {
+			return Resp.create(String.class).setCode(500).setResult(stack);
+		}
+		return Resp.create(String.class).setCode(mo.getCode()).setResult(stack);
 	}
 
 	private static Object[] formatArgs(Method method, Map<String, Object> params) {

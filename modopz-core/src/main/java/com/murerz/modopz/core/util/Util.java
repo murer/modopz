@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
+import java.io.PrintStream;
 import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.util.HashMap;
@@ -180,4 +181,30 @@ public class Util {
 		return String.format(str, args);
 	}
 
+	@SuppressWarnings("unchecked")
+	public static <T> T cause(Throwable exp, Class<T> clazz) {
+		Throwable current = exp;
+		while (current != null) {
+			if (clazz.isInstance(current)) {
+				return (T) current;
+			}
+			current = current.getCause();
+		}
+		return null;
+	}
+
+	public static String stack(Exception exp) {
+		try {
+			ByteArrayOutputStream bout = new ByteArrayOutputStream();
+			PrintStream out = new PrintStream(bout);
+			exp.printStackTrace(out);
+			out.close();
+			byte[] data = bout.toByteArray();
+			return toString(data, "UTF-8");
+		} catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	
 }

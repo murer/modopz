@@ -11,4 +11,6 @@ public interface BasicModule extends Module {
 
 	public Object none();
 
+	public void exp(@Param("code") Integer code);
+
 }

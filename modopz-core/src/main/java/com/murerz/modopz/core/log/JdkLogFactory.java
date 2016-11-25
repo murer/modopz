@@ -21,6 +21,10 @@ public class JdkLogFactory extends LogFactory {
 			logger.log(Level.INFO, msg);
 		}
 
+		public void error(String msg) {
+			logger.log(Level.SEVERE, msg);
+		}
+
 	}
 
 	@Override

@@ -1,11 +1,10 @@
 package com.murerz.modopz.server;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 import org.junit.Test;
 
+import com.murerz.modopz.core.exp.MOException;
 import com.murerz.modopz.core.module.BasicModule;
 import com.murerz.modopz.core.service.Echo;
 
@@ -28,6 +27,25 @@ public class BasicModuleTest extends AbstractTestCase {
 	public void testNull() {
 		BasicModule module = service.module(BasicModule.class);
 		assertNull(module.none());
+	}
+
+	@Test
+	public void testException() {
+		BasicModule module = service.module(BasicModule.class);
+		try {
+			module.exp(404);
+			fail("MOException expected");
+		} catch (MOException e) {
+			assertEquals(new Integer(404), e.getCode());
+			assertNotNull(e.getMessage());
+		}
+		try {
+			module.exp(null);
+			fail("MOException expected");
+		} catch (MOException e) {
+			assertEquals(new Integer(500), e.getCode());
+			assertNotNull(e.getMessage());
+		}
 	}
 
 	@Test

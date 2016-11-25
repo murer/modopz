@@ -11,6 +11,8 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.murerz.modopz.core.log.Log;
+import com.murerz.modopz.core.log.LogFactory;
 import com.murerz.modopz.core.module.BasicModuleImpl;
 import com.murerz.modopz.core.module.Module;
 import com.murerz.modopz.core.service.Command;
@@ -21,6 +23,8 @@ import com.murerz.modopz.core.util.MOUtil;
 import com.murerz.modopz.core.util.Util;
 
 public class MOFilter implements Filter {
+
+	private static final Log LOG = LogFactory.me().create(MOFilter.class);
 
 	private Kernel kernel;
 
@@ -48,6 +52,9 @@ public class MOFilter implements Filter {
 		Command cmd = JSON.parse(json, Command.class);
 		Module module = kernel.module(cmd.module());
 		Resp<?> response = MOUtil.invoke(cmd, module);
+		if (response.getCode() != 200) {
+			LOG.error("Error on module: " + response.getCode() + ": " + response.getResult());
+		}
 		String ret = JSON.stringify(response);
 		resp.setContentType("application/json");
 		resp.setCharacterEncoding("UTF-8");
