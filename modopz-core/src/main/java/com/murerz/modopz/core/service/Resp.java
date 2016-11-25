@@ -4,7 +4,18 @@ public class Resp<A> {
 
 	private Integer code = 200;
 
+	private Class<A> type;
+
 	private A result;
+
+	public Class<A> getType() {
+		return type;
+	}
+
+	public Resp<A> setType(Class<A> type) {
+		this.type = type;
+		return this;
+	}
 
 	public Integer getCode() {
 		return code;
@@ -24,17 +35,17 @@ public class Resp<A> {
 		return this;
 	}
 
-	public static <T> Resp<T> create(T result) {
-		return new Resp<T>().setResult(result);
+	public static <T> Resp<T> create(Class<T> type) {
+		return new Resp<T>().setType(type);
 	}
 
 	@Override
 	public String toString() {
-		return "[Resp code=" + code + ", type=" + type() + "]";
+		return "[Resp code=" + code + ", type=" + type + "]";
 	}
 
 	public String type() {
-		return result == null ? null : result.getClass().getName();
+		return type == null ? null : type.getName();
 	}
 
 }

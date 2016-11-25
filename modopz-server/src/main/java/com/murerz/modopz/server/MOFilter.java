@@ -47,8 +47,7 @@ public class MOFilter implements Filter {
 		String json = ServletUtil.readText(req);
 		Command cmd = JSON.parse(json, Command.class);
 		Module module = kernel.module(cmd.module());
-		Object result = MOUtil.invoke(cmd, module);
-		Resp<Object> response = Resp.create(result);
+		Resp<?> response = MOUtil.invoke(cmd, module);
 		String ret = JSON.stringify(response);
 		resp.setContentType("application/json");
 		resp.setCharacterEncoding("UTF-8");

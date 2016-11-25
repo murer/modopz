@@ -14,15 +14,20 @@ import com.murerz.modopz.core.module.Module;
 import com.murerz.modopz.core.service.Command;
 import com.murerz.modopz.core.service.JSON;
 import com.murerz.modopz.core.service.Param;
+import com.murerz.modopz.core.service.Resp;
 
 public class MOUtil {
 
-	public static Object invoke(Command cmd, Module module) {
+	@SuppressWarnings("unchecked")
+	public static Resp<?> invoke(Command cmd, Module module) {
 		try {
 			Class<?> spec = MOUtil.module(cmd.module());
 			Method method = MOUtil.moduleMethod(spec, cmd.action(), cmd.keys());
 			Object[] args = formatArgs(method, cmd.getParams());
-			return method.invoke(module, args);
+			Object result = method.invoke(module, args);
+			Class<Object> returnType = (Class<Object>) method.getReturnType();
+			Resp<Object> ret = Resp.create(returnType);
+			return ret.setResult(result);
 		} catch (IllegalAccessException e) {
 			throw new RuntimeException(e);
 		} catch (IllegalArgumentException e) {
