@@ -19,7 +19,6 @@ import com.murerz.modopz.core.service.AModule;
 import com.murerz.modopz.core.service.AResp;
 import com.murerz.modopz.core.util.AReflect;
 import com.murerz.modopz.core.util.MOUtil;
-import com.murerz.modopz.servlet.MOServletUtil;
 
 public class AFilter implements Filter {
 

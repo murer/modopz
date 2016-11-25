@@ -16,11 +16,7 @@
 
 		<dependency>
 			<groupId>com.murerz.modopz</groupId>
-			<artifactId>modopz-client</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>com.murerz.modopz</groupId>
-			<artifactId>modopz-servlet</artifactId>
+			<artifactId>modopz-core</artifactId>
 		</dependency>
 
 		<dependency>

@@ -1,4 +1,4 @@
-package com.murerz.modopz.servlet;
+package com.murerz.modopz.server;
 
 import java.io.BufferedInputStream;
 import java.io.IOException;

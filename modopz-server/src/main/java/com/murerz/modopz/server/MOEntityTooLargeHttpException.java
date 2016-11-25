@@ -1,4 +1,4 @@
-package com.murerz.modopz.servlet;
+package com.murerz.modopz.server;
 
 import com.murerz.modopz.core.exp.AException;
 

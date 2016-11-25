@@ -17,8 +17,6 @@
 
 	<modules>
 		<module>modopz-core</module>
-		<module>modopz-client</module>
-		<module>modopz-servlet</module>
 		<module>modopz-server</module>
 	</modules>
 
@@ -79,16 +77,6 @@
 			<dependency>
 				<groupId>com.murerz.modopz</groupId>
 				<artifactId>modopz-core</artifactId>
-				<version>${project.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>com.murerz.modopz</groupId>
-				<artifactId>modopz-client</artifactId>
-				<version>${project.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>com.murerz.modopz</groupId>
-				<artifactId>modopz-servlet</artifactId>
 				<version>${project.version}</version>
 			</dependency>
 
