@@ -15,7 +15,6 @@ public class RespGsonAdapter implements JsonDeserializer<Resp<?>>, JsonSerialize
 
 	public Resp<?> deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context)
 			throws JsonParseException {
-		System.out.println(json);
 		if (json.isJsonNull()) {
 			return null;
 		}
