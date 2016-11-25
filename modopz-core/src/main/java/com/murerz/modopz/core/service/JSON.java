@@ -13,7 +13,7 @@ public class JSON {
 	public static GsonBuilder basic() {
 		GsonBuilder ret = new GsonBuilder();
 		ret.registerTypeHierarchyAdapter(byte[].class, new ByteArrayBase64GsonAdapter());
-		ret.registerTypeHierarchyAdapter(byte[].class, new CommandGsonAdapter());
+		ret.registerTypeHierarchyAdapter(Command.class, new CommandGsonAdapter());
 		return ret;
 	}
 
