@@ -20,8 +20,14 @@ public class BasicModuleTest extends AbstractTestCase {
 	@Test
 	public void testEcho() {
 		BasicModule module = service.module(BasicModule.class);
-//		assertEquals("[Echo n1]", module.echo(new Echo().setName("n1")).toString());
-		assertNull("[Echo n1]", module.echo(null));
+		assertEquals("[Echo n1]", module.echo(new Echo().setName("n1")).toString());
+		assertNull(module.echo(null));
+	}
+
+	@Test
+	public void testNull() {
+		BasicModule module = service.module(BasicModule.class);
+		assertNull(module.none());
 	}
 
 	@Test

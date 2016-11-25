@@ -9,4 +9,6 @@ public interface BasicModule extends Module {
 
 	public String ping();
 
+	public Object none();
+
 }

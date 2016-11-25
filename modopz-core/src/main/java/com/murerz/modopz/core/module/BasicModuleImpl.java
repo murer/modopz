@@ -24,4 +24,8 @@ public class BasicModuleImpl implements BasicModule {
 		return echo;
 	}
 
+	public Object none() {
+		return null;
+	}
+
 }
