@@ -62,4 +62,12 @@ public class Reflect {
 
 	}
 
+	public static Class<?> clazz(String name) {
+		try {
+			return Class.forName(name);
+		} catch (ClassNotFoundException e) {
+			throw new RuntimeException(e);
+		}
+	}
+
 }

@@ -18,7 +18,6 @@ public class CommandGsonAdapter implements JsonDeserializer<Command>, JsonSerial
 
 	public Command deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context)
 			throws JsonParseException {
-		System.out.println(json);
 		if (json.isJsonNull()) {
 			return null;
 		}

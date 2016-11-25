@@ -28,4 +28,13 @@ public class Resp<A> {
 		return new Resp<T>().setResult(result);
 	}
 
+	@Override
+	public String toString() {
+		return "[Resp code=" + code + ", type=" + type() + "]";
+	}
+
+	public String type() {
+		return result == null ? null : result.getClass().getName();
+	}
+
 }

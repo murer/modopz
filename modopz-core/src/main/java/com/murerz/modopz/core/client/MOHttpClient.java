@@ -32,15 +32,14 @@ public class MOHttpClient extends MOClient {
 
 		Map<String, Object> params = MOUtil.parseParams(method, args);
 		command.setParams(params);
-		String resultJson = post(command);
-		Resp<?> ret = JSON.parseResp(method.getReturnType(), resultJson);
-		if (ret.getCode().intValue() != 200) {
-			throw new RuntimeException("not implemented: " + ret.getCode());
+		Resp<?> resp = post(command);
+		if (resp.getCode().intValue() != 200) {
+			throw new RuntimeException("not implemented: " + resp);
 		}
-		return ret.getResult();
+		return resp.getResult();
 	}
 
-	private String post(Command cmd) {
+	private Resp<?> post(Command cmd) {
 		HttpURLConnection conn = null;
 		try {
 			String send = JSON.stringify(cmd);
@@ -63,7 +62,8 @@ public class MOHttpClient extends MOClient {
 			}
 			InputStream in = conn.getInputStream();
 			String text = Util.readAll(in, charset);
-			return text;
+			Resp<?> ret = JSON.parse(text, Resp.class);
+			return ret;
 		} catch (IOException e) {
 			throw new RuntimeException(e);
 		} finally {
