@@ -18,7 +18,6 @@ import com.murerz.modopz.core.service.JSON;
 import com.murerz.modopz.core.service.Kernel;
 import com.murerz.modopz.core.service.Resp;
 import com.murerz.modopz.core.util.MOUtil;
-import com.murerz.modopz.core.util.Reflect;
 import com.murerz.modopz.core.util.Util;
 
 public class MOFilter implements Filter {
