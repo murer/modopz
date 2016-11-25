@@ -11,11 +11,11 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.murerz.modopz.core.service.BasicModuleImpl;
+import com.murerz.modopz.core.module.BasicModuleImpl;
+import com.murerz.modopz.core.module.Module;
 import com.murerz.modopz.core.service.Command;
 import com.murerz.modopz.core.service.JSON;
 import com.murerz.modopz.core.service.Kernel;
-import com.murerz.modopz.core.service.Module;
 import com.murerz.modopz.core.service.Resp;
 import com.murerz.modopz.core.util.MOUtil;
 import com.murerz.modopz.core.util.Reflect;

@@ -15,7 +15,7 @@ public class Echo {
 
 	@Override
 	public String toString() {
-		return "[AEcho " + name + "]";
+		return "[Echo " + name + "]";
 	}
 
 }

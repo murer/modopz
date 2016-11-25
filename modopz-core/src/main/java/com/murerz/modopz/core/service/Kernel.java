@@ -4,6 +4,7 @@ import java.io.Closeable;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.murerz.modopz.core.module.Module;
 import com.murerz.modopz.core.util.Util;
 
 public class Kernel implements Service, Closeable {

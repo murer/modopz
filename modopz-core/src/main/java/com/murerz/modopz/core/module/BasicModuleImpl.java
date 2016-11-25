@@ -1,4 +1,6 @@
-package com.murerz.modopz.core.service;
+package com.murerz.modopz.core.module;
+
+import com.murerz.modopz.core.service.Echo;
 
 public class BasicModuleImpl implements BasicModule {
 

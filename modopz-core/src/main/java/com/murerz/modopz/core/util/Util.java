@@ -176,4 +176,8 @@ public class Util {
 		}
 	}
 
+	public static String format(String str, Object... args) {
+		return String.format(str, args);
+	}
+
 }

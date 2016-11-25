@@ -3,17 +3,16 @@ package com.murerz.modopz.core.client;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Map;
 
 import com.murerz.modopz.core.service.Command;
 import com.murerz.modopz.core.service.JSON;
-import com.murerz.modopz.core.service.Param;
+import com.murerz.modopz.core.service.Resp;
 import com.murerz.modopz.core.service.Service;
+import com.murerz.modopz.core.util.MOUtil;
 import com.murerz.modopz.core.util.Util;
 
 public class MOHttpClient extends MOClient {
@@ -27,36 +26,17 @@ public class MOHttpClient extends MOClient {
 
 	@Override
 	protected Object proxy(Invoker invoker, Object proxy, Class<?> spec, Method method, Object[] args) {
-		List<String> paramNames = parseParamNames(method);
-		// args = args == null ? new Object[0] : args;
-		// if (args.length > 1) {
-		// throw new RuntimeException("unsupported: " + args.length);
-		// }
-		// if (method.getParameterTypes().length > 1) {
-		// throw new RuntimeException("unsupported: " +
-		// method.getParameterTypes().length);
-		// }
-		// Command<Object> cmd = new Command<Object>();
-		// cmd.setModule(spec.getSimpleName());
-		// cmd.setAction(method.getName());
-		// cmd.setParams(args.length > 0 ? args[0] : null);
-		// String json = post(cmd);
-		// Resp<?> ret = JSON.parseResp(method.getReturnType(), json);
-		// if (ret.getCode().intValue() != 200) {
-		// throw new RuntimeException("not implemented: " + ret.getCode());
-		// }
-		// return ret.getResult();
-		throw new RuntimeException("implement");
-	}
+		Command command = new Command();
+		command.module(spec.getSimpleName()).action(method.getName());
 
-	private List<String> parseParamNames(Method method) {
-		List<String> ret = new ArrayList<String>();
-		Annotation[][] annons = method.getParameterAnnotations();
-		for (int i = 0; i < annons.length; i++) {
-			Param annon = (Param) annons[i][0];
-			ret.add(annon.value());
+		Map<String, Object> params = MOUtil.parseParams(method, args);
+		command.setParams(params);
+		String resultJson = post(command);
+		Resp<?> ret = JSON.parseResp(method.getReturnType(), resultJson);
+		if (ret.getCode().intValue() != 200) {
+			throw new RuntimeException("not implemented: " + ret.getCode());
 		}
-		return ret;
+		return ret.getResult();
 	}
 
 	private String post(Command cmd) {

@@ -5,7 +5,7 @@ import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
-import com.murerz.modopz.core.service.BasicModule;
+import com.murerz.modopz.core.module.BasicModule;
 import com.murerz.modopz.core.service.Echo;
 
 public class BasicModuleTest extends AbstractTestCase {
@@ -19,7 +19,7 @@ public class BasicModuleTest extends AbstractTestCase {
 	@Test
 	public void testEcho() {
 		BasicModule module = service.module(BasicModule.class);
-		assertEquals("[AEcho n1]", module.echo(new Echo().setName("n1")).toString());
+		assertEquals("[Echo n1]", module.echo(new Echo().setName("n1")).toString());
 	}
 
 	@Test

@@ -1,5 +1,9 @@
 package com.murerz.modopz.core.service;
 
+import java.util.HashSet;
+import java.util.Map.Entry;
+import java.util.Set;
+
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonElement;
@@ -34,6 +38,14 @@ public class JSON {
 
 	public static <T> T parse(String json, Class<T> clazz) {
 		return basic().create().fromJson(json, clazz);
+	}
+
+	public static Set<String> keys(JsonObject obj) {
+		Set<String> ret = new HashSet<String>();
+		for (Entry<String, JsonElement> entry : obj.entrySet()) {
+			ret.add(entry.getKey());
+		}
+		return ret;
 	}
 
 }

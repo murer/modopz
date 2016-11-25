@@ -2,6 +2,7 @@ package com.murerz.modopz.core.service;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 
 public class Command {
 
@@ -39,10 +40,26 @@ public class Command {
 	}
 
 	public Command setCmd(String cmd) {
-		String[] array = cmd.split(".");
+		String[] array = cmd.split("\\.");
 		module(array[0]);
 		action(array[1]);
 		return this;
+	}
+
+	@Override
+	public String toString() {
+		return String.format("[Command %s.%s %s]", module, action, keys());
+	}
+
+	public Set<String> keys() {
+		return params == null ? null : params.keySet();
+	}
+
+	public String getCmd() {
+		if (module == null || action == null) {
+			return null;
+		}
+		return String.format("%s.%s", module, action);
 	}
 
 }
