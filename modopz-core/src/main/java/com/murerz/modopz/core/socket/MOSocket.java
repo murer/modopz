@@ -9,14 +9,12 @@ import java.net.Socket;
 import java.net.SocketTimeoutException;
 import java.net.UnknownHostException;
 
-import com.murerz.modopz.core.util.ID;
 import com.murerz.modopz.core.util.Util;
 
 public class MOSocket implements Closeable {
 
 	private static final int MAX = 512 * 1024;
 
-	private long id;
 	private long createdAt;
 	private Socket socket;
 
@@ -27,7 +25,6 @@ public class MOSocket implements Closeable {
 	public static MOSocket create(String host, int port) {
 		try {
 			MOSocket ret = new MOSocket();
-			ret.id = ID.next();
 			ret.createdAt = System.currentTimeMillis();
 			ret.socket = new Socket(host, port);
 			ret.socket.setSoTimeout(100);
@@ -70,8 +67,9 @@ public class MOSocket implements Closeable {
 		Util.writeFlush(out, buffer);
 	}
 
-	public long getId() {
-		return id;
+	public String getId() {
+		return Util.format("%s:%s-%s:%s", socket.getLocalAddress().getHostAddress(), socket.getLocalPort(),
+				socket.getInetAddress().getHostAddress(), socket.getPort());
 	}
 
 	public long getCreatedAt() {

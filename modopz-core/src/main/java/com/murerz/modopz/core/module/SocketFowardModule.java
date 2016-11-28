@@ -1,6 +1,6 @@
-package com.murerz.modopz.core.socket;
+package com.murerz.modopz.core.module;
 
-import com.murerz.modopz.core.module.Module;
+import com.murerz.modopz.core.socket.SocketForward;
 
 public interface SocketFowardModule extends Module {
 

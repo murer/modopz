@@ -30,7 +30,11 @@ public class Kernel implements Service, Closeable {
 	}
 
 	public Module module(String simpleName) {
-		return modules.get(simpleName);
+		Module ret = modules.get(simpleName);
+		if (ret == null) {
+			throw new RuntimeException("module not found: " + simpleName);
+		}
+		return ret;
 	}
 
 	public Kernel load(Module module) {

@@ -4,23 +4,19 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.Socket;
-import java.net.SocketTimeoutException;
-import java.net.UnknownHostException;
 
-import javax.net.SocketFactory;
-
-import com.murerz.modopz.core.log.Log;
-import com.murerz.modopz.core.log.LogFactory;
+import com.murerz.modopz.core.module.SocketModule;
+import com.murerz.modopz.core.service.Service;
 import com.murerz.modopz.core.util.Util;
 
 public class SocketFowardSource implements Runnable {
 
-	private static final Log LOG = LogFactory.me().create(Util.class);
-
 	private Socket source;
 	private SocketForward forward;
-	private Socket dest;
+	private String dest;
 	private boolean running;
+
+	private Service service;
 
 	public Socket getSource() {
 		return source;
@@ -53,8 +49,7 @@ public class SocketFowardSource implements Runnable {
 	public void run() {
 		Thread thread = null;
 		try {
-			dest = SocketFactory.getDefault().createSocket(forward.getDestHost(), forward.getDestPort());
-			dest.setSoTimeout(1000);
+			dest = service.module(SocketModule.class).connect(forward.getDestHost(), forward.getDestPort());
 			running = true;
 			thread = new Thread("SFP-" + getId()) {
 				public void run() {
@@ -63,43 +58,66 @@ public class SocketFowardSource implements Runnable {
 			};
 			thread.start();
 			pipe(dest, source);
-		} catch (UnknownHostException e) {
-			throw new RuntimeException(e);
-		} catch (IOException e) {
-			throw new RuntimeException(e);
 		} finally {
-			try {
-				thread.join();
-			} catch (InterruptedException e) {
-				LOG.error("error on thread.join", e);
-			}
+			Util.join(thread);
 			close();
 		}
 
 	}
 
-	private void pipe(Socket in, Socket out) {
+	protected void pipe(Socket source, String dest) {
 		try {
-			InputStream sin = in.getInputStream();
-			OutputStream sout = out.getOutputStream();
-			while (running || sin.available() > 0) {
-				try {
-					Util.copyExp(sin, sout);
-					running = false;
-				} catch (SocketTimeoutException e) {
-					// ok
+			InputStream in = source.getInputStream();
+			byte[] buffer = new byte[10 * 1024];
+			while (running) {
+				int read = in.read(buffer);
+				if (read > 0) {
+					byte[] n = Util.cut(buffer, 0, read);
+					service.module(SocketModule.class).write(dest, n);
+				}
+				if (read < 0) {
+					return;
 				}
 			}
-		} catch (IOException e1) {
-			throw new RuntimeException(e1);
+		} catch (IOException e) {
+			throw new RuntimeException(e);
 		} finally {
 			running = false;
 		}
 	}
 
+	private void pipe(String dest, Socket source) {
+		try {
+			OutputStream out = source.getOutputStream();
+			while (running) {
+				byte[] data = service.module(SocketModule.class).read(dest);
+				if (data == null) {
+					return;
+				}
+				if (data.length > 0) {
+					out.write(data);
+				}
+			}
+		} catch (IOException e) {
+			throw new RuntimeException(e);
+		} finally {
+			running = false;
+		}
+
+	}
+
 	private void close() {
-		Util.close(dest);
+		closeDest();
 		Util.close(source);
+	}
+
+	private void closeDest() {
+		service.module(SocketModule.class).destroy(dest);
+	}
+
+	public SocketFowardSource setService(Service service) {
+		this.service = service;
+		return this;
 	}
 
 }

@@ -9,8 +9,8 @@ import java.net.Socket;
 import org.junit.After;
 import org.junit.Test;
 
+import com.murerz.modopz.core.module.SocketFowardModule;
 import com.murerz.modopz.core.socket.SocketForward;
-import com.murerz.modopz.core.socket.SocketFowardModule;
 import com.murerz.modopz.core.util.Util;
 import com.murerz.modopz.server.AbstractTestCase;
 
@@ -43,13 +43,13 @@ public class SocketFowardLocalTest extends AbstractTestCase {
 		
 		Util.writeFlush(client.getOutputStream(), "t1", "UTF-8");
 		Util.writeFlush(socket.getOutputStream(), "t2", "UTF-8");
-		Util.sleep(100);
+		Util.sleep(150);
 		assertEquals("t2", Util.readAvailable(client.getInputStream(), 10, "UTF-8"));
 		assertEquals("t1", Util.readAvailable(socket.getInputStream(), 10, "UTF-8"));
 		
 		Util.writeFlush(socket.getOutputStream(), "t4", "UTF-8");
 		Util.writeFlush(client.getOutputStream(), "t3", "UTF-8");
-		Util.sleep(100);
+		Util.sleep(150);
 		assertEquals("t3", Util.readAvailable(socket.getInputStream(), 10, "UTF-8"));
 		assertEquals("t4", Util.readAvailable(client.getInputStream(), 10, "UTF-8"));
 	}

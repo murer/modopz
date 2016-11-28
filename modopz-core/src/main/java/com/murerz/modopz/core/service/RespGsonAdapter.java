@@ -22,10 +22,14 @@ public class RespGsonAdapter implements JsonDeserializer<Resp<?>>, JsonSerialize
 		Resp<Object> ret = new Resp<Object>();
 		ret.setCode(obj.get("code").getAsInt());
 		String type = obj.get("type").getAsString();
-		Class<?> clazz = Reflect.clazz(type);
+		Class<?> clazz = resolveType(type);
 		Object result = context.deserialize(obj.get("result"), clazz);
 		ret.setResult(result);
 		return ret;
+	}
+
+	private Class<?> resolveType(String type) {
+		return Reflect.clazz(type);
 	}
 
 	public JsonElement serialize(Resp<?> src, Type typeOfSrc, JsonSerializationContext context) {

@@ -16,6 +16,7 @@ public class AbstractTestCase {
 	protected Service service;
 	protected Kernel local;
 
+	@SuppressWarnings("resource")
 	@Before
 	public void setUp() {
 		server = new MOServer();
@@ -25,7 +26,7 @@ public class AbstractTestCase {
 		service = new HttpProxyService().prepare("http://localhost:" + port + "/s/modopz");
 
 		local = new Kernel();
-		local.load(new SocketFowardModuleImpl());
+		local.load(new SocketFowardModuleImpl().setService(service));
 		local.start();
 	}
 

@@ -230,4 +230,14 @@ public class Util {
 		}
 	}
 
+	public static void join(Thread thread) {
+		if (thread != null) {
+			try {
+				thread.join();
+			} catch (InterruptedException e) {
+				LOG.error("error on thread.join", e);
+			}
+		}
+	}
+
 }

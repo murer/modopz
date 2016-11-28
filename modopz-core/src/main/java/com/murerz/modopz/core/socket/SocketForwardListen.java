@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 
+import com.murerz.modopz.core.service.Service;
+
 public class SocketForwardListen implements Runnable {
 
 	private String id;
@@ -11,6 +13,7 @@ public class SocketForwardListen implements Runnable {
 	private ServerSocket server;
 
 	private Thread thread;
+	private Service service;
 
 	public String getId() {
 		return id;
@@ -49,7 +52,8 @@ public class SocketForwardListen implements Runnable {
 			while (true) {
 				Socket source = server.accept();
 				source.setSoTimeout(500);
-				SocketFowardSource forwardSource = new SocketFowardSource().setForward(forward).setSource(source);
+				SocketFowardSource forwardSource = new SocketFowardSource().setForward(forward).setSource(source)
+						.setService(service);
 				forwardSource.start();
 			}
 		} catch (IOException e) {
@@ -71,6 +75,11 @@ public class SocketForwardListen implements Runnable {
 				throw new RuntimeException(e);
 			}
 		}
+	}
+
+	public SocketForwardListen setService(Service service) {
+		this.service = service;
+		return this;
 	}
 
 }

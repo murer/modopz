@@ -19,6 +19,7 @@ import com.murerz.modopz.core.service.Command;
 import com.murerz.modopz.core.service.JSON;
 import com.murerz.modopz.core.service.Kernel;
 import com.murerz.modopz.core.service.Resp;
+import com.murerz.modopz.core.socket.SocketModuleImpl;
 import com.murerz.modopz.core.util.MOUtil;
 import com.murerz.modopz.core.util.Util;
 
@@ -31,6 +32,7 @@ public class MOFilter implements Filter {
 	public void init(FilterConfig filterConfig) throws ServletException {
 		kernel = new Kernel();
 		kernel.load(new BasicModuleImpl());
+		kernel.load(new SocketModuleImpl());
 		kernel.start();
 	}
 
@@ -50,6 +52,7 @@ public class MOFilter implements Filter {
 	private void post(HttpServletRequest req, HttpServletResponse resp) throws IOException {
 		String json = ServletUtil.readText(req);
 		Command cmd = JSON.parse(json, Command.class);
+
 		Module module = kernel.module(cmd.module());
 		Resp<?> response = MOUtil.invoke(cmd, module);
 		if (response.getCode() != 200) {

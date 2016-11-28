@@ -1,6 +1,7 @@
 package com.murerz.modopz.core.socket;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
@@ -12,7 +13,6 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.murerz.modopz.core.socket.MOSocket;
 import com.murerz.modopz.core.util.Util;
 
 public class MOSocketTest {
@@ -39,7 +39,7 @@ public class MOSocketTest {
 		socket = MOSocket.create("127.0.0.1", server.getLocalPort());
 		assertTrue(socket.getCreatedAt() <= System.currentTimeMillis());
 		assertTrue(socket.getCreatedAt() >= System.currentTimeMillis() - 5000);
-		assertTrue(socket.getId() > 0);
+		assertNotNull(socket.getId());
 		assertEquals("", Util.toString(socket.read(), "UTF-8"));
 
 		client = server.accept();

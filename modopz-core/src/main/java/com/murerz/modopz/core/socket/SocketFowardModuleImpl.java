@@ -9,11 +9,15 @@ import java.util.Map;
 
 import javax.net.ServerSocketFactory;
 
+import com.murerz.modopz.core.module.Module;
+import com.murerz.modopz.core.module.SocketFowardModule;
+import com.murerz.modopz.core.service.Service;
 import com.murerz.modopz.core.util.Util;
 
 public class SocketFowardModuleImpl implements SocketFowardModule {
 
 	private Map<String, SocketForwardListen> servers = new HashMap<String, SocketForwardListen>();
+	private Service service;
 
 	public Class<?> spec() {
 		return SocketFowardModule.class;
@@ -42,7 +46,7 @@ public class SocketFowardModuleImpl implements SocketFowardModule {
 			ServerSocket sck = ServerSocketFactory.getDefault().createServerSocket(forward.getSourcePort(), 50,
 					sourceAddress);
 			String id = Util.format("%s:%s", forward.getSourceHost(), sck.getLocalPort());
-			SocketForwardListen server = new SocketForwardListen().setId(id).setForward(forward).setServer(sck);
+			SocketForwardListen server = new SocketForwardListen().setId(id).setForward(forward).setServer(sck).setService(service);
 			servers.put(id, server);
 			server.start();
 			return id;
@@ -51,6 +55,11 @@ public class SocketFowardModuleImpl implements SocketFowardModule {
 		} catch (IOException e) {
 			throw new RuntimeException(e);
 		}
+	}
+
+	public Module setService(Service service) {
+		this.service = service;
+		return this;
 	}
 
 }
