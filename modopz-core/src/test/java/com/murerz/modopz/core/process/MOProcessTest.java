@@ -50,7 +50,7 @@ public class MOProcessTest {
 		assertTrue(process.getCreatedAt() >= System.currentTimeMillis() - 5000);
 		assertTrue(process.getId() > 0);
 
-		process.stdin("#!/bin/bash -xe\necho stderr 1>&2; echo stdout; exit 5;\n".getBytes());
+		process.write("#!/bin/bash -xe\necho stderr 1>&2; echo stdout; exit 5;\n".getBytes());
 
 		MOProcessStatus status = process.waitFor(500L);
 		assertEquals("stdout", Util.toString(status.getStdout(), "UTF-8").trim());
@@ -65,7 +65,7 @@ public class MOProcessTest {
 		assertTrue(process.getCreatedAt() >= System.currentTimeMillis() - 5000);
 		assertTrue(process.getId() > 0);
 
-		process.stdin("#!/bin/bash -xe\nsleep 1; echo stderr 1>&2; echo stdout; exit 5;\n".getBytes());
+		process.write("#!/bin/bash -xe\nsleep 1; echo stderr 1>&2; echo stdout; exit 5;\n".getBytes());
 
 		MOProcessStatus status = process.waitFor(1500L);
 		assertEquals("stdout", Util.toString(status.getStdout(), "UTF-8").trim());
@@ -80,7 +80,7 @@ public class MOProcessTest {
 		assertTrue(process.getCreatedAt() >= System.currentTimeMillis() - 5000);
 		assertTrue(process.getId() > 0);
 
-		process.stdin("#!/bin/bash -xe\nsleep 1; echo stdout;\n".getBytes());
+		process.write("#!/bin/bash -xe\nsleep 1; echo stdout;\n".getBytes());
 		Util.sleep(500L);
 		Util.close(process);
 

@@ -52,7 +52,7 @@ public class MOProcess implements Closeable {
 		}
 	}
 
-	public synchronized MOProcessStatus status() {
+	public synchronized MOProcessStatus read() {
 		MOProcessStatus ret = new MOProcessStatus();
 		Util.copyAvailable(this.stdout, ret.getStdout(), MAX - ret.getStdout().size());
 		Util.copyAvailable(this.stderr, ret.getStderr(), MAX - ret.getStderr().size());
@@ -67,7 +67,7 @@ public class MOProcess implements Closeable {
 
 	public MOProcessStatus waitFor(long timeout) {
 		long before = System.currentTimeMillis();
-		MOProcessStatus ret = status();
+		MOProcessStatus ret = read();
 		while (true) {
 			if (ret.getCode() != null) {
 				return ret;
@@ -76,7 +76,7 @@ public class MOProcess implements Closeable {
 				return ret;
 			}
 			Util.sleep(20L);
-			ret.append(status());
+			ret.append(read());
 		}
 	}
 
@@ -88,7 +88,7 @@ public class MOProcess implements Closeable {
 		}
 	}
 
-	public synchronized void stdin(byte[] buffer) {
+	public synchronized void write(byte[] buffer) {
 		Util.writeFlush(stdin, buffer);
 	}
 
