@@ -40,6 +40,7 @@ public class SocketFowardLocalTest extends AbstractTestCase {
 
 		client = new Socket(forward.getSourceHost(), port);
 		socket = server.accept();
+		socket.setSoTimeout(1000);
 		
 		Util.writeFlush(client.getOutputStream(), "t1", "UTF-8");
 		Util.writeFlush(socket.getOutputStream(), "t2", "UTF-8");
@@ -65,6 +66,7 @@ public class SocketFowardLocalTest extends AbstractTestCase {
 		
 		client = new Socket(forward.getSourceHost(), port);
 		socket = server.accept();
+		socket.setSoTimeout(1000);
 		
 		Util.writeFlush(client.getOutputStream(), "t1", "UTF-8");
 		
@@ -84,6 +86,7 @@ public class SocketFowardLocalTest extends AbstractTestCase {
 		
 		client = new Socket(forward.getSourceHost(), port);
 		socket = server.accept();
+		socket.setSoTimeout(1000);
 		
 		Util.writeFlush(client.getOutputStream(), "t1", "UTF-8");
 		Util.writeFlush(socket.getOutputStream(), "t2", "UTF-8");
