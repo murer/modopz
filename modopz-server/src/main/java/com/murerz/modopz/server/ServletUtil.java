@@ -8,7 +8,7 @@ import java.io.StringWriter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.murerz.modopz.core.service.JSON;
+import com.murerz.modopz.core.json.JSON;
 
 public class ServletUtil {
 

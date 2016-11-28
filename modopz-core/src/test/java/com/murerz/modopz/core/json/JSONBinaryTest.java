@@ -4,7 +4,6 @@ import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
 
-import com.murerz.modopz.core.service.JSON;
 import com.murerz.modopz.core.util.Util;
 
 public class JSONBinaryTest {

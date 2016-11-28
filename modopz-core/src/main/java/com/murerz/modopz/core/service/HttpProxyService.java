@@ -9,6 +9,7 @@ import java.net.URL;
 import java.util.Map;
 
 import com.murerz.modopz.core.exp.MOException;
+import com.murerz.modopz.core.json.JSON;
 import com.murerz.modopz.core.util.MOUtil;
 import com.murerz.modopz.core.util.Util;
 

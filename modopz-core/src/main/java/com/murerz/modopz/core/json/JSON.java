@@ -1,4 +1,4 @@
-package com.murerz.modopz.core.service;
+package com.murerz.modopz.core.json;
 
 import java.util.HashSet;
 import java.util.Map.Entry;
@@ -7,7 +7,8 @@ import java.util.Set;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-import com.murerz.modopz.core.json.ByteArrayBase64GsonAdapter;
+import com.murerz.modopz.core.service.Command;
+import com.murerz.modopz.core.service.Resp;
 
 public class JSON {
 

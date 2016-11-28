@@ -8,8 +8,6 @@ import java.util.List;
 
 import org.junit.Test;
 
-import com.murerz.modopz.core.service.JSON;
-
 public class JSONTest {
 
 	public static class J3 {

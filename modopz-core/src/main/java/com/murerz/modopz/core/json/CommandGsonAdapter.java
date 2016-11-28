@@ -1,4 +1,4 @@
-package com.murerz.modopz.core.service;
+package com.murerz.modopz.core.json;
 
 import java.lang.reflect.Method;
 import java.lang.reflect.Type;
@@ -12,6 +12,7 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
 import com.google.gson.JsonSerializationContext;
 import com.google.gson.JsonSerializer;
+import com.murerz.modopz.core.service.Command;
 import com.murerz.modopz.core.util.MOUtil;
 
 public class CommandGsonAdapter implements JsonDeserializer<Command>, JsonSerializer<Command> {

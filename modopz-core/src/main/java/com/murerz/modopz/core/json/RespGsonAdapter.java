@@ -1,4 +1,4 @@
-package com.murerz.modopz.core.service;
+package com.murerz.modopz.core.json;
 
 import java.lang.reflect.Type;
 
@@ -9,6 +9,7 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
 import com.google.gson.JsonSerializationContext;
 import com.google.gson.JsonSerializer;
+import com.murerz.modopz.core.service.Resp;
 import com.murerz.modopz.core.util.Reflect;
 
 public class RespGsonAdapter implements JsonDeserializer<Resp<?>>, JsonSerializer<Resp<?>> {
