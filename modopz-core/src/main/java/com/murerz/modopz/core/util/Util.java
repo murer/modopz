@@ -206,5 +206,28 @@ public class Util {
 		}
 	}
 
-	
+	public static long copy(InputStream in, OutputStream out) {
+		try {
+			return copyExp(in, out);
+		} catch (IOException e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	public static long copyExp(InputStream in, OutputStream out) throws IOException {
+		byte[] buffer = new byte[10 * 1024];
+		long total = 0;
+		while (true) {
+			int read = in.read(buffer);
+			if (read < 0) {
+				return total;
+			}
+			if (read > 0) {
+				total += read;
+				out.write(buffer, 0, read);
+				out.flush();
+			}
+		}
+	}
+
 }

@@ -26,7 +26,7 @@ public class Kernel implements Service, Closeable {
 
 	@SuppressWarnings("unchecked")
 	public <T> T module(Class<T> spec) {
-		return (T) module(spec.getName());
+		return (T) module(spec.getSimpleName());
 	}
 
 	public Module module(String simpleName) {

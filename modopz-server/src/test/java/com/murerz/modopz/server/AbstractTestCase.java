@@ -4,15 +4,17 @@ import org.junit.After;
 import org.junit.Before;
 
 import com.murerz.modopz.core.service.HttpProxyService;
+import com.murerz.modopz.core.service.Kernel;
 import com.murerz.modopz.core.service.Service;
+import com.murerz.modopz.core.socket.SocketFowardModuleImpl;
 import com.murerz.modopz.core.util.Util;
-import com.murerz.modopz.server.MOServer;
 
 public class AbstractTestCase {
 
 	protected MOServer server;
 	protected int port;
 	protected Service service;
+	protected Kernel local;
 
 	@Before
 	public void setUp() {
@@ -21,10 +23,15 @@ public class AbstractTestCase {
 		port = server.bind("127.0.0.1", 0);
 
 		service = new HttpProxyService().prepare("http://localhost:" + port + "/s/modopz");
+
+		local = new Kernel();
+		local.load(new SocketFowardModuleImpl());
+		local.start();
 	}
 
 	@After
 	public void tearDown() {
+		Util.close(local);
 		Util.close(server);
 	}
 }
