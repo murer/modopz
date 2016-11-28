@@ -1,4 +1,4 @@
-package com.murerz.modopz.core.service;
+package com.murerz.modopz.server.core.service;
 
 import static org.junit.Assert.*;
 

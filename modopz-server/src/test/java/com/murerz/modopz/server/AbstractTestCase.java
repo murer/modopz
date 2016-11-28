@@ -6,6 +6,7 @@ import org.junit.Before;
 import com.murerz.modopz.core.client.MOHttpClient;
 import com.murerz.modopz.core.service.Service;
 import com.murerz.modopz.core.util.Util;
+import com.murerz.modopz.server.MOServer;
 
 public class AbstractTestCase {
 
