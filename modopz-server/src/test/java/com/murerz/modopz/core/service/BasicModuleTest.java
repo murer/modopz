@@ -1,4 +1,4 @@
-package com.murerz.modopz.server;
+package com.murerz.modopz.core.service;
 
 import static org.junit.Assert.*;
 
@@ -7,6 +7,7 @@ import org.junit.Test;
 import com.murerz.modopz.core.exp.MOException;
 import com.murerz.modopz.core.module.BasicModule;
 import com.murerz.modopz.core.service.Echo;
+import com.murerz.modopz.server.AbstractTestCase;
 
 public class BasicModuleTest extends AbstractTestCase {
 
