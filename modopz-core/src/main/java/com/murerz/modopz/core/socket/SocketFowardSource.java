@@ -4,12 +4,17 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.Socket;
+import java.net.SocketTimeoutException;
 
+import com.murerz.modopz.core.log.Log;
+import com.murerz.modopz.core.log.LogFactory;
 import com.murerz.modopz.core.module.SocketModule;
 import com.murerz.modopz.core.service.Service;
 import com.murerz.modopz.core.util.Util;
 
 public class SocketFowardSource implements Runnable {
+
+	private static final Log LOG = LogFactory.me().create(SocketFowardSource.class);
 
 	private Socket source;
 	private SocketForward forward;
@@ -70,13 +75,17 @@ public class SocketFowardSource implements Runnable {
 			InputStream in = source.getInputStream();
 			byte[] buffer = new byte[10 * 1024];
 			while (running) {
-				int read = in.read(buffer);
-				if (read > 0) {
-					byte[] n = Util.cut(buffer, 0, read);
-					service.module(SocketModule.class).write(dest, n);
-				}
-				if (read < 0) {
-					return;
+				try {
+					int read = in.read(buffer);
+					if (read > 0) {
+						byte[] n = Util.cut(buffer, 0, read);
+						service.module(SocketModule.class).write(dest, n);
+					}
+					if (read < 0) {
+						return;
+					}
+				} catch (SocketTimeoutException e) {
+
 				}
 			}
 		} catch (IOException e) {
@@ -112,7 +121,11 @@ public class SocketFowardSource implements Runnable {
 	}
 
 	private void closeDest() {
-		service.module(SocketModule.class).destroy(dest);
+		try {
+			service.module(SocketModule.class).destroy(dest);
+		} catch (Exception e) {
+			LOG.error("Error closing", e);
+		}
 	}
 
 	public SocketFowardSource setService(Service service) {

@@ -8,6 +8,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.Map;
 
+import com.murerz.modopz.core.client.ClientConfig;
 import com.murerz.modopz.core.exp.MOException;
 import com.murerz.modopz.core.json.JSON;
 import com.murerz.modopz.core.util.MOUtil;
@@ -67,6 +68,10 @@ public class HttpProxyService extends ProxyService {
 		} finally {
 			Util.close(conn);
 		}
+	}
+
+	public Service prepare() {
+		return prepare(ClientConfig.me().require("modopz.url"));
 	}
 
 }

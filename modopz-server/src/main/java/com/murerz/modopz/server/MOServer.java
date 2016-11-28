@@ -11,6 +11,7 @@ import org.eclipse.jetty.servlet.ServletHandler;
 
 import com.murerz.modopz.core.log.Log;
 import com.murerz.modopz.core.log.LogFactory;
+import com.murerz.modopz.core.util.Util;
 
 public class MOServer implements Closeable {
 
@@ -50,6 +51,25 @@ public class MOServer implements Closeable {
 			} catch (Exception e) {
 				LOG.error("error stopping server", e);
 			}
+		}
+	}
+
+	public static void main(String[] args) {
+		MOServer server = new MOServer();
+		try {
+			server.boot();
+			server.bind("0.0.0.0", 8765);
+			server.waitFor();
+		} finally {
+			Util.close(server);
+		}
+	}
+
+	public void waitFor() {
+		try {
+			server.join();
+		} catch (InterruptedException e) {
+			throw new RuntimeException(e);
 		}
 	}
 

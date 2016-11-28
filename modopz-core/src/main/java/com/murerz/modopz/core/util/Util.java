@@ -240,4 +240,12 @@ public class Util {
 		}
 	}
 
+	public static synchronized void hold() {
+		try {
+			Util.class.wait();
+		} catch (InterruptedException e) {
+			throw new RuntimeException(e);
+		}
+	}
+
 }
