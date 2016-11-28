@@ -1,12 +1,10 @@
-package com.murerz.modopz.core.client;
+package com.murerz.modopz.core.service;
 
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
 
-import com.murerz.modopz.core.service.Service;
-
-public abstract class MOClient implements Service {
+public abstract class ProxyService implements Service {
 
 	protected class Invoker implements InvocationHandler {
 

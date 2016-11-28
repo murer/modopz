@@ -1,4 +1,4 @@
-package com.murerz.modopz.core.client;
+package com.murerz.modopz.core.service;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -9,14 +9,10 @@ import java.net.URL;
 import java.util.Map;
 
 import com.murerz.modopz.core.exp.MOException;
-import com.murerz.modopz.core.service.Command;
-import com.murerz.modopz.core.service.JSON;
-import com.murerz.modopz.core.service.Resp;
-import com.murerz.modopz.core.service.Service;
 import com.murerz.modopz.core.util.MOUtil;
 import com.murerz.modopz.core.util.Util;
 
-public class MOHttpClient extends MOClient {
+public class HttpProxyService extends ProxyService {
 
 	private String url;
 
