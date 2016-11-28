@@ -62,4 +62,8 @@ public class SocketFowardModuleImpl implements SocketFowardModule {
 		return this;
 	}
 
+	public static SocketFowardModuleImpl create() {
+		return new SocketFowardModuleImpl();
+	}
+
 }
