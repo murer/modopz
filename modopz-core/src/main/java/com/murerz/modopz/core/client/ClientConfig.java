@@ -21,7 +21,7 @@ public class ClientConfig {
 		return ret;
 	}
 
-	private String prop(String name) {
+	public String prop(String name) {
 		return prop(name, null);
 	}
 
@@ -30,13 +30,23 @@ public class ClientConfig {
 		return Arrays.asList(str.split(","));
 	}
 
-	private String prop(String name, String def) {
+	public String prop(String name, String def) {
 		String ret = System.getProperty(name);
 		return ret == null ? def : ret;
 	}
 
 	public <T> T json(String json, Class<T> clazz) {
 		return JSON.parse(prop(json), clazz);
+	}
+
+	public boolean propBoolean(String name) {
+		return "true".equals(prop(name));
+	}
+
+	public void config(String name, String value) {
+		if (prop(name) == null) {
+			System.setProperty(name, value);
+		}
 	}
 
 }

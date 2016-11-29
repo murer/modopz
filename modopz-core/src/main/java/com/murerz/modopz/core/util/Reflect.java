@@ -70,4 +70,15 @@ public class Reflect {
 		}
 	}
 
+	@SuppressWarnings("unchecked")
+	public static <T> T newInstance(String name, Class<T> type) {
+		try {
+			return (T) clazz(name).newInstance();
+		} catch (InstantiationException e) {
+			throw new RuntimeException(e);
+		} catch (IllegalAccessException e) {
+			throw new RuntimeException(e);
+		}
+	}
+
 }

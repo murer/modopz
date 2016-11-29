@@ -14,7 +14,7 @@ import com.murerz.modopz.core.json.JSON;
 import com.murerz.modopz.core.util.MOUtil;
 import com.murerz.modopz.core.util.Util;
 
-public class HttpProxyService extends ProxyService {
+public class HttpProxyService extends ProxyService implements CLIConfigurable {
 
 	private String url;
 
@@ -70,8 +70,16 @@ public class HttpProxyService extends ProxyService {
 		}
 	}
 
-	public Service prepare() {
-		return prepare(ClientConfig.me().require("modopz.url"));
+	public void start() {
+
+	}
+
+	public void close() {
+
+	}
+
+	public void config() {
+		prepare(ClientConfig.me().prop("modopz.url", "http://localhost:8765/s/modopz"));
 	}
 
 }

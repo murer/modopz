@@ -17,11 +17,10 @@ public class Kernel implements Service, Closeable {
 		}
 	}
 
-	public Kernel start() {
+	public void start() {
 		for (Module module : modules.values()) {
 			module.start();
 		}
-		return this;
 	}
 
 	@SuppressWarnings("unchecked")
