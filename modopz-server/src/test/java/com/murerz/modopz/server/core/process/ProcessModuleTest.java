@@ -1,4 +1,4 @@
-package com.murerz.modopz.server.core.socket;
+package com.murerz.modopz.server.core.process;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
@@ -14,7 +14,7 @@ import com.murerz.modopz.core.socket.SocketForward;
 import com.murerz.modopz.core.util.Util;
 import com.murerz.modopz.server.AbstractTestCase;
 
-public class SocketFowardLocalTest extends AbstractTestCase {
+public class ProcessModuleTest extends AbstractTestCase {
 
 	private ServerSocket server;
 	private Socket socket;
