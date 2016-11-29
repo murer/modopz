@@ -54,4 +54,8 @@ public abstract class CLI implements CLIConfigurable, Closeable {
 		return service;
 	}
 
+	public void hold() {
+		Util.hold();
+	}
+
 }

@@ -30,7 +30,7 @@ public class SocketForwardCLI extends CLI {
 				LOG.info("Binding: " + forward);
 				mod.bind(forward);
 			}
-			Util.hold();
+			hold();
 		} finally {
 			Util.close(mod);
 		}
