@@ -7,8 +7,6 @@ import com.murerz.modopz.core.client.CLI;
 import com.murerz.modopz.core.client.ClientConfig;
 import com.murerz.modopz.core.log.Log;
 import com.murerz.modopz.core.log.LogFactory;
-import com.murerz.modopz.core.module.SocketFowardModule;
-import com.murerz.modopz.core.service.Kernel;
 import com.murerz.modopz.core.util.Util;
 
 public class SocketForwardCLI extends CLI {
@@ -24,22 +22,18 @@ public class SocketForwardCLI extends CLI {
 	}
 
 	public void exec() {
-		Kernel local = new Kernel();
+		SocketFowardModuleImpl mod = new SocketFowardModuleImpl();
 		try {
-			local.load(SocketFowardModuleImpl.create().setService(service()));
-			local.start();
-
-			SocketFowardModule module = local.module(SocketFowardModule.class);
+			mod.setService(service());
+			mod.start();
 			for (SocketForward forward : this.local) {
 				LOG.info("Binding: " + forward);
-				module.bind(forward);
+				mod.bind(forward);
 			}
 			Util.hold();
 		} finally {
-			LOG.info("Closing");
-			Util.close(local);
+			Util.close(mod);
 		}
-		LOG.info("Done");
 	}
 
 	public void config() {
