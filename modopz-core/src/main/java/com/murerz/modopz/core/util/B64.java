@@ -1,5 +1,7 @@
 package com.murerz.modopz.core.util;
 
+import java.util.Arrays;
+
 public class B64 {
 
 	private final static char[] ALPHABET = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_"
@@ -29,13 +31,19 @@ public class B64 {
 			ar[a++] = ALPHABET[((b1 << 2) | ((b2 & 0xFF) >> 6)) & mask];
 			ar[a++] = ALPHABET[b2 & mask];
 		}
+		// switch (size % 3) {
+		// case 1:
+		// ar[--a] = '=';
+		// case 2:
+		// ar[--a] = '=';
+		// }
 		switch (size % 3) {
 		case 1:
-			ar[--a] = '=';
+			--a;
 		case 2:
-			ar[--a] = '=';
+			--a;
 		}
-		return new String(ar);
+		return new String(ar, 0, a);
 	}
 
 	public static byte[] decode(String s) {
