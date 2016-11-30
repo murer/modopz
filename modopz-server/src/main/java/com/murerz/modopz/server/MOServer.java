@@ -9,6 +9,7 @@ import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.server.ServerConnector;
 import org.eclipse.jetty.servlet.ServletHandler;
 
+import com.murerz.modopz.core.client.ClientConfig;
 import com.murerz.modopz.core.log.Log;
 import com.murerz.modopz.core.log.LogFactory;
 import com.murerz.modopz.core.util.Util;
@@ -58,7 +59,8 @@ public class MOServer implements Closeable {
 		MOServer server = new MOServer();
 		try {
 			server.boot();
-			server.bind("0.0.0.0", 8765);
+			int port = ClientConfig.me().propInt("modioz.server.port", 8765);
+			server.bind("0.0.0.0", port);
 			server.waitFor();
 		} finally {
 			Util.close(server);

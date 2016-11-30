@@ -49,4 +49,9 @@ public class ClientConfig {
 		}
 	}
 
+	public int propInt(String name, int def) {
+		String ret = prop(name);
+		return ret != null ? Integer.parseInt(ret) : def;
+	}
+
 }
