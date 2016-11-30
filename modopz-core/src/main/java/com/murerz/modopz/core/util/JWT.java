@@ -8,7 +8,7 @@ import com.murerz.modopz.core.json.JSON;
 
 public class JWT {
 
-	private String user;
+	private String pub;
 
 	private String service;
 
@@ -16,12 +16,12 @@ public class JWT {
 
 	private long exp;
 
-	public String getUser() {
-		return user;
+	public String getPub() {
+		return pub;
 	}
 
-	public JWT setUser(String user) {
-		this.user = user;
+	public JWT setPub(String pub) {
+		this.pub = pub;
 		return this;
 	}
 
@@ -89,6 +89,11 @@ public class JWT {
 		if (time < 0) {
 			return null;
 		}
+		String pub = Hash.md5B64(key.getEncoded());
+		if (!pub.equals(jwt.getPub())) {
+			return null;
+		}
+
 		return jwt;
 	}
 
@@ -110,7 +115,13 @@ public class JWT {
 
 	@Override
 	public String toString() {
-		return "[JWT user=" + user + ", service=" + service + ", iat=" + iat + ", exp=" + exp + "]";
+		return "[JWT user=" + pub + ", service=" + service + ", iat=" + iat + ", exp=" + exp + "]";
+	}
+
+	public void pub(PublicKey key) {
+		byte[] encoded = key.getEncoded();
+		String user = Hash.md5B64(encoded);
+		this.pub = user;
 	}
 
 }
