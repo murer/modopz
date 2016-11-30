@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.murerz.modopz.core.json.JSON;
+import com.murerz.modopz.core.util.Util;
 
 public class ServletUtil {
 
@@ -50,6 +51,10 @@ public class ServletUtil {
 			throw new RuntimeException(e);
 		}
 
+	}
+
+	public static String header(HttpServletRequest req, String name) {
+		return Util.str(req.getHeader(name));
 	}
 
 }

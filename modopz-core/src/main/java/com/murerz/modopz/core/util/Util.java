@@ -252,4 +252,12 @@ public class Util {
 		}
 	}
 
+	public static String str(String str) {
+		if (str == null) {
+			return null;
+		}
+		str = str.trim();
+		return str.length() == 0 ? null : str;
+	}
+
 }

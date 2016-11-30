@@ -21,6 +21,8 @@ import com.murerz.modopz.core.service.Command;
 import com.murerz.modopz.core.service.Kernel;
 import com.murerz.modopz.core.service.Resp;
 import com.murerz.modopz.core.socket.SocketModuleImpl;
+import com.murerz.modopz.core.util.Auth;
+import com.murerz.modopz.core.util.JWT;
 import com.murerz.modopz.core.util.MOUtil;
 import com.murerz.modopz.core.util.Util;
 
@@ -30,12 +32,18 @@ public class MOFilter implements Filter {
 
 	private Kernel kernel;
 
+	private Auth auth;
+
 	public void init(FilterConfig filterConfig) throws ServletException {
 		kernel = new Kernel();
 		kernel.load(new BasicModuleImpl());
 		kernel.load(new ProcessModuleImpl());
 		kernel.load(new SocketModuleImpl());
 		kernel.start();
+
+		auth = new Auth();
+		auth.add(System.getProperty("modopz.server.pub",
+				"MFwwDQYJKoZIhvcNAQEBBQADSwAwSAJBALF65WfU7KVi4RLLmW7JvBHCqDJoS2UFUeJag6q0qPQEiT3ZK_3LTdwr8-Kxb537Qn4ozOFkSXSnskiqwae9fdMCAwEAAQ"));
 	}
 
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
@@ -48,7 +56,29 @@ public class MOFilter implements Filter {
 			resp.sendError(HttpServletResponse.SC_METHOD_NOT_ALLOWED);
 			return;
 		}
+		auth(req, resp);
 		post(req, resp);
+	}
+
+	private void auth(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+		String header = ServletUtil.header(req, "Authorization");
+		if (header == null) {
+			resp.sendError(HttpServletResponse.SC_UNAUTHORIZED);
+			return;
+		}
+		if (!header.startsWith("Bearer ")) {
+			throw new RuntimeException("unsupported: " + header);
+		}
+		String token = header.replaceAll("Bearer ", "");
+		JWT jwt = JWT.parse(token, auth.getPubs());
+		if (jwt == null) {
+			resp.sendError(HttpServletResponse.SC_FORBIDDEN);
+			return;
+		}
+		if (!"modopz".equals(jwt.getService())) {
+			resp.sendError(HttpServletResponse.SC_FORBIDDEN);
+			return;
+		}
 	}
 
 	private void post(HttpServletRequest req, HttpServletResponse resp) throws IOException {

@@ -2,6 +2,8 @@ package com.murerz.modopz.core.util;
 
 import java.security.PrivateKey;
 import java.security.PublicKey;
+import java.util.HashMap;
+import java.util.Map;
 
 import com.google.gson.JsonObject;
 import com.murerz.modopz.core.json.JSON;
@@ -52,8 +54,9 @@ public class JWT {
 		return this;
 	}
 
-	public void exp(long time) {
+	public JWT exp(long time) {
 		exp = iat + time;
+		return this;
 	}
 
 	public String stringify(PrivateKey key) {
@@ -70,7 +73,7 @@ public class JWT {
 		return Util.format("%s.%s", header, payload);
 	}
 
-	public static JWT parse(String token, PublicKey key) {
+	public static JWT parse(String token, Map<String, PublicKey> pubs) {
 		String[] array = token.split("\\.");
 		if (array.length != 3) {
 			throw new RuntimeException("wrong: " + token);
@@ -80,10 +83,15 @@ public class JWT {
 		byte[] sign = B64.decode(array[2]);
 
 		checkHeader(encHeader);
+		JWT jwt = JSON.parse(encPayload, JWT.class);
+		PublicKey key = pubs.get(jwt.getPub());
+		if(key == null) {
+			return null;
+		}
+		
 		if (!checkSign(array[0], array[1], sign, key)) {
 			return null;
 		}
-		JWT jwt = JSON.parse(encPayload, JWT.class);
 		long time = jwt.getExp() - System.currentTimeMillis();
 		System.out.println(time);
 		if (time < 0) {
@@ -95,6 +103,12 @@ public class JWT {
 		}
 
 		return jwt;
+	}
+
+	public static JWT parse(String token, PublicKey key) {
+		HashMap<String, PublicKey> pubs = new HashMap<String, PublicKey>();
+		pubs.put(Hash.md5B64(key.getEncoded()), key);
+		return parse(token, pubs);
 	}
 
 	private static boolean checkSign(String header, String payload, byte[] sign, PublicKey key) {
@@ -122,6 +136,14 @@ public class JWT {
 		byte[] encoded = key.getEncoded();
 		String user = Hash.md5B64(encoded);
 		this.pub = user;
+	}
+
+	public static void main(String[] args) {
+		KPCrypt kp = KPCrypt.create();
+		JsonObject ret = new JsonObject();
+		ret.addProperty("pub", kp.getPublicKeyB64());
+		ret.addProperty("priv", kp.getPrivateKeyB64());
+		System.out.println(ret);
 	}
 
 }
