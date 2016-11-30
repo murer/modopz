@@ -7,7 +7,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.lang.ProcessBuilder.Redirect;
-import java.util.List;
 
 import com.murerz.modopz.core.util.ID;
 import com.murerz.modopz.core.util.Util;
@@ -37,15 +36,11 @@ public class MOProcess implements Closeable {
 	}
 
 	public static MOProcess create(ProcessCommand command) {
-		return create(command.getCmds());
-	}
-
-	public static MOProcess create(List<String> cmds) {
 		try {
 			MOProcess ret = new MOProcess();
 			ret.id = ID.next();
 			ret.createdAt = System.currentTimeMillis();
-			ProcessBuilder builder = new ProcessBuilder(cmds);
+			ProcessBuilder builder = new ProcessBuilder(command.getCmds());
 			builder.redirectOutput(Redirect.PIPE).redirectError(Redirect.PIPE).redirectInput(Redirect.PIPE);
 			ret.process = builder.start();
 			ret.stdout = new BufferedInputStream(ret.process.getInputStream(), MAX * 2);

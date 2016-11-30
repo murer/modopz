@@ -26,23 +26,27 @@ public class SocketModuleImpl implements SocketModule {
 		scks.clear();
 	}
 
-	public String connect(String host, Integer port) {
-		MOSocket socket = MOSocket.create(host, port);
-		addSocket(socket);
-		return socket.getId();
+	private synchronized MOSocket removeSocket(String dest) {
+		return scks.remove(dest);
 	}
 
 	private synchronized void addSocket(MOSocket socket) {
 		scks.put(socket.getId(), socket);
 	}
 
+	private synchronized MOSocket getSocket(String dest) {
+		return scks.get(dest);
+	}
+
+	public String connect(String host, Integer port) {
+		MOSocket socket = MOSocket.create(host, port);
+		addSocket(socket);
+		return socket.getId();
+	}
+
 	public byte[] read(String dest) {
 		MOSocket socket = getSocket(dest);
 		return socket.read();
-	}
-
-	private synchronized MOSocket getSocket(String dest) {
-		return scks.get(dest);
 	}
 
 	public Status write(String dest, byte[] data) {
@@ -55,10 +59,6 @@ public class SocketModuleImpl implements SocketModule {
 		MOSocket socket = removeSocket(dest);
 		Util.close(socket);
 		return new Status();
-	}
-
-	private synchronized MOSocket removeSocket(String dest) {
-		return scks.get(dest);
 	}
 
 }

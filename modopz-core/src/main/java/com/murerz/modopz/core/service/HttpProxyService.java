@@ -82,4 +82,10 @@ public class HttpProxyService extends ProxyService implements CLIConfigurable {
 		prepare(ClientConfig.me().prop("modopz.url", "http://localhost:8765/s/modopz"));
 	}
 
+	public static Service create(String url) {
+		HttpProxyService ret = new HttpProxyService();
+		ret.prepare(url);
+		return ret;
+	}
+
 }

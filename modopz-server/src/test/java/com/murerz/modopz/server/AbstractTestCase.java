@@ -22,7 +22,7 @@ public class AbstractTestCase {
 		server.boot();
 		port = server.bind("127.0.0.1", 0);
 
-		service = new HttpProxyService().prepare("http://localhost:" + port + "/s/modopz");
+		service = HttpProxyService.create("http://localhost:" + port + "/s/modopz");
 
 		local = new Kernel();
 		local.load(SocketFowardModuleImpl.create().setService(service));

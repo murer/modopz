@@ -16,6 +16,7 @@ import com.murerz.modopz.core.log.Log;
 import com.murerz.modopz.core.log.LogFactory;
 import com.murerz.modopz.core.module.BasicModuleImpl;
 import com.murerz.modopz.core.module.Module;
+import com.murerz.modopz.core.process.ProcessModuleImpl;
 import com.murerz.modopz.core.service.Command;
 import com.murerz.modopz.core.service.Kernel;
 import com.murerz.modopz.core.service.Resp;
@@ -32,6 +33,7 @@ public class MOFilter implements Filter {
 	public void init(FilterConfig filterConfig) throws ServletException {
 		kernel = new Kernel();
 		kernel.load(new BasicModuleImpl());
+		kernel.load(new ProcessModuleImpl());
 		kernel.load(new SocketModuleImpl());
 		kernel.start();
 	}
