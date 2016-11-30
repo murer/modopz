@@ -8,3 +8,10 @@ dependencies:
 test:
   override:
     - ./ci/ci-test.sh
+  post:
+    - ./ci/ci-test-post.sh
+deployment:
+    cloudz:
+        branch: [ master ]
+        commands:
+           - ./ci/ci-cloudz.sh
