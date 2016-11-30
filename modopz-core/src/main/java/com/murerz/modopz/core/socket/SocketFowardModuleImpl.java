@@ -24,7 +24,7 @@ public class SocketFowardModuleImpl implements SocketFowardModule {
 	}
 
 	public void start() {
-
+		
 	}
 
 	public synchronized void close() {

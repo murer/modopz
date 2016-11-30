@@ -19,8 +19,11 @@ public class SocketModuleImpl implements SocketModule {
 
 	}
 
-	public void close() {
-
+	public synchronized void close() {
+		for (MOSocket sck : scks.values()) {
+			Util.close(sck);
+		}
+		scks.clear();
 	}
 
 	public String connect(String host, Integer port) {
