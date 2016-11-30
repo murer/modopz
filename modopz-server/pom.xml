@@ -30,6 +30,7 @@
 	</dependencies>
 
 	<build>
+		<finalName>modopz-server</finalName>
 		<plugins>
 			<plugin>
 				<artifactId>maven-assembly-plugin</artifactId>
