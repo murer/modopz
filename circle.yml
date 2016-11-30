@@ -1,0 +1,10 @@
+machine:
+  timezone: America/Sao_Paulo
+  java:
+    version: oraclejdk8
+dependencies:
+  override:
+    - ./ci/ci-build.sh
+test:
+  override:
+    - ./ci/ci-test.sh
