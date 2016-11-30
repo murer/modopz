@@ -16,4 +16,12 @@ public class ProcessModuleImpl implements ProcessModule {
 
 	}
 
+	public Long create(ProcessCommand setCmds) {
+		return null;
+	}
+
+	public MOProcessStatus status(long l) {
+		return null;
+	}
+
 }

@@ -1,15 +1,12 @@
 package com.murerz.modopz.core.process;
 
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-
 public class MOProcessStatus {
 
 	private Integer code;
 
-	private ByteArrayOutputStream stdout = new ByteArrayOutputStream();
+	private byte[] stdout = new byte[0];
 
-	private ByteArrayOutputStream stderr = new ByteArrayOutputStream();
+	private byte[] stderr = new byte[0];
 
 	public Integer getCode() {
 		return code;
@@ -20,32 +17,22 @@ public class MOProcessStatus {
 		return this;
 	}
 
-	public ByteArrayOutputStream getStdout() {
+	public byte[] getStdout() {
 		return stdout;
 	}
 
-	public MOProcessStatus setStdout(ByteArrayOutputStream stdout) {
+	public MOProcessStatus setStdout(byte[] stdout) {
 		this.stdout = stdout;
 		return this;
 	}
 
-	public ByteArrayOutputStream getStderr() {
+	public byte[] getStderr() {
 		return stderr;
 	}
 
-	public MOProcessStatus setStderr(ByteArrayOutputStream stderr) {
+	public MOProcessStatus setStderr(byte[] stderr) {
 		this.stderr = stderr;
 		return this;
-	}
-
-	public void append(MOProcessStatus status) {
-		try {
-			code = status.getCode();
-			status.stdout.writeTo(stdout);
-			status.stderr.writeTo(stderr);
-		} catch (IOException e) {
-			throw new RuntimeException(e);
-		}
 	}
 
 }

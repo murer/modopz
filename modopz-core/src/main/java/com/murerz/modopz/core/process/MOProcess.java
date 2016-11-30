@@ -1,6 +1,7 @@
 package com.murerz.modopz.core.process;
 
 import java.io.BufferedInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.Closeable;
 import java.io.IOException;
 import java.io.InputStream;
@@ -58,8 +59,8 @@ public class MOProcess implements Closeable {
 
 	public synchronized MOProcessStatus read() {
 		MOProcessStatus ret = new MOProcessStatus();
-		Util.copyAvailable(this.stdout, ret.getStdout(), MAX - ret.getStdout().size());
-		Util.copyAvailable(this.stderr, ret.getStderr(), MAX - ret.getStderr().size());
+		ret.setStdout(Util.readAvailable(this.stdout, MAX - ret.getStdout().length));
+		ret.setStderr(Util.readAvailable(this.stderr, MAX - ret.getStderr().length));
 		Integer code = code();
 		if (code != null) {
 			if (Util.available(this.stdout) <= 0 && Util.available(this.stderr) <= 0) {
@@ -71,16 +72,21 @@ public class MOProcess implements Closeable {
 
 	public MOProcessStatus waitFor(long timeout) {
 		long before = System.currentTimeMillis();
-		MOProcessStatus ret = read();
+		ByteArrayOutputStream out = new ByteArrayOutputStream();
+		ByteArrayOutputStream err = new ByteArrayOutputStream();
+		Integer code = null;
 		while (true) {
-			if (ret.getCode() != null) {
-				return ret;
+			MOProcessStatus status = read();
+			Util.writeFlush(out, status.getStdout());
+			Util.writeFlush(err, status.getStderr());
+			code = status.getCode();
+			if (code != null) {
+				return new MOProcessStatus().setCode(code).setStdout(out.toByteArray()).setStderr(err.toByteArray());
 			}
 			if (before + timeout < System.currentTimeMillis()) {
-				return ret;
+				return new MOProcessStatus().setCode(code).setStdout(out.toByteArray()).setStderr(err.toByteArray());
 			}
 			Util.sleep(20L);
-			ret.append(read());
 		}
 	}
 
