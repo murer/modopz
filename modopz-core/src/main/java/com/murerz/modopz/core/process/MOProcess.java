@@ -35,6 +35,10 @@ public class MOProcess implements Closeable {
 		return createdAt;
 	}
 
+	public static MOProcess create(ProcessCommand command) {
+		return create(command.getCmds());
+	}
+
 	public static MOProcess create(List<String> cmds) {
 		try {
 			MOProcess ret = new MOProcess();

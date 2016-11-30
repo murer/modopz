@@ -9,8 +9,6 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.murerz.modopz.core.process.MOProcess;
-import com.murerz.modopz.core.process.MOProcessStatus;
 import com.murerz.modopz.core.util.Util;
 
 public class MOProcessTest {
@@ -32,7 +30,7 @@ public class MOProcessTest {
 
 	@Test
 	public void testProcessStdout() {
-		process = MOProcess.create(Arrays.asList("echo", "abc"));
+		process = MOProcess.create(new ProcessCommand().setCmds(Arrays.asList("echo", "abc")));
 		assertTrue(process.getCreatedAt() <= System.currentTimeMillis());
 		assertTrue(process.getCreatedAt() >= System.currentTimeMillis() - 5000);
 		assertTrue(process.getId() > 0);
@@ -45,7 +43,7 @@ public class MOProcessTest {
 
 	@Test
 	public void testProcessComplete() {
-		process = MOProcess.create(Arrays.asList("/bin/bash"));
+		process = MOProcess.create(new ProcessCommand().setCmds(Arrays.asList("/bin/bash")));
 		assertTrue(process.getCreatedAt() <= System.currentTimeMillis());
 		assertTrue(process.getCreatedAt() >= System.currentTimeMillis() - 5000);
 		assertTrue(process.getId() > 0);
@@ -60,7 +58,7 @@ public class MOProcessTest {
 
 	@Test
 	public void testProcessWait() {
-		process = MOProcess.create(Arrays.asList("/bin/bash"));
+		process = MOProcess.create(new ProcessCommand().setCmds(Arrays.asList("/bin/bash")));
 		assertTrue(process.getCreatedAt() <= System.currentTimeMillis());
 		assertTrue(process.getCreatedAt() >= System.currentTimeMillis() - 5000);
 		assertTrue(process.getId() > 0);
@@ -75,7 +73,7 @@ public class MOProcessTest {
 
 	@Test
 	public void testProcessDestroy() {
-		process = MOProcess.create(Arrays.asList("/bin/bash"));
+		process = MOProcess.create(new ProcessCommand().setCmds(Arrays.asList("/bin/bash")));
 		assertTrue(process.getCreatedAt() <= System.currentTimeMillis());
 		assertTrue(process.getCreatedAt() >= System.currentTimeMillis() - 5000);
 		assertTrue(process.getId() > 0);
