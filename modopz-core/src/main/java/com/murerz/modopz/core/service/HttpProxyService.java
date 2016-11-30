@@ -12,6 +12,7 @@ import java.util.Map;
 import com.murerz.modopz.core.client.ClientConfig;
 import com.murerz.modopz.core.exp.MOException;
 import com.murerz.modopz.core.json.JSON;
+import com.murerz.modopz.core.util.Hash;
 import com.murerz.modopz.core.util.JWT;
 import com.murerz.modopz.core.util.KPCrypt;
 import com.murerz.modopz.core.util.MOUtil;
@@ -95,6 +96,7 @@ public class HttpProxyService extends ProxyService implements CLIConfigurable {
 				"MFwwDQYJKoZIhvcNAQEBBQADSwAwSAJBALF65WfU7KVi4RLLmW7JvBHCqDJoS2UFUeJag6q0qPQEiT3ZK_3LTdwr8-Kxb537Qn4ozOFkSXSnskiqwae9fdMCAwEAAQ");
 		priv = ClientConfig.me().prop("modopz.priv",
 				"MIIBVAIBADANBgkqhkiG9w0BAQEFAASCAT4wggE6AgEAAkEAsXrlZ9TspWLhEsuZbsm8EcKoMmhLZQVR4lqDqrSo9ASJPdkr_ctN3Cvz4rFvnftCfijM4WRJdKeySKrBp7190wIDAQABAkAxpm3S9FAXnGfWuDp-MdV5KnmfUGn3ItvbdPLsqImzabIqMZu8fEB99LCot83Pxk7WSZKO4xwjyJvv1Hvjw4BxAiEA2WKvBwdRG1BG2MG8aywESlGifybL_LUeEYqw1toF1U8CIQDRAZD_bbj9bYXI-ltGouPNsJUJcVlW9OwSZVUZsDU2PQIgV79j0zx62sGet2QMgF42JSGqrBSnBoy9ZGtNUoyTCjUCIB4prbVPLm1UiwQwLVAKXfnnS_rq4svL2O3mtdtZNLS5AiEAr1qLlgnus_6o1DIZh_XqbWLJdGdtOEpMQ8OiyJjYtBI");
+		pub = Hash.md5B64(KPCrypt.create(null, pub).getPublicKey().getEncoded());
 	}
 
 	public static Service create(String url, String pub, String priv) {

@@ -93,7 +93,6 @@ public class JWT {
 			return null;
 		}
 		long time = jwt.getExp() - System.currentTimeMillis();
-		System.out.println(time);
 		if (time < 0) {
 			return null;
 		}
