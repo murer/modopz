@@ -1,9 +1,11 @@
 package com.murerz.modopz.core.client;
 
+import java.io.File;
 import java.util.Arrays;
 import java.util.List;
 
 import com.murerz.modopz.core.json.JSON;
+import com.murerz.modopz.core.util.Util;
 
 public class ClientConfig {
 
@@ -32,7 +34,15 @@ public class ClientConfig {
 
 	public String prop(String name, String def) {
 		String ret = System.getProperty(name);
-		return ret == null ? def : ret;
+		if (ret != null) {
+			return ret;
+		}
+		String path = System.getProperty(name + ".file");
+		if (path == null) {
+			return def;
+		}
+		ret = Util.readAll(new File(path), "UTF-8");
+		return ret;
 	}
 
 	public <T> T json(String json, Class<T> clazz) {

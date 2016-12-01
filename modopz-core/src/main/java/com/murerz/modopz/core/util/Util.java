@@ -1,6 +1,8 @@
 package com.murerz.modopz.core.util;
 
+import java.io.BufferedInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -8,6 +10,8 @@ import java.io.OutputStream;
 import java.io.PrintStream;
 import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -258,6 +262,26 @@ public class Util {
 		}
 		str = str.trim();
 		return str.length() == 0 ? null : str;
+	}
+
+	public static String readAll(URL url, String charset) {
+		InputStream in = null;
+		try {
+			in = new BufferedInputStream(url.openStream());
+			return readAll(in, charset);
+		} catch (IOException e) {
+			throw new RuntimeException(e);
+		} finally {
+			close(in);
+		}
+	}
+
+	public static String readAll(File file, String charset) {
+		try {
+			return readAll(file.toURI().toURL(), charset);
+		} catch (MalformedURLException e) {
+			throw new RuntimeException(e);
+		}
 	}
 
 }
