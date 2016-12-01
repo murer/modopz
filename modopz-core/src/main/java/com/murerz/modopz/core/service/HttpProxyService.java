@@ -12,8 +12,9 @@ import java.util.Map;
 import com.murerz.modopz.core.client.ClientConfig;
 import com.murerz.modopz.core.exp.MOException;
 import com.murerz.modopz.core.json.JSON;
-import com.murerz.modopz.core.util.Hash;
 import com.murerz.modopz.core.util.JWT;
+import com.murerz.modopz.core.util.JWT.Header;
+import com.murerz.modopz.core.util.JWT.Payload;
 import com.murerz.modopz.core.util.KPCrypt;
 import com.murerz.modopz.core.util.MOUtil;
 import com.murerz.modopz.core.util.Util;
@@ -21,8 +22,36 @@ import com.murerz.modopz.core.util.Util;
 public class HttpProxyService extends ProxyService implements CLIConfigurable {
 
 	private String url;
-	private String pub;
-	private String priv;
+	private String user;
+	private PrivateKey key;
+	private String service = "modopz";
+
+	public String getUser() {
+		return user;
+	}
+
+	public HttpProxyService setUser(String user) {
+		this.user = user;
+		return this;
+	}
+
+	public PrivateKey getKey() {
+		return key;
+	}
+
+	public HttpProxyService setKey(PrivateKey key) {
+		this.key = key;
+		return this;
+	}
+
+	public String getService() {
+		return service;
+	}
+
+	public HttpProxyService setService(String service) {
+		this.service = service;
+		return this;
+	}
 
 	public Service prepare(String url) {
 		this.url = url;
@@ -48,9 +77,12 @@ public class HttpProxyService extends ProxyService implements CLIConfigurable {
 		HttpURLConnection conn = null;
 		try {
 
-			JWT jwt = new JWT().setPub(pub).setService("modopz").setIat(System.currentTimeMillis()).exp(3600);
-			PrivateKey key = KPCrypt.create(priv, null).getPrivateKey();
-			String token = jwt.stringify(key);
+			JWT jwt = new JWT();
+			Header header = new Header();
+			Payload payload = new Payload();
+			payload.setUser(user).setService(service).exp(System.currentTimeMillis() / 1000, 3600);
+			jwt.formatHeader(header).formatPayload(payload).sign(key);
+			String token = jwt.formatToken();
 
 			String send = JSON.stringify(cmd);
 			URL u = new URL(url);
@@ -92,18 +124,16 @@ public class HttpProxyService extends ProxyService implements CLIConfigurable {
 
 	public void config() {
 		prepare(ClientConfig.me().prop("modopz.url", "http://localhost:8765/s/modopz"));
-		pub = ClientConfig.me().prop("modopz.pub",
-				"MFwwDQYJKoZIhvcNAQEBBQADSwAwSAJBALF65WfU7KVi4RLLmW7JvBHCqDJoS2UFUeJag6q0qPQEiT3ZK_3LTdwr8-Kxb537Qn4ozOFkSXSnskiqwae9fdMCAwEAAQ");
-		priv = ClientConfig.me().prop("modopz.priv",
+		String priv = ClientConfig.me().prop("modopz.http.key",
 				"MIIBVAIBADANBgkqhkiG9w0BAQEFAASCAT4wggE6AgEAAkEAsXrlZ9TspWLhEsuZbsm8EcKoMmhLZQVR4lqDqrSo9ASJPdkr_ctN3Cvz4rFvnftCfijM4WRJdKeySKrBp7190wIDAQABAkAxpm3S9FAXnGfWuDp-MdV5KnmfUGn3ItvbdPLsqImzabIqMZu8fEB99LCot83Pxk7WSZKO4xwjyJvv1Hvjw4BxAiEA2WKvBwdRG1BG2MG8aywESlGifybL_LUeEYqw1toF1U8CIQDRAZD_bbj9bYXI-ltGouPNsJUJcVlW9OwSZVUZsDU2PQIgV79j0zx62sGet2QMgF42JSGqrBSnBoy9ZGtNUoyTCjUCIB4prbVPLm1UiwQwLVAKXfnnS_rq4svL2O3mtdtZNLS5AiEAr1qLlgnus_6o1DIZh_XqbWLJdGdtOEpMQ8OiyJjYtBI");
-		pub = Hash.md5B64(KPCrypt.create(null, pub).getPublicKey().getEncoded());
+		this.key = KPCrypt.create(priv, null).getPrivateKey();
+		this.service = ClientConfig.me().prop("modopz.http.service", "modopz");
+		this.user = ClientConfig.me().prop("modopz.http.user", "user");
 	}
 
-	public static Service create(String url, String pub, String priv) {
+	public static HttpProxyService create(String url) {
 		HttpProxyService ret = new HttpProxyService();
 		ret.prepare(url);
-		ret.pub = pub;
-		ret.priv = priv;
 		return ret;
 	}
 

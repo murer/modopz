@@ -1,10 +1,13 @@
 package com.murerz.modopz.core.util;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
 
 import org.junit.Test;
+
+import com.murerz.modopz.core.util.JWT.Header;
+import com.murerz.modopz.core.util.JWT.Payload;
 
 public class JWTTest {
 
@@ -13,20 +16,23 @@ public class JWTTest {
 		KPCrypt kp = KPCrypt.create();
 
 		JWT jwt = new JWT();
-		jwt.pub(kp.getPublicKey());
-		jwt.setService("modopz");
-		long iat = System.currentTimeMillis();
-		jwt.setIat(iat);
-		jwt.exp(3600L);
+		Header header = new Header();
+		Payload payload = new Payload();
+		payload.setUser("test");
+		payload.setService("modopz");
+		long iat = System.currentTimeMillis() / 1000;
+		payload.exp(iat, 3600);
+		jwt.formatHeader(header).formatPayload(payload).sign(kp.getPrivateKey());
 
-		String token = jwt.stringify(kp.getPrivateKey());
+		String token = jwt.formatToken();
 		assertNotNull(token);
 
-		jwt = JWT.parse(token, kp.getPublicKey());
-		assertEquals(Hash.md5B64(kp.getPublicKey().getEncoded()), jwt.getPub());
-		assertEquals("modopz", jwt.getService());
-		assertEquals(iat, jwt.getIat());
-		assertEquals(iat + 3600L, jwt.getExp());
+		jwt = JWT.parse(token);
+		payload = jwt.parsePayload();
+		assertEquals("test", payload.getUser());
+		assertEquals("modopz", payload.getService());
+		assertEquals(iat, payload.getIat());
+		assertEquals(iat + 3600L, payload.getExp());
 	}
 
 	@Test
@@ -34,16 +40,18 @@ public class JWTTest {
 		KPCrypt kp = KPCrypt.create();
 
 		JWT jwt = new JWT();
-		jwt.pub(kp.getPublicKey());
-		jwt.setService("modopz");
-		long iat = System.currentTimeMillis() - 3000;
-		jwt.setIat(iat);
-		jwt.exp(1000L);
+		Header header = new Header();
+		Payload payload = new Payload();
+		payload.setUser("test");
+		payload.setService("modopz");
+		long iat = (System.currentTimeMillis() / 1000) - 10;
+		payload.exp(iat, 5);
+		jwt.formatHeader(header).formatPayload(payload).sign(kp.getPrivateKey());
 
-		String token = jwt.stringify(kp.getPrivateKey());
+		String token = jwt.formatToken();
 		assertNotNull(token);
 
-		assertNull(JWT.parse(token, kp.getPublicKey()));
+		assertFalse(JWT.parse(token).verify(kp.getPublicKey()));
 	}
 
 	@Test
@@ -52,34 +60,18 @@ public class JWTTest {
 		KPCrypt wrong = KPCrypt.create();
 
 		JWT jwt = new JWT();
-		jwt.pub(kp.getPublicKey());
-		jwt.setService("modopz");
-		long iat = System.currentTimeMillis();
-		jwt.setIat(iat);
-		jwt.exp(3600L);
+		Header header = new Header();
+		Payload payload = new Payload();
+		payload.setUser("test");
+		payload.setService("modopz");
+		long iat = System.currentTimeMillis() / 1000;
+		payload.exp(iat, 3600);
+		jwt.formatHeader(header).formatPayload(payload).sign(kp.getPrivateKey());
 
-		String token = jwt.stringify(kp.getPrivateKey());
+		String token = jwt.formatToken();
 		assertNotNull(token);
 
-		assertNull(JWT.parse(token, wrong.getPublicKey()));
-	}
-	
-	@Test
-	public void testPub() {
-		KPCrypt kp = KPCrypt.create();
-		KPCrypt wrong = KPCrypt.create();
-
-		JWT jwt = new JWT();
-		jwt.pub(kp.getPublicKey());
-		jwt.setService("modopz");
-		long iat = System.currentTimeMillis();
-		jwt.setIat(iat);
-		jwt.exp(3600L);
-
-		String token = jwt.stringify(wrong.getPrivateKey());
-		assertNotNull(token);
-
-		assertNull(JWT.parse(token, wrong.getPublicKey()));
+		assertFalse(JWT.parse(token).verify(wrong.getPublicKey()));
 	}
 
 }

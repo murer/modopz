@@ -2,147 +2,164 @@ package com.murerz.modopz.core.util;
 
 import java.security.PrivateKey;
 import java.security.PublicKey;
-import java.util.HashMap;
-import java.util.Map;
 
-import com.google.gson.JsonObject;
 import com.murerz.modopz.core.json.JSON;
 
 public class JWT {
 
-	private String pub;
+	public static class Header {
+		private String alg = "RS256";
+		private String typ = "JWT";
 
-	private String service;
-
-	private long iat;
-
-	private long exp;
-
-	public String getPub() {
-		return pub;
-	}
-
-	public JWT setPub(String pub) {
-		this.pub = pub;
-		return this;
-	}
-
-	public String getService() {
-		return service;
-	}
-
-	public JWT setService(String service) {
-		this.service = service;
-		return this;
-	}
-
-	public long getIat() {
-		return iat;
-	}
-
-	public JWT setIat(long iat) {
-		this.iat = iat;
-		return this;
-	}
-
-	public long getExp() {
-		return exp;
-	}
-
-	public JWT setExp(long exp) {
-		this.exp = exp;
-		return this;
-	}
-
-	public JWT exp(long time) {
-		exp = iat + time;
-		return this;
-	}
-
-	public String stringify(PrivateKey key) {
-		String payload = encodePayload();
-		KPCrypt crypt = KPCrypt.create(key, null);
-		String sign = crypt.signB64(payload);
-		return Util.format("%s.%s", payload, sign);
-	}
-
-	private String encodePayload() {
-		String header = B64.encode(Util.toBytes("{\"alg\":\"RS256\",\"typ\":\"JWT\"}", "UTF-8"));
-		String payload = JSON.stringify(this);
-		payload = B64.encode(Util.toBytes(payload, "UTF-8"));
-		return Util.format("%s.%s", header, payload);
-	}
-
-	public static JWT parse(String token, Map<String, PublicKey> pubs) {
-		String[] array = token.split("\\.");
-		if (array.length != 3) {
-			throw new RuntimeException("wrong: " + token);
-		}
-		String encHeader = Util.toString(B64.decode(array[0]), "UTF-8");
-		String encPayload = Util.toString(B64.decode(array[1]), "UTF-8");
-		byte[] sign = B64.decode(array[2]);
-
-		checkHeader(encHeader);
-		JWT jwt = JSON.parse(encPayload, JWT.class);
-		PublicKey key = pubs.get(jwt.getPub());
-		if(key == null) {
-			return null;
-		}
-		
-		if (!checkSign(array[0], array[1], sign, key)) {
-			return null;
-		}
-		long time = jwt.getExp() - System.currentTimeMillis();
-		if (time < 0) {
-			return null;
-		}
-		String pub = Hash.md5B64(key.getEncoded());
-		if (!pub.equals(jwt.getPub())) {
-			return null;
+		@Override
+		public String toString() {
+			return "[Header alg=" + alg + ", typ=" + typ + "]";
 		}
 
-		return jwt;
 	}
 
-	public static JWT parse(String token, PublicKey key) {
-		HashMap<String, PublicKey> pubs = new HashMap<String, PublicKey>();
-		pubs.put(Hash.md5B64(key.getEncoded()), key);
-		return parse(token, pubs);
+	public static class Payload {
+		private String user;
+		private String service;
+		private long iat;
+		private long exp;
+
+		public String getUser() {
+			return user;
+		}
+
+		public Payload setUser(String user) {
+			this.user = user;
+			return this;
+		}
+
+		public String getService() {
+			return service;
+		}
+
+		public Payload setService(String service) {
+			this.service = service;
+			return this;
+		}
+
+		public long getIat() {
+			return iat;
+		}
+
+		public Payload setIat(long iat) {
+			this.iat = iat;
+			return this;
+		}
+
+		public long getExp() {
+			return exp;
+		}
+
+		public Payload setExp(long exp) {
+			this.exp = exp;
+			return this;
+		}
+
+		public void exp(long iat, long time) {
+			this.iat = iat;
+			this.exp = iat + time;
+		}
+
+		@Override
+		public String toString() {
+			return "Payload user=" + user + ", service=" + service + ", iat=" + iat + ", exp=" + exp + "]";
+		}
+
 	}
 
-	private static boolean checkSign(String header, String payload, byte[] sign, PublicKey key) {
+	private String header;
+	private String payload;
+	private byte[] sign;
+
+	public Payload parsePayload() {
+		String json = Util.toString(B64.decode(payload), "UTF-8");
+		return JSON.parse(json, Payload.class);
+	}
+
+	public Header parseHeader() {
+		String json = Util.toString(B64.decode(header), "UTF-8");
+		return JSON.parse(json, Header.class);
+	}
+
+	public static void main(String[] args) {
+		JWT jwt = new JWT();
+		Header header = new Header();
+		Payload payload = new Payload();
+		payload.setUser("test").setService("modopz").exp(System.currentTimeMillis() / 1000, 3600L);
+
+		jwt.formatHeader(header);
+		jwt.formatPayload(payload);
+
+		KPCrypt kp = KPCrypt.create();
+		jwt.sign(kp.getPrivateKey());
+
+		String token = jwt.formatToken();
+		System.out.println("Token: " + token.length() + " " + token);
+
+		jwt = JWT.parse(token);
+		header = jwt.parseHeader();
+		payload = jwt.parsePayload();
+
+		System.out.println("header: " + header);
+		System.out.println("payload: " + payload);
+
+		System.out.println(jwt.verify(kp.getPublicKey()));
+	}
+
+	public boolean verify(PublicKey key) {
+		if (!verifyExp()) {
+			return false;
+		}
+		return verifySign(key);
+	}
+
+	private boolean verifySign(PublicKey key) {
 		String tk = Util.format("%s.%s", header, payload);
 		KPCrypt kp = KPCrypt.create(null, key);
 		return kp.verify(tk, sign);
 	}
 
-	private static void checkHeader(String header) {
-		JsonObject obj = JSON.parse(header, JsonObject.class);
-		if (!"RS256".equals(obj.get("alg").getAsString())) {
-			throw new RuntimeException("wrong: " + header);
-		}
-		if (!"JWT".equals(obj.get("typ").getAsString())) {
-			throw new RuntimeException("wrong: " + header);
-		}
+	private boolean verifyExp() {
+		long now = System.currentTimeMillis();
+		long exp = parsePayload().getExp() * 1000;
+		return exp >= now;
 	}
 
-	@Override
-	public String toString() {
-		return "[JWT user=" + pub + ", service=" + service + ", iat=" + iat + ", exp=" + exp + "]";
+	public static JWT parse(String token) {
+		String[] array = token.split("\\.");
+		JWT ret = new JWT();
+		ret.header = array[0];
+		ret.payload = array[1];
+		ret.sign = B64.decode(array[2]);
+		return ret;
 	}
 
-	public void pub(PublicKey key) {
-		byte[] encoded = key.getEncoded();
-		String user = Hash.md5B64(encoded);
-		this.pub = user;
+	public String formatToken() {
+		return Util.format("%s.%s.%s", header, payload, B64.encode(sign));
 	}
 
-	public static void main(String[] args) {
-		KPCrypt kp = KPCrypt.create();
-		JsonObject ret = new JsonObject();
-		ret.addProperty("pub", kp.getPublicKeyB64());
-		ret.addProperty("priv", kp.getPrivateKeyB64());
-		System.out.println(ret);
+	public JWT sign(PrivateKey key) {
+		String tk = Util.format("%s.%s", header, payload);
+		KPCrypt kp = KPCrypt.create(key, null);
+		this.sign = kp.sign(tk);
+		return this;
+	}
+
+	public JWT formatPayload(Payload payload) {
+		String json = JSON.stringify(payload);
+		this.payload = B64.encode(Util.toBytes(json, "UTF-8"));
+		return this;
+	}
+
+	public JWT formatHeader(Header header) {
+		String json = JSON.stringify(header);
+		this.header = B64.encode(Util.toBytes(json, "UTF-8"));
+		return this;
 	}
 
 }

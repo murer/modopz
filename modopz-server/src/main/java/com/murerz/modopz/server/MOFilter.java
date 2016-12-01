@@ -1,6 +1,9 @@
 package com.murerz.modopz.server;
 
 import java.io.IOException;
+import java.security.PublicKey;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
@@ -21,8 +24,9 @@ import com.murerz.modopz.core.service.Command;
 import com.murerz.modopz.core.service.Kernel;
 import com.murerz.modopz.core.service.Resp;
 import com.murerz.modopz.core.socket.SocketModuleImpl;
-import com.murerz.modopz.core.util.Auth;
 import com.murerz.modopz.core.util.JWT;
+import com.murerz.modopz.core.util.JWT.Payload;
+import com.murerz.modopz.core.util.KPCrypt;
 import com.murerz.modopz.core.util.MOUtil;
 import com.murerz.modopz.core.util.Util;
 
@@ -32,7 +36,7 @@ public class MOFilter implements Filter {
 
 	private Kernel kernel;
 
-	private Auth auth;
+	private Map<String, PublicKey> pubs = new HashMap<String, PublicKey>();
 
 	public void init(FilterConfig filterConfig) throws ServletException {
 		kernel = new Kernel();
@@ -41,9 +45,9 @@ public class MOFilter implements Filter {
 		kernel.load(new SocketModuleImpl());
 		kernel.start();
 
-		auth = new Auth();
-		auth.add(System.getProperty("modopz.server.pub",
-				"MFwwDQYJKoZIhvcNAQEBBQADSwAwSAJBALF65WfU7KVi4RLLmW7JvBHCqDJoS2UFUeJag6q0qPQEiT3ZK_3LTdwr8-Kxb537Qn4ozOFkSXSnskiqwae9fdMCAwEAAQ"));
+		String publicKey = System.getProperty("modopz.server.pub",
+				"MFwwDQYJKoZIhvcNAQEBBQADSwAwSAJBALF65WfU7KVi4RLLmW7JvBHCqDJoS2UFUeJag6q0qPQEiT3ZK_3LTdwr8-Kxb537Qn4ozOFkSXSnskiqwae9fdMCAwEAAQ");
+		pubs.put("test", KPCrypt.create(null, publicKey).getPublicKey());
 	}
 
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
@@ -56,29 +60,39 @@ public class MOFilter implements Filter {
 			resp.sendError(HttpServletResponse.SC_METHOD_NOT_ALLOWED);
 			return;
 		}
-		auth(req, resp);
+		if (!auth(req, resp)) {
+			return;
+		}
 		post(req, resp);
 	}
 
-	private void auth(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+	private boolean auth(HttpServletRequest req, HttpServletResponse resp) throws IOException {
 		String header = ServletUtil.header(req, "Authorization");
 		if (header == null) {
-			resp.sendError(HttpServletResponse.SC_UNAUTHORIZED);
-			return;
+			resp.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Authorization: Bearer token is required");
+			return false;
 		}
 		if (!header.startsWith("Bearer ")) {
 			throw new RuntimeException("unsupported: " + header);
 		}
 		String token = header.replaceAll("Bearer ", "");
-		JWT jwt = JWT.parse(token, auth.getPubs());
+		JWT jwt = JWT.parse(token);
 		if (jwt == null) {
-			resp.sendError(HttpServletResponse.SC_FORBIDDEN);
-			return;
+			resp.sendError(HttpServletResponse.SC_FORBIDDEN, "JWT parse error");
+			return false;
 		}
-		if (!"modopz".equals(jwt.getService())) {
-			resp.sendError(HttpServletResponse.SC_FORBIDDEN);
-			return;
+		Payload payload = jwt.parsePayload();
+		String user = payload.getUser();
+		PublicKey key = pubs.get(user);
+		if (key == null) {
+			resp.sendError(HttpServletResponse.SC_FORBIDDEN, "PublicKey not found: " + user);
+			return false;
 		}
+		if (!jwt.verify(key)) {
+			resp.sendError(HttpServletResponse.SC_FORBIDDEN, "Wrong sign");
+			return false;
+		}
+		return true;
 	}
 
 	private void post(HttpServletRequest req, HttpServletResponse resp) throws IOException {
