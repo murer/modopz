@@ -20,4 +20,4 @@ java -jar modopz-server/target/modopz-server-dist-single.jar
 
 ## Server Embedded
 
-Follow this sample: 
+Follow this sample: [MOFilter.java](./modopz-server/src/main/java/com/github/murer/modopz/server/MOFilter.java)
