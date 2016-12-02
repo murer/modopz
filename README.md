@@ -37,6 +37,8 @@ java -cp modopz-server/target/modopz-server-dist-single.jar \
 ### Port Foward
 
 ```shell
-java -cp modopz-server/target/modopz-server-dist-single.jar '-Dmodopz.process.cmd={\"cmds\":[\"/bin/bash\",\"-e\"]}'
+java -cp modopz-server/target/modopz-server-dist-single.jar \
+    '-Dmodopz.http.url=http://localhost:8765/s/modopz' \
+    '-Dmodopz.socketforward=5000:irc.freenode.net:6667,5001:irc.freenode.net:7000'
 ```
 
