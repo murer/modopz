@@ -9,7 +9,7 @@ It let you can control your server trough your application.
    1. By running it standalone
  1. You connect to it using the modopz client.
    1. Everthing is transmitted trough HTTP/json.
-   1. You can exec long-running process on server.
+   1. You can exec long-running process on server and keep tracking it: stdin, stdout, stderr and exitcode.
    2. You can port forward just like ```ssh -L```
 
 # Comming Soon
