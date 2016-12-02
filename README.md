@@ -8,9 +8,19 @@ It let you can control your server trough your application.
    1. By embedding it into you application
    1. By running it alone
  1. You connect to it using the modopz client.
-   1. Everthing is transmitted trough HTTP/json (for now).
+   1. Everthing is transmitted trough HTTP/json.
    1. You can exec long-running process on server.
-   2. You can port forward just like ```shh -L```
+   2. You can port forward just like ```ssh -L```
+
+# Comming Soon
+
+ 1. Other modes of connection to bypass specifics network restrictions like:
+   1. Reversed http
+   1. IRC
+   1. XMPP 
+ 1. More modules:
+   1. Filesystem.
+   1. JVM scripting.
 
 # Building
 
