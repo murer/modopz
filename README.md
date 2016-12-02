@@ -28,7 +28,7 @@ It let you control your server trough your application.
 mvn clean install -Ddist
 ```
 
-Use ```-Dmaven.test.skip.exec``` on windows to since exec test is depends on ```/bin/bash```
+Use ```-Dmaven.test.skip.exec``` on windows because exec test requires ```/bin/bash```
 
 # Getting Started
 
