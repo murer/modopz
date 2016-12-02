@@ -14,7 +14,7 @@ It let you can control your server trough your application.
 
 # Comming Soon
 
- 1. Other modes of connection to bypass specifics network restrictions like:
+ 1. Other modes of connection to bypass network restrictions like:
    1. Reversed http
    1. IRC
    1. XMPP 
