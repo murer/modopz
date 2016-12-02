@@ -2,7 +2,7 @@
 
 [![Build Status](https://circleci.com/gh/murer/modopz.svg?style=shield)](https://circleci.com/gh/murer/modopz)
 
-It let you can control your server trough your application. 
+It lets you control your server trough your application. 
 
  1. You start the modopz server.
    1. By embedding it into your application
