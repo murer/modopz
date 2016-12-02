@@ -12,6 +12,12 @@ Use ```-Dmaven.test.skip.exec``` on windows to since exec test is depends on ```
 
 # Server
 
-## Standalone
+## Standalone Server
 
-java -jar target/
+```shell
+java -jar modopz-server/target/modopz-server-dist-single.jar
+```
+
+## Server Embedded
+
+Follow this sample: 
