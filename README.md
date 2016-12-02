@@ -12,12 +12,31 @@ Use ```-Dmaven.test.skip.exec``` on windows to since exec test is depends on ```
 
 # Server
 
-### Standalone Server
+## Standalone Server
 
 ```shell
 java -jar modopz-server/target/modopz-server-dist-single.jar
 ```
 
-### Server Embedded
+## Server Embedded
 
 Follow this sample: [MOFilter.java](./modopz-server/src/main/java/com/github/murer/modopz/server/MOFilter.java)
+
+# Client
+
+### Standalone Client
+
+### Exec
+
+```shell
+java -cp modopz-server/target/modopz-server-dist-single.jar \
+   '-Dmodopz.http.url=http://localhost:8765/s/modopz' \
+   '-Dmodopz.process.cmd={\"cmds\":[\"/bin/bash\",\"-e\"]}'
+```
+
+### Port Foward
+
+```shell
+java -cp modopz-server/target/modopz-server-dist-single.jar '-Dmodopz.process.cmd={\"cmds\":[\"/bin/bash\",\"-e\"]}'
+```
+
