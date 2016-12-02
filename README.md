@@ -2,11 +2,11 @@
 
 [![Build Status](https://circleci.com/gh/murer/modopz.svg?style=shield)](https://circleci.com/gh/murer/modopz)
 
-It lets you control your server trough your application. 
+It let you control your server trough your application. 
 
  1. You start the modopz server.
    1. By embedding it into your application
-   1. By running it standalone
+   1. By running it (standalone)
  1. You connect to it using the modopz client.
    1. Everthing is transmitted trough HTTP/json.
    1. You can exec long-running process on server and keep tracking it: stdin, stdout, stderr and exitcode.
