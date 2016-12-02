@@ -7,10 +7,10 @@ It let you control your server trough your application.
  1. Start the modopz server.
    1. Embedding it into your application
    1. Or running it (standalone)
- 1. You connect to it using the modopz client.
+ 1. Connect to it using the modopz client.
    1. Everthing is transmitted trough HTTP/json.
-   1. You can exec long-running process on server and keep tracking it: stdin, stdout, stderr and exitcode.
-   1. You can port forward just like ```ssh -L```
+   1. Exec long-running process on server and track it: stdin, stdout, stderr and exitcode.
+   1. Start port forward just like ```ssh -L```
 
 # Comming Soon
 
