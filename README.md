@@ -5,8 +5,8 @@
 It let you can control your server trough your application. 
 
  1. You start the modopz server.
-   1. By embedding it into you application
-   1. By running it alone
+   1. By embedding it into your application
+   1. By running it standalone
  1. You connect to it using the modopz client.
    1. Everthing is transmitted trough HTTP/json.
    1. You can exec long-running process on server.
